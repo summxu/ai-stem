@@ -1,42 +1,186 @@
 {
     "projectId": "67ee2731001981539fcb",
-    "functions": [
+    "functions": [],
+    "projectName": "Ai-STEM",
+    "settings": {
+        "services": {
+            "account": true,
+            "avatars": true,
+            "databases": true,
+            "locale": true,
+            "health": true,
+            "storage": true,
+            "teams": true,
+            "users": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": true
+        },
+        "auth": {
+            "methods": {
+                "jwt": true,
+                "phone": true,
+                "invites": true,
+                "anonymous": true,
+                "email-otp": true,
+                "magic-url": true,
+                "email-password": true
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
+        }
+    },
+    "databases": [
         {
-            "$id": "67ee2b56002882921457",
-            "execute": [],
-            "name": "Starter function",
-            "enabled": true,
-            "logging": true,
-            "runtime": "node-16.0",
-            "scopes": [
-                "users.read"
+            "$id": "67ef70bd0025644c3858",
+            "name": "ai-stem",
+            "enabled": true
+        }
+    ],
+    "collections": [
+        {
+            "$id": "67ef70d4002e731b6402",
+            "$permissions": [
+                "create(\"team:67eff5cd002d982e9eac\")",
+                "read(\"team:67eff5cd002d982e9eac\")",
+                "update(\"team:67eff5cd002d982e9eac\")",
+                "delete(\"team:67eff5cd002d982e9eac\")",
+                "read(\"users\")"
             ],
-            "events": [],
-            "schedule": "",
-            "timeout": 15,
-            "entrypoint": "src/main.js",
-            "commands": "npm install",
-            "specification": "s-1vcpu-512mb",
-            "path": "functions/Starter function"
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "group",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 24,
+                    "default": null
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": "哈哈测试"
+                },
+                {
+                    "key": "school",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null
+                },
+                {
+                    "key": "grade",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "一年级",
+                        "二年级",
+                        "三年级",
+                        "四年级",
+                        "五年级",
+                        "六年级"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "groupUser",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67eff830002a2869b11c",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "group",
+                    "onDelete": "cascade",
+                    "side": "parent"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "$id"
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                }
+            ]
         },
         {
-            "$id": "67ee52730032c814e493",
-            "name": "test",
-            "runtime": "node-16.0",
-            "execute": [
-                "any"
+            "$id": "67eff830002a2869b11c",
+            "$permissions": [
+                "read(\"users\")",
+                "create(\"team:67eff5cd002d982e9eac\")",
+                "read(\"team:67eff5cd002d982e9eac\")",
+                "update(\"team:67eff5cd002d982e9eac\")",
+                "delete(\"team:67eff5cd002d982e9eac\")"
             ],
-            "events": [],
-            "scopes": [
-                "users.read"
-            ],
-            "schedule": "",
-            "timeout": 15,
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "group_user",
             "enabled": true,
-            "logging": true,
-            "entrypoint": "src/main.js",
-            "commands": "npm install",
-            "path": "functions/test"
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "group",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67ef70d4002e731b6402",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "groupUser",
+                    "onDelete": "cascade",
+                    "side": "child"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "$id"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
+        }
+    ],
+    "teams": [
+        {
+            "$id": "67eff5700011a25bf625",
+            "name": "student"
+        },
+        {
+            "$id": "67eff5af002bb3b74a49",
+            "name": "teacher"
+        },
+        {
+            "$id": "67eff5cd002d982e9eac",
+            "name": "admin"
         }
     ]
 }
