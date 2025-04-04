@@ -1,0 +1,42 @@
+{
+    "projectId": "67ee2731001981539fcb",
+    "functions": [
+        {
+            "$id": "67ee2b56002882921457",
+            "execute": [],
+            "name": "Starter function",
+            "enabled": true,
+            "logging": true,
+            "runtime": "node-16.0",
+            "scopes": [
+                "users.read"
+            ],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "specification": "s-1vcpu-512mb",
+            "path": "functions/Starter function"
+        },
+        {
+            "$id": "67ee52730032c814e493",
+            "name": "test",
+            "runtime": "node-16.0",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/test"
+        }
+    ]
+}
