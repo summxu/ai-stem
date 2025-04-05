@@ -73,8 +73,8 @@
                     "type": "string",
                     "required": false,
                     "array": false,
-                    "size": 255,
-                    "default": "哈哈测试"
+                    "size": 500,
+                    "default": ""
                 },
                 {
                     "key": "school",
@@ -152,6 +152,18 @@
                     "twoWayKey": "groupUser",
                     "onDelete": "cascade",
                     "side": "child"
+                },
+                {
+                    "key": "leaning",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0d09400061c9c9fe0",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "groupUser",
+                    "onDelete": "cascade",
+                    "side": "parent"
                 }
             ],
             "indexes": [
@@ -167,6 +179,383 @@
                     ]
                 }
             ]
+        },
+        {
+            "$id": "67f0a408002f85969a31",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"team:67eff5cd002d982e9eac\")",
+                "read(\"team:67eff5cd002d982e9eac\")",
+                "update(\"team:67eff5cd002d982e9eac\")",
+                "delete(\"team:67eff5cd002d982e9eac\")"
+            ],
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "active",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 500,
+                    "default": null
+                },
+                {
+                    "key": "grade",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "一年级",
+                        "二年级",
+                        "三年级",
+                        "四年级",
+                        "五年级",
+                        "六年级"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "subject",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "S",
+                        "T",
+                        "E",
+                        "M"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "course",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0a530000e5c01c41e",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "active",
+                    "onDelete": "cascade",
+                    "side": "parent"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "$id"
+                    ],
+                    "orders": [
+                        "DESC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "67f0a530000e5c01c41e",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"team:67eff5cd002d982e9eac\")",
+                "read(\"team:67eff5cd002d982e9eac\")",
+                "update(\"team:67eff5cd002d982e9eac\")",
+                "delete(\"team:67eff5cd002d982e9eac\")"
+            ],
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "course",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 500,
+                    "default": null
+                },
+                {
+                    "key": "duration",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 12,
+                    "default": null
+                },
+                {
+                    "key": "attachment",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "format": "url",
+                    "default": null
+                },
+                {
+                    "key": "active",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0a408002f85969a31",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "course",
+                    "onDelete": "cascade",
+                    "side": "child"
+                },
+                {
+                    "key": "step",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0b9eb0002bb4a7658",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "course",
+                    "onDelete": "cascade",
+                    "side": "parent"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "$id"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "67f0b8cb00277ce1d71b",
+            "$permissions": [
+                "read(\"users\")",
+                "create(\"team:67eff5cd002d982e9eac\")",
+                "read(\"team:67eff5cd002d982e9eac\")",
+                "update(\"team:67eff5cd002d982e9eac\")",
+                "delete(\"team:67eff5cd002d982e9eac\")"
+            ],
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "chapter",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 99999,
+                    "default": null
+                },
+                {
+                    "key": "step",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0b9eb0002bb4a7658",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "chapter",
+                    "onDelete": "cascade",
+                    "side": "child"
+                },
+                {
+                    "key": "leaning",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0d09400061c9c9fe0",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "chapter",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "$id"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "67f0b9eb0002bb4a7658",
+            "$permissions": [
+                "read(\"users\")",
+                "create(\"team:67eff5cd002d982e9eac\")",
+                "read(\"team:67eff5cd002d982e9eac\")",
+                "update(\"team:67eff5cd002d982e9eac\")",
+                "delete(\"team:67eff5cd002d982e9eac\")"
+            ],
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "step",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 12,
+                    "default": null
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 500,
+                    "default": null
+                },
+                {
+                    "key": "course",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0a530000e5c01c41e",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "step",
+                    "onDelete": "cascade",
+                    "side": "child"
+                },
+                {
+                    "key": "code",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 12,
+                    "default": null
+                },
+                {
+                    "key": "chapter",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0b8cb00277ce1d71b",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "step",
+                    "onDelete": "cascade",
+                    "side": "parent"
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "$id"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "67f0d09400061c9c9fe0",
+            "$permissions": [],
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "leaning",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "duration",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "min": 0,
+                    "max": 9223372036854775807,
+                    "default": null
+                },
+                {
+                    "key": "completed",
+                    "type": "boolean",
+                    "required": false,
+                    "array": false,
+                    "default": false
+                },
+                {
+                    "key": "groupUser",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67eff830002a2869b11c",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "leaning",
+                    "onDelete": "cascade",
+                    "side": "child"
+                },
+                {
+                    "key": "chapter",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0b8cb00277ce1d71b",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "leaning",
+                    "onDelete": "restrict",
+                    "side": "child"
+                },
+                {
+                    "key": "testContent",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 99999,
+                    "default": null
+                },
+                {
+                    "key": "aiContent",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 99999,
+                    "default": null
+                }
+            ],
+            "indexes": []
         }
     ],
     "teams": [
