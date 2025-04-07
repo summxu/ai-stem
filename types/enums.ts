@@ -11,3 +11,7 @@ export enum CollectionName {
     group_user = '67eff830002a2869b11c',
     group = '67ef70d4002e731b6402'
 }
+
+export enum FunctionName {
+    starterTemplate = '67f346ff0010a45f8fe6'
+}

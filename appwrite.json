@@ -1,6 +1,27 @@
 {
     "projectId": "67ee2731001981539fcb",
-    "functions": [],
+    "functions": [
+        {
+            "$id": "67f346ff0010a45f8fe6",
+            "name": "starterTemplate",
+            "runtime": "node-20.0",
+            "specification": "s-1vcpu-512mb",
+            "execute": [
+                "users"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "dist/main.js",
+            "commands": "npm install && npm run build",
+            "path": "functions/starterTemplate"
+        }
+    ],
     "projectName": "Ai-STEM",
     "settings": {
         "services": {
@@ -24,12 +45,12 @@
                 "anonymous": false,
                 "email-otp": false,
                 "magic-url": false,
-                "email-password": true
+                "email-password": false
             },
             "security": {
-                "duration": 31536000,
+                "duration": 43200,
                 "limit": 0,
-                "sessionsLimit": 10,
+                "sessionsLimit": 3,
                 "passwordHistory": 0,
                 "passwordDictionary": false,
                 "personalDataCheck": false,
@@ -510,7 +531,7 @@
                     "required": true,
                     "array": false,
                     "min": 0,
-                    "max": 9223372036854775807,
+                    "max": 2592000000,
                     "default": null
                 },
                 {
