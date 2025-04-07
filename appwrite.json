@@ -18,12 +18,12 @@
         },
         "auth": {
             "methods": {
-                "jwt": true,
-                "phone": true,
-                "invites": true,
-                "anonymous": true,
-                "email-otp": true,
-                "magic-url": true,
+                "jwt": false,
+                "phone": false,
+                "invites": false,
+                "anonymous": false,
+                "email-otp": false,
+                "magic-url": false,
                 "email-password": true
             },
             "security": {
@@ -41,7 +41,7 @@
     "databases": [
         {
             "$id": "67ef70bd0025644c3858",
-            "name": "ai-stem",
+            "name": "ai_stem",
             "enabled": true
         }
     ],
@@ -49,11 +49,11 @@
         {
             "$id": "67ef70d4002e731b6402",
             "$permissions": [
-                "create(\"team:67eff5cd002d982e9eac\")",
-                "read(\"team:67eff5cd002d982e9eac\")",
-                "update(\"team:67eff5cd002d982e9eac\")",
-                "delete(\"team:67eff5cd002d982e9eac\")",
-                "read(\"users\")"
+                "read(\"team:67eff5af002bb3b74a49\")",
+                "create(\"team:67f33e5300326073bc00\")",
+                "read(\"team:67f33e5300326073bc00\")",
+                "update(\"team:67f33e5300326073bc00\")",
+                "delete(\"team:67f33e5300326073bc00\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "group",
@@ -130,11 +130,11 @@
         {
             "$id": "67eff830002a2869b11c",
             "$permissions": [
-                "read(\"users\")",
-                "create(\"team:67eff5cd002d982e9eac\")",
-                "read(\"team:67eff5cd002d982e9eac\")",
-                "update(\"team:67eff5cd002d982e9eac\")",
-                "delete(\"team:67eff5cd002d982e9eac\")"
+                "read(\"team:67eff5af002bb3b74a49\")",
+                "create(\"team:67f33e5300326073bc00\")",
+                "read(\"team:67f33e5300326073bc00\")",
+                "update(\"team:67f33e5300326073bc00\")",
+                "delete(\"team:67f33e5300326073bc00\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "group_user",
@@ -184,10 +184,10 @@
             "$id": "67f0a408002f85969a31",
             "$permissions": [
                 "read(\"guests\")",
-                "create(\"team:67eff5cd002d982e9eac\")",
-                "read(\"team:67eff5cd002d982e9eac\")",
-                "update(\"team:67eff5cd002d982e9eac\")",
-                "delete(\"team:67eff5cd002d982e9eac\")"
+                "create(\"team:67f33e5300326073bc00\")",
+                "read(\"team:67f33e5300326073bc00\")",
+                "update(\"team:67f33e5300326073bc00\")",
+                "delete(\"team:67f33e5300326073bc00\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "active",
@@ -271,10 +271,10 @@
             "$id": "67f0a530000e5c01c41e",
             "$permissions": [
                 "read(\"guests\")",
-                "create(\"team:67eff5cd002d982e9eac\")",
-                "read(\"team:67eff5cd002d982e9eac\")",
-                "update(\"team:67eff5cd002d982e9eac\")",
-                "delete(\"team:67eff5cd002d982e9eac\")"
+                "create(\"team:67f33e5300326073bc00\")",
+                "read(\"team:67f33e5300326073bc00\")",
+                "update(\"team:67f33e5300326073bc00\")",
+                "delete(\"team:67f33e5300326073bc00\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "course",
@@ -355,11 +355,12 @@
         {
             "$id": "67f0b8cb00277ce1d71b",
             "$permissions": [
-                "read(\"users\")",
-                "create(\"team:67eff5cd002d982e9eac\")",
-                "read(\"team:67eff5cd002d982e9eac\")",
-                "update(\"team:67eff5cd002d982e9eac\")",
-                "delete(\"team:67eff5cd002d982e9eac\")"
+                "read(\"team:67eff5700011a25bf625\")",
+                "read(\"team:67eff5af002bb3b74a49\")",
+                "create(\"team:67f33e5300326073bc00\")",
+                "read(\"team:67f33e5300326073bc00\")",
+                "update(\"team:67f33e5300326073bc00\")",
+                "delete(\"team:67f33e5300326073bc00\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "chapter",
@@ -416,11 +417,12 @@
         {
             "$id": "67f0b9eb0002bb4a7658",
             "$permissions": [
-                "read(\"users\")",
-                "create(\"team:67eff5cd002d982e9eac\")",
-                "read(\"team:67eff5cd002d982e9eac\")",
-                "update(\"team:67eff5cd002d982e9eac\")",
-                "delete(\"team:67eff5cd002d982e9eac\")"
+                "read(\"team:67eff5af002bb3b74a49\")",
+                "read(\"team:67eff5700011a25bf625\")",
+                "create(\"team:67f33e5300326073bc00\")",
+                "read(\"team:67f33e5300326073bc00\")",
+                "update(\"team:67f33e5300326073bc00\")",
+                "delete(\"team:67f33e5300326073bc00\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "step",
@@ -492,11 +494,15 @@
         },
         {
             "$id": "67f0d09400061c9c9fe0",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")"
+            ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "leaning",
             "enabled": true,
-            "documentSecurity": false,
+            "documentSecurity": true,
             "attributes": [
                 {
                     "key": "duration",
@@ -569,6 +575,10 @@
         },
         {
             "$id": "67eff5cd002d982e9eac",
+            "name": "admin"
+        },
+        {
+            "$id": "67f33e5300326073bc00",
             "name": "admin"
         }
     ]

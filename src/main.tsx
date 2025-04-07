@@ -1,13 +1,14 @@
-import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import './index.css'
 import App from './app.tsx'
 import {BrowserRouter, Route, Routes} from "react-router";
 import Home from "./pages/home";
 import Introduce from "./pages/introduce";
+import {UserProvider} from "./hooks/user.tsx";
+import '@ant-design/v5-patch-for-react-19';
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
+    <UserProvider>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App/>}>
@@ -16,5 +17,5 @@ createRoot(document.getElementById('root')!).render(
                 </Route>
             </Routes>
         </BrowserRouter>
-    </StrictMode>,
+    </UserProvider>
 )
