@@ -1,17 +1,18 @@
 import { useUser } from '../../hooks/user.tsx';
-import { account } from '../../utils/appwrite.ts';
+import { account, functions } from '../../utils/appwrite.ts';
 import { Fragment } from 'react';
 import { message } from 'antd';
+import { FunctionName } from '../../../types/enums.ts';
 
 function Home() {
     const { userInfo, login } = useUser();
     console.log(userInfo);
     const register = async () => {
-        await account.create('unique()', 'test@test1.com', '12345678').catch(err => message.error(err.message));
+        await account.create('unique()', 'test@test.com', '12345678').catch(err => message.error(err.message));
         console.log(userInfo);
     };
     const loginHandle = () => {
-        login('test@test1.com', '12345678');
+        login('istemadmin1@istem.com', '12345678');
     };
 
     const teamAddMembers = async () => {
@@ -28,7 +29,8 @@ function Home() {
         //         grade: '一年级',
         //     }
         // ).catch(err => message.error(err.message))
-        // databases.listDocuments(DatabaseName.ai_stem, CollectionName.leaning)
+        // databases.listDocuments(DatabaseName.ai_stem, CollectionName.active)
+        // teams.listMemberships()
         // databases.createDocument<Learning>(
         //     DatabaseName.ai_stem,
         //     CollectionName.leaning,
@@ -40,6 +42,17 @@ function Home() {
         //
         // const res = await avatars.getFlag(Flag.Honduras);
         // console.log(res)
+        const { responseBody } = await functions.createExecution(FunctionName.login);
+        const res = JSON.parse(responseBody);
+        console.log(res)
+
+        // const result = await teams.create(
+        //     '123', // teamId
+        //     'test', // name
+        //     [] // roles (optional)
+        // );
+        // console.log(await account.getSession('current'))
+
     };
 
     return (

@@ -6,7 +6,26 @@
             "name": "starterTemplate",
             "runtime": "node-20.0",
             "specification": "s-1vcpu-512mb",
+            "execute": [],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "dist/main.js",
+            "commands": "npm install && npm run build",
+            "path": "functions/starterTemplate"
+        },
+        {
+            "$id": "67f346ff0010a45f8fe7",
+            "name": "login",
+            "runtime": "node-21.0",
+            "specification": "s-1vcpu-512mb",
             "execute": [
+                "guests",
                 "users"
             ],
             "events": [],
@@ -19,7 +38,7 @@
             "logging": true,
             "entrypoint": "dist/main.js",
             "commands": "npm install && npm run build",
-            "path": "functions/starterTemplate"
+            "path": "functions/login"
         }
     ],
     "projectName": "Ai-STEM",
@@ -29,13 +48,13 @@
             "avatars": true,
             "databases": true,
             "locale": true,
-            "health": true,
+            "health": false,
             "storage": true,
-            "teams": true,
-            "users": true,
+            "teams": false,
+            "users": false,
             "functions": true,
             "graphql": true,
-            "messaging": true
+            "messaging": false
         },
         "auth": {
             "methods": {

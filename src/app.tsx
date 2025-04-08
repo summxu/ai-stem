@@ -2,7 +2,7 @@ import {Outlet} from "react-router";
 
 function App() {
     return (
-        <div className="ai-stem-container">
+        <div className="istem-container">
             <p>hello</p>
             <Outlet/>
         </div>

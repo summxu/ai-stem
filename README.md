@@ -1,12 +1,12 @@
 管理员账号（活动、课程、章节内容、小组、小组成员）：
-账号：AistemAdmin1
-密码：Aistem@2025
+账号：istemAdmin1
+密码：istem@2025
 
-账号：AistemAdmin2
-密码：Aistem@2025
+账号：istemAdmin2
+密码：istem@2025
 
-账号：AistemAdmin3
-密码：Aistem@2025
+账号：istemAdmin3
+密码：istem@2025
 
 服务器信息（阿里云）：
 账号：
@@ -21,9 +21,9 @@ ECS：
 
 服务信息（Appwrite）：
 地址：
-账号：AistemAdmin@aistem.com
-密码：Aistem@2025
-实例：ai-stem
+账号：istemAdmin@istem.com
+密码：istem@2025
+实例：istem
 
 服务信息（MySQL）：
 地址：

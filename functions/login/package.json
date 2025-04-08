@@ -1,0 +1,16 @@
+{
+    "name": "login",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/main.js",
+    "type": "module",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "@types/node": "^22.14.0",
+        "argon2": "^0.41.1",
+        "node-appwrite": "^15.0.1",
+        "typescript": "^5.7.3"
+    }
+}

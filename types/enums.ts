@@ -13,5 +13,6 @@ export enum CollectionName {
 }
 
 export enum FunctionName {
-    starterTemplate = '67f346ff0010a45f8fe6'
+    starterTemplate = '67f346ff0010a45f8fe6',
+    login = '67f346ff0010a45f8fe7'
 }
