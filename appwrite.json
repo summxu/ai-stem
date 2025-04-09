@@ -6,7 +6,7 @@
             "name": "starterTemplate",
             "runtime": "node-20.0",
             "specification": "s-1vcpu-512mb",
-            "execute": [],
+            "execute": [],l
             "events": [],
             "scopes": [
                 "users.read"
@@ -289,7 +289,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "active",
-                    "onDelete": "cascade",
+                    "onDelete": "setNull",
                     "side": "parent"
                 }
             ],
@@ -362,7 +362,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "course",
-                    "onDelete": "cascade",
+                    "onDelete": "setNull",
                     "side": "child"
                 },
                 {
@@ -374,7 +374,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "course",
-                    "onDelete": "cascade",
+                    "onDelete": "setNull",
                     "side": "parent"
                 }
             ],
@@ -446,6 +446,18 @@
                     "array": false,
                     "size": 255,
                     "default": null
+                },
+                {
+                    "key": "interaction",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f65f0300181798df20",
+                    "relationType": "manyToOne",
+                    "twoWay": true,
+                    "twoWayKey": "chapter",
+                    "onDelete": "cascade",
+                    "side": "child"
                 }
             ],
             "indexes": [
@@ -502,7 +514,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "step",
-                    "onDelete": "cascade",
+                    "onDelete": "setNull",
                     "side": "child"
                 },
                 {
@@ -549,15 +561,6 @@
             "documentSecurity": true,
             "attributes": [
                 {
-                    "key": "duration",
-                    "type": "integer",
-                    "required": true,
-                    "array": false,
-                    "min": 0,
-                    "max": 2592000000,
-                    "default": null
-                },
-                {
                     "key": "completed",
                     "type": "boolean",
                     "required": false,
@@ -577,23 +580,136 @@
                     "side": "child"
                 },
                 {
-                    "key": "testContent",
-                    "type": "string",
+                    "key": "interaction",
+                    "type": "relationship",
                     "required": false,
-                    "array": true,
-                    "size": 99999,
-                    "default": null
+                    "array": false,
+                    "relatedCollection": "67f65f0300181798df20",
+                    "relationType": "manyToOne",
+                    "twoWay": true,
+                    "twoWayKey": "leaning",
+                    "onDelete": "cascade",
+                    "side": "parent"
                 },
                 {
-                    "key": "aiContent",
+                    "key": "answer",
                     "type": "string",
                     "required": false,
                     "array": true,
-                    "size": 99999,
+                    "size": 10000,
                     "default": null
                 }
             ],
             "indexes": []
+        },
+        {
+            "$id": "67f65f0300181798df20",
+            "$permissions": [],
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "interaction",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "options",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "answer",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 5000,
+                    "default": null
+                },
+                {
+                    "key": "attachment",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "format": "url",
+                    "default": null
+                },
+                {
+                    "key": "type",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "choice",
+                        "gap",
+                        "file",
+                        "flow"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "chapter",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0b8cb00277ce1d71b",
+                    "relationType": "manyToOne",
+                    "twoWay": true,
+                    "twoWayKey": "interaction",
+                    "onDelete": "cascade",
+                    "side": "parent"
+                },
+                {
+                    "key": "leaning",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0d09400061c9c9fe0",
+                    "relationType": "manyToOne",
+                    "twoWay": true,
+                    "twoWayKey": "interaction",
+                    "onDelete": "cascade",
+                    "side": "child"
+                },
+                {
+                    "key": "explain",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 5000,
+                    "default": null
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "key",
+                    "status": "available",
+                    "attributes": [
+                        "$id"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
         }
     ],
     "teams": [
@@ -645,6 +761,74 @@
             ],
             "fileSecurity": false,
             "name": "users",
+            "enabled": true,
+            "maximumFileSize": 30000000,
+            "allowedFileExtensions": [],
+            "compression": "none",
+            "encryption": true,
+            "antivirus": true
+        },
+        {
+            "$id": "67f677ac001d18127125",
+            "$permissions": [
+                "read(\"label:admin\")",
+                "create(\"guests\")",
+                "read(\"guests\")",
+                "update(\"guests\")",
+                "delete(\"guests\")"
+            ],
+            "fileSecurity": false,
+            "name": "course",
+            "enabled": true,
+            "maximumFileSize": 30000000,
+            "allowedFileExtensions": [],
+            "compression": "none",
+            "encryption": true,
+            "antivirus": true
+        },
+        {
+            "$id": "67f677ff000c76bb7833",
+            "$permissions": [
+                "read(\"label:teachers\")",
+                "read(\"label:students\")",
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
+            ],
+            "fileSecurity": false,
+            "name": "chapter",
+            "enabled": true,
+            "maximumFileSize": 30000000,
+            "allowedFileExtensions": [],
+            "compression": "none",
+            "encryption": true,
+            "antivirus": true
+        },
+        {
+            "$id": "67f6785200221401b252",
+            "$permissions": [
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")",
+                "read(\"label:teachers\")",
+                "read(\"label:students\")"
+            ],
+            "fileSecurity": false,
+            "name": "interaction",
+            "enabled": true,
+            "maximumFileSize": 30000000,
+            "allowedFileExtensions": [],
+            "compression": "none",
+            "encryption": true,
+            "antivirus": true
+        },
+        {
+            "$id": "67f679530004496f2c31",
+            "$permissions": [],
+            "fileSecurity": true,
+            "name": "leaning",
             "enabled": true,
             "maximumFileSize": 30000000,
             "allowedFileExtensions": [],

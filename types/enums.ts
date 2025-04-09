@@ -8,8 +8,7 @@ export enum CollectionName {
     chapter = '67f0b8cb00277ce1d71b',
     course = '67f0a530000e5c01c41e',
     active = '67f0a408002f85969a31',
-    group_user = '67eff830002a2869b11c',
-    group = '67ef70d4002e731b6402'
+    interaction = '67f65f0300181798df20'
 }
 
 export enum FunctionName {
@@ -18,6 +17,8 @@ export enum FunctionName {
 }
 
 export enum BuckerName {
-    guest = '67f5d09e000a4d858f1a',
-    users = '67f5d9d6001e4590359b'
+    interaction = '67f6785200221401b252',
+    chapter = '67f677ff000c76bb7833',
+    course = '67f677ac001d18127125',
+    leaning = '67f679530004496f2c31'
 }

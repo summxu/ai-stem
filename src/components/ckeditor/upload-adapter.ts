@@ -9,13 +9,14 @@ export class UploadAdapter {
     constructor(loader: FileLoader) { // 修改参数类型为FileLoader
         this.loader = loader;
     }
+
     upload() {
         return new Promise<{ uploaded: boolean; default: string }>(async (resolve, reject) => {
             const file = await this.loader.file;
             if (file) {
                 try {
                     const fileInfo = await storage.createFile(
-                        BuckerName.users,
+                        BuckerName.chapter,
                         ID.unique(),
                         file,
                     );
@@ -31,6 +32,7 @@ export class UploadAdapter {
             }
         });
     }
+
     abort() {
         this.loader.abort();
     }
