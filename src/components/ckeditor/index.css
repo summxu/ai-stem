@@ -119,3 +119,99 @@
     background-color: #e8f0fe;
     border-color: #3f51b5;
 }
+
+/* 添加到现有CSS文件 */
+
+/* 锁定区块基础样式 */
+.locked-block {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: relative;
+}
+
+/* 锁定区块类型样式 */
+.locked-block-checks {
+    background-color: #f0f7ff;
+    border-color: #b8daff;
+}
+
+.locked-block-file {
+    background-color: #fff0f7;
+    border-color: #ffb8d2;
+}
+
+.locked-block-flow {
+    background-color: #f7fff0;
+    border-color: #c8ffb8;
+}
+
+.locked-block-gap-filling {
+    background-color: #f0faff;
+    border-color: #b8f1ff;
+}
+
+/* 按钮容器 */
+.block-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+}
+
+/* 按钮样式 */
+.edit-btn, .delete-btn {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 1;
+}
+
+.edit-btn {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.delete-btn {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* 确保图标在工具栏中正确显示 */
+.ck-toolbar .ck-button.ck-on .ck-icon,
+.ck-toolbar .ck-button:hover .ck-icon {
+    color: var(--ck-color-button-on);
+}
+
+/* 自定义锁定区块按钮图标 */
+.ck-icon[class*="inserChecksBlock"] svg {
+    width: 20px;
+    height: 20px;
+}
+
+.ck-icon[class*="insertFileBlock"] svg {
+    width: 20px;
+    height: 20px;
+}
+
+.ck-icon[class*="insertFlowBlock"] svg {
+    width: 20px;
+    height: 20px;
+}
+
+.ck-icon[class*="insertGapFillingBlock"] svg {
+    width: 20px;
+    height: 20px;
+}

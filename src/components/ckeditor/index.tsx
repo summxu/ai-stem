@@ -42,7 +42,13 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import translations from 'ckeditor5/translations/zh.js';
 import './index.css';
 import { UploadAdapter } from './upload-adapter.ts';
-import { LockedBlockPlugin } from './locked-block-plugin.ts';
+import { 
+    LockedBlockBasePlugin, 
+    ChecksBlockPlugin,
+    FileBlockPlugin,
+    FlowBlockPlugin,
+    GapFillingBlockPlugin
+} from './plugins';
 
 const LICENSE_KEY = 'GPL'; // or <YOUR_LICENSE_KEY>.
 
@@ -86,7 +92,11 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
                         '|',
                         'bulletedList',
                         'numberedList',
-                        '|', 'insertLockedBlock'
+                        '|', 
+                        'insertChecksBlock',
+                        'insertFileBlock',
+                        'insertFlowBlock',
+                        'insertGapFillingBlock'
                     ],
                     shouldNotGroupWhenFull: false,
                 },
@@ -123,7 +133,11 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
                     TableToolbar,
                     TextTransformation,
                     Underline,
-                    LockedBlockPlugin
+                    LockedBlockBasePlugin,
+                    ChecksBlockPlugin,
+                    FileBlockPlugin,
+                    FlowBlockPlugin,
+                    GapFillingBlockPlugin
                 ],
                 heading: {
                     options: [
