@@ -1,5 +1,3 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
     Autoformat,
     AutoImage,
@@ -38,10 +36,13 @@ import {
     TextTransformation,
     Underline,
 } from 'ckeditor5';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import translations from 'ckeditor5/translations/zh.js';
 import './index.css';
 import { UploadAdapter } from './upload-adapter.ts';
+import { LockedBlockPlugin } from './locked-block-plugin.ts';
 
 const LICENSE_KEY = 'GPL'; // or <YOUR_LICENSE_KEY>.
 
@@ -85,6 +86,7 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
                         '|',
                         'bulletedList',
                         'numberedList',
+                        '|', 'insertLockedBlock'
                     ],
                     shouldNotGroupWhenFull: false,
                 },
@@ -121,6 +123,7 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
                     TableToolbar,
                     TextTransformation,
                     Underline,
+                    LockedBlockPlugin
                 ],
                 heading: {
                     options: [

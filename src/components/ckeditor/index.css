@@ -30,3 +30,92 @@
     min-height: 300px!important;
     height: auto;
 }
+
+/* 锁定区块样式 */
+.ck-content .locked-block {
+    background-color: #f8f9fa;
+    border: 1px solid #e2e2e2;
+    border-left: 3px solid #3f51b5;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    position: relative;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    pointer-events: none !important;
+}
+
+/* 使锁定区块本身可点击，但其内容不可选 */
+.ck-content .locked-block::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* 操作按钮容器 */
+.ck-content .locked-block .block-actions {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    display: flex;
+    gap: 8px;
+    z-index: 3;
+    pointer-events: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2px 4px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 操作按钮 */
+.ck-content .locked-block .block-actions button {
+    background: none;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+
+.ck-content .locked-block .block-actions button:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 编辑按钮 */
+.ck-content .locked-block .block-actions .edit-btn::before {
+    content: "✏️";
+    font-size: 14px;
+}
+
+/* 删除按钮 */
+.ck-content .locked-block .block-actions .delete-btn::before {
+    content: "🗑️";
+    font-size: 14px;
+}
+
+/* 锁定区块悬停效果 */
+.ck-content .locked-block:hover {
+    background-color: #f0f2f5;
+    border-color: #d0d0d0;
+}
+
+/* 锁定区块选中状态 */
+.ck-content .locked-block.ck-widget_selected {
+    background-color: #e8f0fe;
+    border-color: #3f51b5;
+}
