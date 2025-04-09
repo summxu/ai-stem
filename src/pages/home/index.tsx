@@ -12,7 +12,7 @@ function Home() {
         console.log(userInfo);
     };
     const loginHandle = () => {
-        login('istemadmin1@istem.com', '12345678');
+        login('istemadmin1@istem.com', 'istem@2025');
     };
 
     const teamAddMembers = async () => {

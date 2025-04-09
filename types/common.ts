@@ -3,3 +3,7 @@ export interface FunctionsReturn<T> {
     message: string;
     data: T;
 }
+
+export type Label = 'admin' | 'teachers' | 'students';
+
+export type TeamRole = 'teacher' | 'student';

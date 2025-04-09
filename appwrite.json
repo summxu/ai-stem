@@ -224,10 +224,10 @@
             "$id": "67f0a408002f85969a31",
             "$permissions": [
                 "read(\"guests\")",
-                "create(\"team:67f33e5300326073bc00\")",
-                "read(\"team:67f33e5300326073bc00\")",
-                "update(\"team:67f33e5300326073bc00\")",
-                "delete(\"team:67f33e5300326073bc00\")"
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "active",
@@ -311,10 +311,10 @@
             "$id": "67f0a530000e5c01c41e",
             "$permissions": [
                 "read(\"guests\")",
-                "create(\"team:67f33e5300326073bc00\")",
-                "read(\"team:67f33e5300326073bc00\")",
-                "update(\"team:67f33e5300326073bc00\")",
-                "delete(\"team:67f33e5300326073bc00\")"
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "course",
@@ -395,12 +395,12 @@
         {
             "$id": "67f0b8cb00277ce1d71b",
             "$permissions": [
-                "read(\"team:67eff5700011a25bf625\")",
-                "read(\"team:67eff5af002bb3b74a49\")",
-                "create(\"team:67f33e5300326073bc00\")",
-                "read(\"team:67f33e5300326073bc00\")",
-                "update(\"team:67f33e5300326073bc00\")",
-                "delete(\"team:67f33e5300326073bc00\")"
+                "read(\"label:teachers\")",
+                "read(\"label:students\")",
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "chapter",
@@ -438,6 +438,14 @@
                     "twoWayKey": "chapter",
                     "onDelete": "restrict",
                     "side": "parent"
+                },
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
                 }
             ],
             "indexes": [
@@ -457,12 +465,12 @@
         {
             "$id": "67f0b9eb0002bb4a7658",
             "$permissions": [
-                "read(\"team:67eff5af002bb3b74a49\")",
-                "read(\"team:67eff5700011a25bf625\")",
-                "create(\"team:67f33e5300326073bc00\")",
-                "read(\"team:67f33e5300326073bc00\")",
-                "update(\"team:67f33e5300326073bc00\")",
-                "delete(\"team:67f33e5300326073bc00\")"
+                "read(\"label:students\")",
+                "read(\"label:teachers\")",
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "step",
@@ -534,11 +542,7 @@
         },
         {
             "$id": "67f0d09400061c9c9fe0",
-            "$permissions": [
-                "create(\"users\")",
-                "read(\"users\")",
-                "update(\"users\")"
-            ],
+            "$permissions": [],
             "databaseId": "67ef70bd0025644c3858",
             "name": "leaning",
             "enabled": true,
@@ -559,18 +563,6 @@
                     "required": false,
                     "array": false,
                     "default": false
-                },
-                {
-                    "key": "groupUser",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67eff830002a2869b11c",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "leaning",
-                    "onDelete": "cascade",
-                    "side": "child"
                 },
                 {
                     "key": "chapter",
@@ -620,6 +612,45 @@
         {
             "$id": "67f33e5300326073bc00",
             "name": "admin"
+        }
+    ],
+    "buckets": [
+        {
+            "$id": "67f5d09e000a4d858f1a",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
+            ],
+            "fileSecurity": false,
+            "name": "guest",
+            "enabled": true,
+            "maximumFileSize": 30000000,
+            "allowedFileExtensions": [],
+            "compression": "none",
+            "encryption": true,
+            "antivirus": true
+        },
+        {
+            "$id": "67f5d9d6001e4590359b",
+            "$permissions": [
+                "read(\"label:teachers\")",
+                "read(\"label:students\")",
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
+            ],
+            "fileSecurity": false,
+            "name": "users",
+            "enabled": true,
+            "maximumFileSize": 30000000,
+            "allowedFileExtensions": [],
+            "compression": "none",
+            "encryption": true,
+            "antivirus": true
         }
     ]
 }

@@ -16,3 +16,8 @@ export enum FunctionName {
     starterTemplate = '67f346ff0010a45f8fe6',
     login = '67f346ff0010a45f8fe7'
 }
+
+export enum BuckerName {
+    guest = '67f5d09e000a4d858f1a',
+    users = '67f5d9d6001e4590359b'
+}
