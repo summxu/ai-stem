@@ -23,5 +23,10 @@
 }
 
 .ck.ck-powered-by-balloon {
-    display: none!important;
+    display: none !important;
+}
+
+.ck.ck-editor__editable {
+    min-height: 300px!important;
+    height: auto;
 }
