@@ -7,5 +7,3 @@ export interface FunctionsReturn<T> {
 export type Label = 'admin' | 'teachers' | 'students';
 
 export type TeamRole = 'teacher' | 'student';
-
-export type InteractionType = 'choice' | 'gap' | 'file' | 'flow'

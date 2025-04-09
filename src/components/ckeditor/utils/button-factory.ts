@@ -1,5 +1,5 @@
 import { ButtonView, Editor } from 'ckeditor5';
-import { InteractionType } from '../../../../types/common.ts';
+import { InteractionType } from '../../../../types/db.ts';
 
 // 创建按钮的工厂方法
 export function createButton(editor: Editor, name: string, label: string, icon: string, command: string, blockType?: InteractionType) {

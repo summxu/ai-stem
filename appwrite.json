@@ -6,7 +6,7 @@
             "name": "starterTemplate",
             "runtime": "node-20.0",
             "specification": "s-1vcpu-512mb",
-            "execute": [],l
+            "execute": [],
             "events": [],
             "scopes": [
                 "users.read"
@@ -194,7 +194,7 @@
                     "side": "child"
                 },
                 {
-                    "key": "leaning",
+                    "key": "learning",
                     "type": "relationship",
                     "required": false,
                     "array": false,
@@ -428,18 +428,6 @@
                     "side": "child"
                 },
                 {
-                    "key": "leaning",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0d09400061c9c9fe0",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "chapter",
-                    "onDelete": "restrict",
-                    "side": "parent"
-                },
-                {
                     "key": "name",
                     "type": "string",
                     "required": true,
@@ -458,6 +446,18 @@
                     "twoWayKey": "chapter",
                     "onDelete": "cascade",
                     "side": "child"
+                },
+                {
+                    "key": "learning",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0d09400061c9c9fe0",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "chapter",
+                    "onDelete": "restrict",
+                    "side": "parent"
                 }
             ],
             "indexes": [
@@ -556,9 +556,9 @@
             "$id": "67f0d09400061c9c9fe0",
             "$permissions": [],
             "databaseId": "67ef70bd0025644c3858",
-            "name": "leaning",
+            "name": "learning",
             "enabled": true,
-            "documentSecurity": true,
+            "documentSecurity": false,
             "attributes": [
                 {
                     "key": "completed",
@@ -568,6 +568,14 @@
                     "default": false
                 },
                 {
+                    "key": "answer",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 10000,
+                    "default": null
+                },
+                {
                     "key": "chapter",
                     "type": "relationship",
                     "required": false,
@@ -575,7 +583,7 @@
                     "relatedCollection": "67f0b8cb00277ce1d71b",
                     "relationType": "oneToMany",
                     "twoWay": true,
-                    "twoWayKey": "leaning",
+                    "twoWayKey": "learning",
                     "onDelete": "restrict",
                     "side": "child"
                 },
@@ -585,19 +593,11 @@
                     "required": false,
                     "array": false,
                     "relatedCollection": "67f65f0300181798df20",
-                    "relationType": "manyToOne",
+                    "relationType": "oneToMany",
                     "twoWay": true,
-                    "twoWayKey": "leaning",
-                    "onDelete": "cascade",
-                    "side": "parent"
-                },
-                {
-                    "key": "answer",
-                    "type": "string",
-                    "required": false,
-                    "array": true,
-                    "size": 10000,
-                    "default": null
+                    "twoWayKey": "learning",
+                    "onDelete": "restrict",
+                    "side": "child"
                 }
             ],
             "indexes": []
@@ -677,24 +677,24 @@
                     "side": "parent"
                 },
                 {
-                    "key": "leaning",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0d09400061c9c9fe0",
-                    "relationType": "manyToOne",
-                    "twoWay": true,
-                    "twoWayKey": "interaction",
-                    "onDelete": "cascade",
-                    "side": "child"
-                },
-                {
                     "key": "explain",
                     "type": "string",
                     "required": false,
                     "array": false,
                     "size": 5000,
                     "default": null
+                },
+                {
+                    "key": "learning",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0d09400061c9c9fe0",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "interaction",
+                    "onDelete": "restrict",
+                    "side": "parent"
                 }
             ],
             "indexes": [
@@ -828,7 +828,7 @@
             "$id": "67f679530004496f2c31",
             "$permissions": [],
             "fileSecurity": true,
-            "name": "leaning",
+            "name": "learning",
             "enabled": true,
             "maximumFileSize": 30000000,
             "allowedFileExtensions": [],

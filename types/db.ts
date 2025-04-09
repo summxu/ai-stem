@@ -1,73 +1,87 @@
 /*
- * 数据库集合类型定义（基于 appwrite.json 配置）
- * 1. 所有接口继承自 Models.Document（隐含 $id 等元数据字段）
+ * 根据 appwrite.json collections 块生成接口
+ * 1. 所有接口继承自 Models.Models.Document（隐含 $id 等元数据字段）
  * 2. 关系字段统一定义为 string[] 类型
  * 3. 枚举类型单独抽离为 type
  */
 
-import {Models} from 'appwrite';
+// 枚举类型定义
+export type Grade = '一年级' | '二年级' | '三年级' | '四年级' | '五年级' | '六年级';
+export type Subject = 'S' | 'T' | 'E' | 'M';
+export type InteractionType = 'choice' | 'gap' | 'file' | 'flow';
 
-// --- 枚举类型 ---
-export type GradeLevel =
-    | "一年级"
-    | "二年级"
-    | "三年级"
-    | "四年级"
-    | "五年级"
-    | "六年级";
+// 接口定义
+import { Models } from 'appwrite';
 
-export type SubjectType = "S" | "T" | "E" | "M";
-
-// --- 集合接口 ---
+// Group 集合
 export interface Group extends Models.Document {
-    name: string; // 必填（size:24）
-    school: string; // 必填（size:36）
-    grade: GradeLevel;
-    description?: string; // 可选（size:500）
+    name: string;
+    description?: string;
+    school: string;
+    grade: Grade;
     groupUser?: string[]; // 关系字段
 }
 
+// GroupUser 集合
 export interface GroupUser extends Models.Document {
-    group?: string[]; // 关联到 group 集合
-    leaning?: string[]; // 关联到 leaning 集合
+    group?: string[]; // 关系字段
+    learning?: string[]; // 关系字段
 }
 
+// Active 集合
 export interface Active extends Models.Document {
-    name: string; // 必填（size:36）
-    grade: GradeLevel;
-    subject: SubjectType;
-    description?: string; // 可选（size:500）
+    name: string;
+    description?: string;
+    grade: Grade;
+    subject: Subject;
     course?: string[]; // 关系字段
 }
 
+// Course 集合
 export interface Course extends Models.Document {
-    name: string; // 必填（size:36）
-    description: string; // 必填（size:500）
-    duration: string; // 必填（size:12）
-    attachment: string; // URL 格式
-    active?: string[]; // 关联到 active 集合
-    step?: string[]; // 关联到 step 集合
+    name: string;
+    description: string;
+    duration: string;
+    attachment: string; // URL格式
+    active?: string[]; // 关系字段
+    step?: string[]; // 关系字段
 }
 
+// Chapter 集合
 export interface Chapter extends Models.Document {
-    content: string; // 必填（最大长度99999）
-    step?: string[]; // 关联到 step 集合
-    leaning?: string[]; // 关联到 leaning 集合
+    content: string;
+    step?: string[]; // 关系字段
+    name: string;
+    interaction?: string[]; // 关系字段
+    learning?: string[]; // 关系字段
 }
 
+// Step 集合
 export interface Step extends Models.Document {
-    name: string; // 必填（size:12）
-    description: string; // 必填（size:500）
-    course?: string[]; // 关联到 course 集合
-    code: string; // 必填（size:12）
-    chapter?: string[]; // 关联到 chapter 集合
+    name: string;
+    description: string;
+    course?: string[]; // 关系字段
+    code: string;
+    chapter?: string[]; // 关系字段
 }
 
+// Learning 集合
 export interface Learning extends Models.Document {
-    duration: number; // 必填整数
-    completed?: boolean; // 默认false
-    groupUser?: string[]; // 关联到 group_user
-    chapter?: string[]; // 关联到 chapter
-    testContent?: string[]; // 数组类型
-    aiContent?: string[]; // 数组类型
+    completed?: boolean;
+    answer?: string[]; // 数组类型
+    chapter?: string[]; // 关系字段
+    interaction?: string[]; // 关系字段
+}
+
+// Interaction 集合
+export interface Interaction extends Models.Document {
+    title: string;
+    options?: string[]; // 数组类型
+    answer?: string[]; // 数组类型
+    content?: string;
+    attachment?: string; // URL格式
+    type: InteractionType;
+    chapter?: string[]; // 关系字段
+    explain?: string;
+    learning?: string[]; // 关系字段
 }
