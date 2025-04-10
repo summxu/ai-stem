@@ -14,7 +14,23 @@ export function createButton(editor: Editor, name: string, label: string, icon: 
         });
 
         button.on('execute', () => {
-            editor.execute(command, blockType);
+            
+            // 触发自定义事件，将命令和类型发送到外部
+            const customEvent = new CustomEvent('ckeditor:buttonExecuted', {
+                detail: {
+                    command,
+                    blockType,
+                    buttonName: name
+                },
+                bubbles: true,
+                cancelable: true
+            });
+            
+            // 获取编辑器DOM元素并分发事件
+            const editorElement = editor.ui.view.element;
+            if (editorElement) {
+                editorElement.dispatchEvent(customEvent);
+            }
         });
 
         return button;

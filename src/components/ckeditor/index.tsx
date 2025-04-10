@@ -42,29 +42,56 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import translations from 'ckeditor5/translations/zh.js';
 import './index.css';
 import { UploadAdapter } from './upload-adapter.ts';
-import { 
-    LockedBlockBasePlugin, 
+import {
+    LockedBlockBasePlugin,
     ChecksBlockPlugin,
     FileBlockPlugin,
     FlowBlockPlugin,
-    GapFillingBlockPlugin
+    GapFillingBlockPlugin,
 } from './plugins';
+import InteractionModal from '../interaction-modal';
 
 const LICENSE_KEY = 'GPL'; // or <YOUR_LICENSE_KEY>.
 
 interface CKeditorProps {
     initialData: string;
     onChange: (data: EventInfo<string, unknown>, editor: ClassicEditor) => void;
+    onButtonExecuted?: (event: { command: string; blockType?: string; buttonName: string }) => void;
 }
 
 function CKeditor({ initialData, onChange }: CKeditorProps) {
-    const editorContainerRef = useRef(null);
-    const editorRef = useRef(null);
+    const editorContainerRef = useRef<HTMLDivElement>(null);
+    const editorRef = useRef<ClassicEditor | null>(null);
+    const eventParams = useRef({
+        command: '',
+        blockType: '',
+    });
     const [isLayoutReady, setIsLayoutReady] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         setIsLayoutReady(true);
         return () => setIsLayoutReady(false);
+    }, []);
+
+    useEffect(() => {
+        const handleButtonExecuted = (event: Event) => {
+            if (event instanceof CustomEvent) {
+                setIsModalOpen(true);
+                eventParams.current = event.detail;
+            }
+        };
+
+        const editorElement = editorContainerRef.current;
+        if (editorElement) {
+            editorElement.addEventListener('ckeditor:buttonExecuted', handleButtonExecuted);
+        }
+
+        return () => {
+            if (editorElement) {
+                editorElement.removeEventListener('ckeditor:buttonExecuted', handleButtonExecuted);
+            }
+        };
     }, []);
 
     const { editorConfig } = useMemo(() => {
@@ -92,11 +119,11 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
                         '|',
                         'bulletedList',
                         'numberedList',
-                        '|', 
+                        '|',
                         'insertChecksBlock',
                         'insertFileBlock',
                         'insertFlowBlock',
-                        'insertGapFillingBlock'
+                        'insertGapFillingBlock',
                     ],
                     shouldNotGroupWhenFull: false,
                 },
@@ -137,7 +164,7 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
                     ChecksBlockPlugin,
                     FileBlockPlugin,
                     FlowBlockPlugin,
-                    GapFillingBlockPlugin
+                    GapFillingBlockPlugin,
                 ],
                 heading: {
                     options: [
@@ -219,21 +246,28 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
                 translations: [translations],
             },
         };
-    }, [isLayoutReady]) as { editorConfig: EditorConfig };
+    }, [isLayoutReady, initialData]) as { editorConfig: EditorConfig };
 
-    // 配置上传loader
     const handleReady = (editor: ClassicEditor) => {
+        editorRef.current = editor;
+
         editor.plugins.get('FileRepository').createUploadAdapter = (loader: FileLoader) => {
             return new UploadAdapter(loader);
         };
     };
 
-    // 修改CKEditor组件渲染逻辑
+    const handleModalOk = () => {
+        editorRef.current?.execute(eventParams.current!.command, eventParams.current!.blockType);
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="main-container">
+            <InteractionModal title="添加问题" maskClosable={false} open={isModalOpen} onOk={handleModalOk}
+                              onCancel={() => setIsModalOpen(false)} />
             <div className="editor-container editor-container_classic-editor" ref={editorContainerRef}>
                 <div className="editor-container__editor">
-                    <div ref={editorRef}>{editorConfig &&
+                    <div>{editorConfig &&
                       <CKEditor
                         onChange={onChange}
                         editor={ClassicEditor}
