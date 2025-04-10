@@ -1,23 +1,30 @@
 import { Command } from 'ckeditor5';
 
 export class EditLockedBlockCommand extends Command {
-    execute() {
+    async execute() {
         const editor = this.editor;
         const selection = editor.model.document.selection;
         const selectedElement = selection.getSelectedElement();
 
         if (selectedElement && selectedElement.name === 'lockedBlock') {
-            const firstChild = selectedElement.getChild(0);
-            if (firstChild && firstChild.is('$text')) {
-                const currentText = firstChild.data;
-                const newText = window.prompt('编辑锁定区块内容:', currentText);
-                
-                if (newText !== null) {
-                    editor.model.change(writer => {
-                        writer.remove(firstChild);
-                        writer.appendText(newText, selectedElement);
-                    });
-                }
+            const id = selectedElement.getAttribute('id') as string;
+            const command = selectedElement.getAttribute('command') as string;
+            const type = selectedElement.getAttribute('type') as string;
+            // 触发自定义事件，将命令和类型发送到外部
+            const customEvent = new CustomEvent('ckeditor:buttonExecuted', {
+                detail: {
+                    command,
+                    blockType: type,
+                    id,
+                    buttonName: selectedElement.name,
+                },
+                bubbles: true,
+                cancelable: true,
+            });
+            // 获取编辑器DOM元素并分发事件
+            const editorElement = editor.ui.view.element;
+            if (editorElement) {
+                editorElement.dispatchEvent(customEvent);
             }
         }
     }

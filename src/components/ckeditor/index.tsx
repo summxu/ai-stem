@@ -50,6 +50,7 @@ import {
     GapFillingBlockPlugin,
 } from './plugins';
 import InteractionModal from '../interaction-modal';
+import { Interaction, InteractionType } from '../../../types/db.ts';
 
 const LICENSE_KEY = 'GPL'; // or <YOUR_LICENSE_KEY>.
 
@@ -62,9 +63,10 @@ interface CKeditorProps {
 function CKeditor({ initialData, onChange }: CKeditorProps) {
     const editorContainerRef = useRef<HTMLDivElement>(null);
     const editorRef = useRef<ClassicEditor | null>(null);
-    const eventParams = useRef({
+    const [eventParams, setEventParams] = useState({
         command: '',
-        blockType: '',
+        blockType: 'choice' as InteractionType,
+        id: '',
     });
     const [isLayoutReady, setIsLayoutReady] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,7 +80,7 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
         const handleButtonExecuted = (event: Event) => {
             if (event instanceof CustomEvent) {
                 setIsModalOpen(true);
-                eventParams.current = event.detail;
+                setEventParams(event.detail);
             }
         };
 
@@ -256,24 +258,27 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
         };
     };
 
-    const handleModalOk = () => {
-        editorRef.current?.execute(eventParams.current!.command, eventParams.current!.blockType);
+    const handleModalOk = (interactionData: Interaction) => {
+        editorRef.current?.execute(eventParams.command, eventParams.blockType, interactionData.$id, interactionData.title);
         setIsModalOpen(false);
     };
 
     return (
         <div className="main-container">
-            <InteractionModal title="添加问题" maskClosable={false} open={isModalOpen} onOk={handleModalOk}
-                              onCancel={() => setIsModalOpen(false)} />
+            <InteractionModal
+                id={eventParams.id}
+                type={eventParams.blockType}
+                open={isModalOpen}
+                onSuccess={handleModalOk}
+                onCancel={() => setIsModalOpen(false)}
+            />
             <div className="editor-container editor-container_classic-editor" ref={editorContainerRef}>
                 <div className="editor-container__editor">
-                    <div>{editorConfig &&
-                      <CKEditor
-                        onChange={onChange}
-                        editor={ClassicEditor}
-                        config={editorConfig}
-                        onReady={handleReady}
-                      />}
+                    <div>
+                        {editorConfig && (
+                            <CKEditor onChange={onChange} editor={ClassicEditor} config={editorConfig}
+                                      onReady={handleReady} />
+                        )}
                     </div>
                 </div>
             </div>

@@ -22,3 +22,10 @@ export enum BuckerName {
     course = '67f677ac001d18127125',
     leaning = '67f679530004496f2c31'
 }
+
+export enum InteractionTypeName {
+    choice = '选择题',
+    gap = '填空题',
+    file = '附件上传题',
+    flow = '流程排序题'
+}

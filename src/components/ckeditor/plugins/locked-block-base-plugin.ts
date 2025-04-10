@@ -78,12 +78,12 @@ export class LockedBlockBasePlugin extends Plugin {
                 writer.insert(writer.createPositionAt(div, 0), actionsDiv);
 
                 // 创建内容容器
-                const contentDiv = writer.createContainerElement('div', {
-                    class: 'locked-content',
-                });
+                // const contentDiv = writer.createContainerElement('div', {
+                //     class: 'locked-content',
+                // });
 
                 // 将内容区域添加到主div
-                writer.insert(writer.createPositionAt(div, 1), contentDiv);
+                // writer.insert(writer.createPositionAt(div, 1), contentDiv);
 
                 // 将模型中的文本转换为视图中的文本
                 const textContent = Array.from(modelElement.getChildren())
@@ -92,8 +92,8 @@ export class LockedBlockBasePlugin extends Plugin {
                     .join('');
 
                 if (textContent) {
-                    const text = writer.createText(textContent);
-                    writer.insert(writer.createPositionAt(contentDiv, 0), text);
+                    // const text = writer.createText(textContent);
+                    // writer.insert(writer.createPositionAt(contentDiv, 0), text);
                 }
 
                 return div;

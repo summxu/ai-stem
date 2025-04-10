@@ -48,13 +48,13 @@
             "avatars": true,
             "databases": true,
             "locale": true,
-            "health": false,
+            "health": true,
             "storage": true,
-            "teams": false,
-            "users": false,
+            "teams": true,
+            "users": true,
             "functions": true,
             "graphql": true,
-            "messaging": false
+            "messaging": true
         },
         "auth": {
             "methods": {
@@ -627,14 +627,6 @@
                     "default": null
                 },
                 {
-                    "key": "answer",
-                    "type": "string",
-                    "required": false,
-                    "array": true,
-                    "size": 255,
-                    "default": null
-                },
-                {
                     "key": "content",
                     "type": "string",
                     "required": false,
@@ -695,6 +687,15 @@
                     "twoWayKey": "interaction",
                     "onDelete": "restrict",
                     "side": "parent"
+                },
+                {
+                    "key": "answer",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "min": 0,
+                    "max": 255,
+                    "default": null
                 }
             ],
             "indexes": [

@@ -1,6 +1,7 @@
 import { Plugin } from 'ckeditor5';
 import { LockedBlockBasePlugin } from './locked-block-base-plugin';
 import { createButton } from '../utils/button-factory';
+import { InteractionTypeName } from '../../../../types/enums.ts';
 
 const ChecksIcon = `<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1744183205826" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4102" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64"><path d="M448 160a32 32 0 0 1 32-32h448a32 32 0 0 1 32 32v64a32 32 0 0 1-32 32h-448a32 32 0 0 1-32-32v-64zM128 64a128 128 0 0 0-128 128v128a128 128 0 0 0 128 128h128a128 128 0 0 0 128-128V192a128 128 0 0 0-128-128H128z m0 512a128 128 0 0 0-128 128v128a128 128 0 0 0 128 128h128a128 128 0 0 0 128-128v-128a128 128 0 0 0-128-128H128z m54.656-233.344a32 32 0 0 1-45.312 0l-64-64a32 32 0 1 1 45.312-45.312l41.344 41.408 105.344-105.408a32 32 0 1 1 45.312 45.312l-128 128z m0 512a32 32 0 0 1-45.312 0l-64-64a32 32 0 0 1 45.312-45.312l41.344 41.408 105.344-105.408a32 32 0 0 1 45.312 45.312l-128 128zM448 672a32 32 0 0 1 32-32h448a32 32 0 0 1 32 32v64a32 32 0 0 1-32 32h-448a32 32 0 0 1-32-32v-64zM448 352a32 32 0 0 1 32-32h320a32 32 0 0 1 0 64h-320a32 32 0 0 1-32-32zM448 864a32 32 0 0 1 32-32h320a32 32 0 0 1 0 64h-320a32 32 0 0 1-32-32z" fill="#000000" p-id="4103"></path></svg>`;
 const FileIcon = `<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1744183494432" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8181" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64"><path d="M823.296 60.416q65.536 0 99.328 38.4t33.792 93.696l0 543.744q0 25.6-21.504 46.08l-171.008 163.84q-13.312 11.264-22.528 14.336t-23.552 3.072l-459.776 0q-23.552 0-47.104-9.728t-41.984-27.648-30.208-43.008-11.776-55.808l0-634.88q0-60.416 33.28-96.256t94.72-35.84l568.32 0zM608.256 702.464q13.312 0 22.528-9.216t9.216-22.528q0-14.336-9.216-23.04t-22.528-8.704l-320.512 0q-13.312 0-22.528 8.704t-9.216 23.04q0 13.312 9.216 22.528t22.528 9.216l320.512 0zM736.256 509.952q13.312 0 22.528-9.216t9.216-22.528-9.216-22.528-22.528-9.216l-448.512 0q-13.312 0-22.528 9.216t-9.216 22.528 9.216 22.528 22.528 9.216l448.512 0zM799.744 318.464q13.312 0 22.528-9.216t9.216-23.552q0-13.312-9.216-22.528t-22.528-9.216l-512 0q-13.312 0-22.528 9.216t-9.216 22.528q0 14.336 9.216 23.552t22.528 9.216l512 0z" p-id="8182"></path></svg>`;
@@ -20,7 +21,7 @@ export class ChecksBlockPlugin extends Plugin {
         createButton(
             editor,
             'insertChecksBlock',
-            '插入选择题',
+            `插入${InteractionTypeName.choice}`,
             ChecksIcon,
             'insertLockedBlock',
             'choice',
@@ -41,7 +42,7 @@ export class FileBlockPlugin extends Plugin {
         createButton(
             editor,
             'insertFileBlock',
-            '插入附件上传题',
+            `插入${InteractionTypeName.file}`,
             FileIcon,
             'insertLockedBlock',
             'file',
@@ -62,7 +63,7 @@ export class FlowBlockPlugin extends Plugin {
         createButton(
             editor,
             'insertFlowBlock',
-            '插入流程排序题',
+            `插入${InteractionTypeName.flow}`,
             FlowIcon,
             'insertLockedBlock',
             'flow',
@@ -83,7 +84,7 @@ export class GapFillingBlockPlugin extends Plugin {
         createButton(
             editor,
             'insertGapFillingBlock',
-            '插入填空题',
+            `插入${InteractionTypeName.gap}`,
             GapFillingIcon,
             'insertLockedBlock',
             'gap',

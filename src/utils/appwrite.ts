@@ -12,5 +12,3 @@ export const databases = new Databases(client);
 export const functions = new Functions(client);
 export const locale = new Locale(client);
 export const storage = new Storage(client);
-
-export { ID } from 'appwrite';
