@@ -1,8 +1,8 @@
 import { FileLoader } from 'ckeditor5';
 import { storage } from '../../utils/appwrite.ts';
-import { BuckerName } from '../../../types/enums.ts';
 import { ID } from 'appwrite';
 import { message } from 'antd';
+import { BucketName } from '../../../types/enums.ts';
 
 export class UploadAdapter {
     loader: FileLoader; // 明确类型声明
@@ -16,7 +16,7 @@ export class UploadAdapter {
             if (file) {
                 try {
                     const fileInfo = await storage.createFile(
-                        BuckerName.chapter,
+                        BucketName.chapter,
                         ID.unique(),
                         file,
                     );

@@ -75,11 +75,11 @@ export interface Learning extends Models.Document {
 
 // Interaction 集合
 export interface Interaction extends Models.Document {
-    title: string;
+    title?: string;
     options?: string[]; // 数组类型
     answer?: number;
     content?: string;
-    attachment?: string; // URL格式
+    attachment?: string[]; // URL格式
     type: InteractionType;
     chapter?: string[]; // 关系字段
     explain?: string;

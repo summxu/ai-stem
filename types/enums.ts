@@ -16,7 +16,7 @@ export enum FunctionName {
     login = '67f346ff0010a45f8fe7'
 }
 
-export enum BuckerName {
+export enum BucketName {
     interaction = '67f6785200221401b252',
     chapter = '67f677ff000c76bb7833',
     course = '67f677ac001d18127125',

@@ -444,7 +444,7 @@
                     "relationType": "manyToOne",
                     "twoWay": true,
                     "twoWayKey": "chapter",
-                    "onDelete": "cascade",
+                    "onDelete": "setNull",
                     "side": "child"
                 },
                 {
@@ -456,7 +456,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "chapter",
-                    "onDelete": "restrict",
+                    "onDelete": "setNull",
                     "side": "parent"
                 }
             ],
@@ -558,7 +558,7 @@
             "databaseId": "67ef70bd0025644c3858",
             "name": "learning",
             "enabled": true,
-            "documentSecurity": false,
+            "documentSecurity": true,
             "attributes": [
                 {
                     "key": "completed",
@@ -584,7 +584,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "learning",
-                    "onDelete": "restrict",
+                    "onDelete": "setNull",
                     "side": "child"
                 },
                 {
@@ -596,7 +596,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "learning",
-                    "onDelete": "restrict",
+                    "onDelete": "setNull",
                     "side": "child"
                 }
             ],
@@ -604,7 +604,14 @@
         },
         {
             "$id": "67f65f0300181798df20",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")",
+                "read(\"label:teachers\")",
+                "read(\"label:students\")"
+            ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "interaction",
             "enabled": true,
@@ -613,7 +620,7 @@
                 {
                     "key": "title",
                     "type": "string",
-                    "required": true,
+                    "required": false,
                     "array": false,
                     "size": 255,
                     "default": null
@@ -632,14 +639,6 @@
                     "required": false,
                     "array": false,
                     "size": 5000,
-                    "default": null
-                },
-                {
-                    "key": "attachment",
-                    "type": "string",
-                    "required": false,
-                    "array": false,
-                    "format": "url",
                     "default": null
                 },
                 {
@@ -665,7 +664,7 @@
                     "relationType": "manyToOne",
                     "twoWay": true,
                     "twoWayKey": "interaction",
-                    "onDelete": "cascade",
+                    "onDelete": "setNull",
                     "side": "parent"
                 },
                 {
@@ -685,7 +684,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "interaction",
-                    "onDelete": "restrict",
+                    "onDelete": "setNull",
                     "side": "parent"
                 },
                 {
@@ -695,6 +694,14 @@
                     "array": false,
                     "min": 0,
                     "max": 255,
+                    "default": null
+                },
+                {
+                    "key": "attachment",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "format": "url",
                     "default": null
                 }
             ],
@@ -827,7 +834,18 @@
         },
         {
             "$id": "67f679530004496f2c31",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")",
+                "create(\"label:teacher\")",
+                "read(\"label:teacher\")",
+                "update(\"label:teacher\")",
+                "create(\"label:students\")",
+                "read(\"label:students\")",
+                "update(\"label:students\")"
+            ],
             "fileSecurity": true,
             "name": "learning",
             "enabled": true,
