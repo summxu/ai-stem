@@ -700,7 +700,7 @@
                     "key": "attachment",
                     "type": "string",
                     "required": false,
-                    "array": true,
+                    "array": false,
                     "format": "url",
                     "default": null
                 }

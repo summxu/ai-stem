@@ -160,7 +160,13 @@ function InteractionModal(props: InteractionModalProps) {
                 </Fragment>}
 
                 {props.type === 'gap' &&
-                  <Form.Item name="content" label="内容" tooltip="{{}}代表一个填空，{{内容}}代表答案内容并且会答案判定">
+                  <Form.Item rules={[
+                      {
+                          required: true,
+                          whitespace: true,
+                          message: '请输入内容',
+                      },
+                  ]} name="content" label="内容" tooltip="{{}}代表一个填空，{{内容}}代表答案内容并且会答案判定">
                     <Input.TextArea rows={4} placeholder="请输入填空内容" />
                   </Form.Item>}
 

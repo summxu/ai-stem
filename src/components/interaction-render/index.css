@@ -1,6 +1,6 @@
 .interaction-render-box .gap-input {
     min-width: 80px;
-    width: auto;
+    width: 100px;
     display: inline-block;
     margin: 0 4px;
     border: none;

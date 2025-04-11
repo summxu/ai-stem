@@ -79,7 +79,7 @@ export interface Interaction extends Models.Document {
     options?: string[]; // 数组类型
     answer?: number;
     content?: string;
-    attachment?: string[]; // URL格式
+    attachment?: string; // URL格式
     type: InteractionType;
     chapter?: string[]; // 关系字段
     explain?: string;
