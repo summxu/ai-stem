@@ -107,9 +107,9 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer }) => {
 
     return (
         <div className="interaction-render">
-            <div className="interaction-title">
+            {data?.title && <div className="interaction-title">
                 <p>{data?.title}</p>
-            </div>
+            </div>}
 
             <div className="interaction-content" style={{ margin: '16px 0' }}>
                 {renderInteractionByType()}
