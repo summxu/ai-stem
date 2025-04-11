@@ -258,8 +258,13 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
         };
     };
 
-    const handleModalOk = (interactionData: Interaction) => {
-        editorRef.current?.execute(eventParams.command, eventParams.blockType, interactionData.$id, interactionData.title);
+    const handleModalOk = (interactionData: Interaction, type: 'insert' | 'update') => {
+        if (type === 'insert') {
+            editorRef.current?.execute(eventParams.command, eventParams.blockType, interactionData.$id, interactionData.title);
+        } else {
+            editorRef.current?.execute('uploadLockedBlock', interactionData);
+        }
+
         setIsModalOpen(false);
     };
 

@@ -4,11 +4,12 @@ import type { Interaction, InteractionType } from '../../../types/db';
 import { databases } from '../../utils/appwrite.ts';
 import { CollectionName, DatabaseName, InteractionTypeName } from '../../../types/enums.ts';
 import { ID } from 'appwrite';
+import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 
 interface InteractionModalProps extends ModalProps {
     type: InteractionType;
     id?: string;
-    onSuccess: (interactionData: Interaction) => void;
+    onSuccess: (interactionData: Interaction, type: 'update' | 'insert') => void;
 }
 
 function InteractionModal(props: InteractionModalProps) {
@@ -38,11 +39,11 @@ function InteractionModal(props: InteractionModalProps) {
             let interactionData;
             if (props.id) {
                 interactionData = await databases.updateDocument<Interaction>(DatabaseName.ai_stem, CollectionName.interaction, props.id, formData);
+                props.onSuccess(interactionData, 'update');
             } else {
                 interactionData = await databases.createDocument<Interaction>(DatabaseName.ai_stem, CollectionName.interaction, ID.unique(), formData);
+                props.onSuccess(interactionData, 'insert');
             }
-            props.onSuccess(interactionData);
-            form.submit();
         } catch (e) {
             message.error((e as Error).message);
         }
@@ -59,7 +60,7 @@ function InteractionModal(props: InteractionModalProps) {
         };
         form.resetFields();
         setOptionsCount(0);
-        if (props.id) {
+        if (props.open && props.id) {
             getData();
         }
     }, [props.open]);
@@ -78,67 +79,100 @@ function InteractionModal(props: InteractionModalProps) {
                 <Form.Item name="title" label="标题" rules={[{ required: true, message: '请输入标题' }]}>
                     <Input placeholder="请输入题目标题" />
                 </Form.Item>
-                <p>选项</p>
-                <Form.List name="options" rules={[
-                    {
-                        validator: async (_, options) => {
-                            if (!options || options.length < 2) {
-                                return Promise.reject(new Error('至少需要2个选项'));
-                            }
-                            return Promise.resolve();
-                        },
-                    },
-                ]}>
-                    {(fields, { add, remove }, { errors }) => (
-                        <Fragment>
-                            {fields.map((field, index) => (
-                                <Form.Item required={false} key={field.key}>
-                                    <Flex>
-                                        <Form.Item
-                                            {...field}
-                                            key={index}
-                                            validateTrigger={['onChange', 'onBlur']}
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    whitespace: true,
-                                                    message: '请输入选项内容或删除此选项',
-                                                },
-                                            ]}
-                                            noStyle>
-                                            <Input placeholder="请输入选项内容" onChange={handleOptionsChange} />
-                                        </Form.Item>
-                                        <Button
-                                            type="text"
-                                            danger
-                                            onClick={() => {
-                                                remove(field.name);
-                                                handleOptionsChange();
-                                            }}
-                                            style={{ marginLeft: '8px' }}>
-                                            删除
-                                        </Button>
-                                    </Flex>
-                                </Form.Item>
-                            ))}
-                            <Form.Item>
-                                <Button type="dashed" onClick={() => add()} style={{ width: '100%' }}>
-                                    添加选项
-                                </Button>
-                                <Form.ErrorList errors={errors} />
-                            </Form.Item>
-                        </Fragment>
-                    )}
-                </Form.List>
+                {props.type === 'choice' || props.type === 'flow' && <Fragment>
 
-                <Form.Item name="answer" label="正确答案" tooltip="正确答案的序号，从1开始">
-                    <InputNumber min={1} max={optionsCount || 1} placeholder="请输入正确答案的序号"
-                                 style={{ width: '100%' }} />
-                </Form.Item>
+                  <p>选项{props.type === 'flow' && '（正确答案的顺序，前端会自动打乱）'}</p>
+                  <Form.List name="options" rules={[
+                      {
+                          validator: async (_, options) => {
+                              if (!options || options.length < 2) {
+                                  return Promise.reject(new Error('至少需要2个选项'));
+                              }
+                              return Promise.resolve();
+                          },
+                      },
+                  ]}>
+                      {(fields, { add, remove }, { errors }) => (
+                          <Fragment>
+                              {fields.map((field, index) => (
+                                  <Form.Item required={false} key={field.key}>
+                                      <Flex>
+                                          <Form.Item
+                                              {...field}
+                                              key={index}
+                                              validateTrigger={['onChange', 'onBlur']}
+                                              rules={[
+                                                  {
+                                                      required: true,
+                                                      whitespace: true,
+                                                      message: '请输入选项内容或删除此选项',
+                                                  },
+                                              ]}
+                                              noStyle>
+                                              <Input placeholder="请输入选项内容" onChange={handleOptionsChange} />
+                                          </Form.Item>
+                                          <Button
+                                              icon={<ArrowUpOutlined />}
+                                              onClick={() => {
+                                                  if (index > 0) {
+                                                      // 交换当前选项与上一个选项
+                                                      const options = form.getFieldValue('options');
+                                                      [options[index], options[index - 1]] = [options[index - 1], options[index]];
+                                                      form.setFieldsValue({ options });
+                                                      handleOptionsChange();
+                                                  }
+                                              }}
+                                              disabled={index === 0}>
+                                          </Button>
+                                          <Button
+                                              icon={<ArrowDownOutlined />}
+                                              onClick={() => {
+                                                  const options = form.getFieldValue('options');
+                                                  if (index < options.length - 1) {
+                                                      // 交换当前选项与下一个选项
+                                                      [options[index], options[index + 1]] = [options[index + 1], options[index]];
+                                                      form.setFieldsValue({ options });
+                                                      handleOptionsChange();
+                                                  }
+                                              }}
+                                              disabled={index === fields.length - 1}>
+                                          </Button>
+                                          <Button
+                                              type="text"
+                                              danger
+                                              onClick={() => {
+                                                  remove(field.name);
+                                                  handleOptionsChange();
+                                              }}>
+                                              删除
+                                          </Button>
+                                      </Flex>
+                                  </Form.Item>
+                              ))}
+                              <Form.Item>
+                                  <Button type="dashed" onClick={() => add()} style={{ width: '100%' }}>
+                                      添加选项
+                                  </Button>
+                                  <Form.ErrorList errors={errors} />
+                              </Form.Item>
+                          </Fragment>
+                      )}
+                  </Form.List>
+                </Fragment>}
 
-                <Form.Item name="explain" label="解析">
+                {props.type === 'gap' && <Form.Item name="content" label="内容" tooltip="{{}}代表一个填空，{{内容}}代表答案内容并且会答案判定">
+                  <Input.TextArea rows={4} placeholder="请输入填空内容" />
+                </Form.Item>}
+
+                {props.type === 'choice' && <Form.Item name="answer" label="正确答案" tooltip="正确答案的序号，从1开始">
+                  <InputNumber min={1} max={optionsCount || 1} placeholder="请输入正确答案的序号"
+                               style={{ width: '100%' }} />
+                </Form.Item>}
+
+                {props.type === 'choice' || props.type === 'flow' || props.type === 'gap' &&
+                  <Form.Item name="explain" label="解析">
                     <Input.TextArea rows={4} placeholder="请输入题目解析" />
-                </Form.Item>
+                  </Form.Item>}
             </Form>
         </Modal>
     );

@@ -2,6 +2,7 @@ import { Plugin } from 'ckeditor5';
 import { InsertLockedBlockCommand } from '../commands/insert-locked-block-command';
 import { DeleteLockedBlockCommand } from '../commands/delete-locked-block-command';
 import { EditLockedBlockCommand } from '../commands/edit-locked-block-command';
+import { UpdateLockedBlockCommand } from '../commands/update-locked-block-command.ts';
 
 // 锁定块基础插件
 export class LockedBlockBasePlugin extends Plugin {
@@ -23,6 +24,7 @@ export class LockedBlockBasePlugin extends Plugin {
         editor.commands.add('insertLockedBlock', new InsertLockedBlockCommand(editor));
         editor.commands.add('deleteLockedBlock', new DeleteLockedBlockCommand(editor));
         editor.commands.add('editLockedBlock', new EditLockedBlockCommand(editor));
+        editor.commands.add('uploadLockedBlock', new UpdateLockedBlockCommand(editor));
 
         // 为指定模型元素添加属性转换
         this._setupAttributeConversion(editor);
