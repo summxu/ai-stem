@@ -1,31 +1,48 @@
 import './index.scss'
+import { Space } from 'antd';
+
 function Header() {
     return (
         <div className='istem-header-box'>
-            <div className="section_9 flex-col justify-center">
-                <div className="box_14 flex-row">
+            <div className="header-container flex-row justify-between align-center">
+                {/* 左侧Logo区域 */}
+                <div className="logo-container flex-row align-center">
                     <img
-                        className="label_9"
+                        className="logo-image"
                         src={
                             "https://lanhu-oss-2537-2.lanhuapp.com/SketchPng43fc4ea8997a0ebda5cead9dd0d4f835650b0ccb83407f320b6ef9a4d05e44dd"
                         }
+                        alt="AI-STEM Logo"
                     />
-                    <span className="text_19">首页</span>
-                    <span className="text_20">功能介绍</span>
-                    <span className="text_21">课程</span>
-                    <span className="text_22">学习记录</span>
-                    <span className="text_23">账号管理</span>
-                    <span className="text_24">关于我们</span>
-                    <span className="text_25">登录/注册</span>
-                    <img
-                        className="thumbnail_4"
-                        src={
-                            "https://lanhu-oss-2537-2.lanhuapp.com/SketchPngdc90e1abd80337692577fa18f0203de9dc8e27f273c997596e7a5ab00175de62"
-                        }
-                    />
-                    <div className="text-wrapper_3">
-                        <span className="text_26">English</span>
-                        <span className="text_27">&nbsp;&nbsp;|&nbsp;&nbsp;中文</span>
+                    <span className="logo-text">AI-STEM</span>
+                </div>
+                
+                {/* 右侧导航菜单 */}
+                <div className="nav-container flex-row align-center">
+                    <Space size="large" className="nav-items">
+                        <span className="nav-item active">首页</span>
+                        <span className="nav-item">功能介绍</span>
+                        <span className="nav-item">课程</span>
+                        <span className="nav-item">学习记录</span>
+                        <span className="nav-item">账号管理</span>
+                        <span className="nav-item">关于我们</span>
+                        <span className="nav-item highlight">登录/注册</span>
+                    </Space>
+                    
+                    {/* 语言切换 */}
+                    <div className="language-selector flex-row align-center">
+                        <img
+                            className="language-icon"
+                            src={
+                                "https://lanhu-oss-2537-2.lanhuapp.com/SketchPngdc90e1abd80337692577fa18f0203de9dc8e27f273c997596e7a5ab00175de62"
+                            }
+                            alt="Language"
+                        />
+                        <div className="language-options">
+                            <span className="language-option">English</span>
+                            <span className="language-separator">&nbsp;|&nbsp;</span>
+                            <span className="language-option active">中文</span>
+                        </div>
                     </div>
                 </div>
             </div>
