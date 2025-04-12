@@ -1,165 +1,166 @@
 .istem-footer-box {
-  width: 100%;
-
-  .footer-container {
     width: 100%;
-    height: 318px;
-    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPng351ba8420c15ac8a43987169dba421f3c0bb642353c44147a33d6e25fd2aee19) 100% no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 133px 0 159px;
-  }
+    background-color: transparent;
 
-  .footer-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 994px;
-    height: 186px;
-  }
-
-  .logo-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 990px;
-    height: 75px;
-    margin-top: -16px;
-  }
-
-  .logo-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 239px;
-  }
-
-  .logo-icon {
-    height: 32px;
-    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPngb3a754f80d9b3e11493ba40576d739220e474d1460661b1c3b374bfdf84154d2) 0px 0px no-repeat;
-    background-size: 32px 33px;
-    margin-top: 4px;
-    width: 31px;
-    position: relative;
-  }
-
-  .logo-icon-top {
-    width: 10px;
-    height: 6px;
-    margin: 7px 0 0 10px;
-  }
-
-  .logo-icon-bottom {
-    position: absolute;
-    left: -4px;
-    top: 16px;
-    width: 40px;
-    height: 8px;
-  }
-
-  .logo-text {
-    width: 192px;
-    overflow-wrap: break-word;
-    color: rgba(255, 255, 255, 1);
-    font-size: 40px;
-    letter-spacing: 4.44444465637207px;
-    font-family: SourceHanSansCN-Bold;
-    font-weight: 700;
-    text-align: justify;
-    white-space: nowrap;
-    line-height: 60px;
-  }
-
-  .green-circle {
-    background-color: rgba(85, 168, 2, 1);
-    border-radius: 54px;
-    width: 40px;
-    height: 40px;
-    margin-bottom: -64px;
-    z-index: 1;
-  }
-
-  .disclaimer-wrapper {
-    height: 129px;
-    background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPng6b6bd6906dd9ee2f114a6a0e53909a71ebff51579d64be3e275df51c51d2d401) 0px 0px no-repeat;
-    background-size: 974px 130px;
-    margin-top: -18px;
-    width: 974px;
-    padding-top: 24px;
-  }
-
-  .disclaimer-text {
-    width: 522px;
-    height: 24px;
-    overflow-wrap: break-word;
-    color: rgba(255, 255, 255, 1);
-    font-size: 16px;
-    letter-spacing: 2px;
-    font-family: SourceHanSansCN-Medium;
-    font-weight: 500;
-    text-align: justify;
-    white-space: nowrap;
-    line-height: 24px;
-    margin-left: 31px;
-  }
-
-  .footer-middle {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .middle-logo-left {
-    width: 148px;
-    margin-bottom: 22px;
-  }
-
-  .middle-logo-right {
-    width: 142px;
-    height: 44px;
-  }
-
-  .footer-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 93px;
-    align-items: flex-end;
-  }
-
-  .right-logo {
-    width: 180px;
-    height: 45px;
-  }
-
-  .social-icons {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    width: 120px;
-    height: 24px;
-    margin-left: 60px;
-    margin-top: -14px;
-  }
-
-  .social-icon {
-    width: 24px;
-    height: 24px;
-    margin-left: 8px;
-
-    &:first-child {
-      margin-left: 0;
+    .footer-container {
+        width: 100%;
+        height: 318px;
+        background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPng351ba8420c15ac8a43987169dba421f3c0bb642353c44147a33d6e25fd2aee19) 100% no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 133px 0 159px;
     }
 
-    &:hover {
-      transform: scale(1.1);
-      transition: transform 0.3s ease;
+    .footer-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 994px;
+        height: 186px;
     }
-  }
+
+    .logo-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 990px;
+        height: 75px;
+        margin-top: -16px;
+    }
+
+    .logo-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 239px;
+    }
+
+    .logo-icon {
+        height: 32px;
+        background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPngb3a754f80d9b3e11493ba40576d739220e474d1460661b1c3b374bfdf84154d2) 0px 0px no-repeat;
+        background-size: 32px 33px;
+        margin-top: 4px;
+        width: 31px;
+        position: relative;
+    }
+
+    .logo-icon-top {
+        width: 10px;
+        height: 6px;
+        margin: 7px 0 0 10px;
+    }
+
+    .logo-icon-bottom {
+        position: absolute;
+        left: -4px;
+        top: 16px;
+        width: 40px;
+        height: 8px;
+    }
+
+    .logo-text {
+        width: 192px;
+        overflow-wrap: break-word;
+        color: rgba(255, 255, 255, 1);
+        font-size: 40px;
+        letter-spacing: 4.44444465637207px;
+        font-family: SourceHanSansCN-Bold;
+        font-weight: 700;
+        text-align: justify;
+        white-space: nowrap;
+        line-height: 60px;
+    }
+
+    .green-circle {
+        background-color: rgba(85, 168, 2, 1);
+        border-radius: 54px;
+        width: 40px;
+        height: 40px;
+        margin-bottom: -64px;
+        z-index: 1;
+    }
+
+    .disclaimer-wrapper {
+        height: 129px;
+        background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPng6b6bd6906dd9ee2f114a6a0e53909a71ebff51579d64be3e275df51c51d2d401) 0px 0px no-repeat;
+        background-size: 974px 130px;
+        margin-top: -18px;
+        width: 974px;
+        padding-top: 24px;
+    }
+
+    .disclaimer-text {
+        width: 522px;
+        height: 24px;
+        overflow-wrap: break-word;
+        color: rgba(255, 255, 255, 1);
+        font-size: 16px;
+        letter-spacing: 2px;
+        font-family: SourceHanSansCN-Medium;
+        font-weight: 500;
+        text-align: justify;
+        white-space: nowrap;
+        line-height: 24px;
+        margin-left: 31px;
+    }
+
+    .footer-middle {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .middle-logo-left {
+        width: 148px;
+        margin-bottom: 22px;
+    }
+
+    .middle-logo-right {
+        width: 142px;
+        height: 44px;
+    }
+
+    .footer-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 93px;
+        align-items: flex-end;
+    }
+
+    .right-logo {
+        width: 180px;
+        height: 45px;
+    }
+
+    .social-icons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        width: 120px;
+        height: 24px;
+        margin-left: 60px;
+        margin-top: -14px;
+    }
+
+    .social-icon {
+        width: 24px;
+        height: 24px;
+        margin-left: 8px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+    }
 }
