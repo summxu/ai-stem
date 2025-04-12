@@ -1,9 +1,10 @@
 import {Outlet} from "react-router";
+import Header from './components/header';
 
 function App() {
     return (
         <div className="istem-container">
-            <p>hello</p>
+            <Header />
             <Outlet/>
         </div>
     )

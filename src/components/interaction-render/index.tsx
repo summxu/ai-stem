@@ -1,6 +1,6 @@
 import React from 'react';
 import InteractionBase from './InteractionBase';
-import './index.css';
+import './index.scss';
 
 interface InteractionRenderProps {
     id: string;

@@ -40,7 +40,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import translations from 'ckeditor5/translations/zh.js';
-import './index.css';
+import './index.scss';
 import { UploadAdapter } from './upload-adapter.ts';
 import {
     LockedBlockBasePlugin,

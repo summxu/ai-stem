@@ -1,6 +1,6 @@
 import {createRoot} from 'react-dom/client'
 import 'ckeditor5/ckeditor5.css';
-import './index.css'
+import './index.scss'
 import App from './app.tsx'
 import {BrowserRouter, Route, Routes} from "react-router";
 import Home from "./pages/home";
