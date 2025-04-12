@@ -1,33 +1,45 @@
 .istem-footer-box {
+  width: 100%;
 
-  .section_15 {
-    position: absolute;
-    left: 0;
-    top: 2004px;
-    width: 1920px;
+  .footer-container {
+    width: 100%;
     height: 318px;
     background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPng351ba8420c15ac8a43987169dba421f3c0bb642353c44147a33d6e25fd2aee19) 100% no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 133px 0 159px;
   }
 
-  .block_11 {
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 994px;
     height: 186px;
-    margin: 74px 0 0 159px;
   }
 
-  .group_13 {
+  .logo-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 990px;
     height: 75px;
-    margin-left: 4px;
+    margin-top: -16px;
   }
 
-  .image-text_11 {
+  .logo-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 239px;
-    height: 40px;
   }
 
-  .image-wrapper_3 {
+  .logo-icon {
     height: 32px;
     background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPngb3a754f80d9b3e11493ba40576d739220e474d1460661b1c3b374bfdf84154d2) 0px 0px no-repeat;
     background-size: 32px 33px;
@@ -36,13 +48,13 @@
     position: relative;
   }
 
-  .thumbnail_5 {
+  .logo-icon-top {
     width: 10px;
     height: 6px;
     margin: 7px 0 0 10px;
   }
 
-  .image_10 {
+  .logo-icon-bottom {
     position: absolute;
     left: -4px;
     top: 16px;
@@ -50,9 +62,8 @@
     height: 8px;
   }
 
-  .text-group_8 {
+  .logo-text {
     width: 192px;
-    height: 40px;
     overflow-wrap: break-word;
     color: rgba(255, 255, 255, 1);
     font-size: 40px;
@@ -64,23 +75,25 @@
     line-height: 60px;
   }
 
-  .section_16 {
+  .green-circle {
     background-color: rgba(85, 168, 2, 1);
     border-radius: 54px;
     width: 40px;
     height: 40px;
-    margin-top: 35px;
+    margin-bottom: -64px;
+    z-index: 1;
   }
 
-  .text-wrapper_4 {
+  .disclaimer-wrapper {
     height: 129px;
     background: url(https://lanhu-oss-2537-2.lanhuapp.com/SketchPng6b6bd6906dd9ee2f114a6a0e53909a71ebff51579d64be3e275df51c51d2d401) 0px 0px no-repeat;
     background-size: 974px 130px;
     margin-top: -18px;
     width: 974px;
+    padding-top: 24px;
   }
 
-  .text_28 {
+  .disclaimer-text {
     width: 522px;
     height: 24px;
     overflow-wrap: break-word;
@@ -92,58 +105,61 @@
     text-align: justify;
     white-space: nowrap;
     line-height: 24px;
-    margin: 18px 0 0 31px;
+    margin-left: 31px;
   }
 
-  .image_11 {
+  .footer-middle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .middle-logo-left {
     width: 148px;
-    height: 87px;
-    margin: 98px 0 0 90px;
+    margin-bottom: 22px;
   }
 
-  .image_12 {
+  .middle-logo-right {
     width: 142px;
     height: 44px;
-    margin: 139px 0 0 42px;
   }
 
-  .block_12 {
-    width: 180px;
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 93px;
-    margin: 133px 133px 0 32px;
+    align-items: flex-end;
   }
 
-  .image_13 {
+  .right-logo {
     width: 180px;
     height: 45px;
   }
 
-  .image-wrapper_4 {
+  .social-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
     width: 120px;
     height: 24px;
-    margin: 24px 0 0 60px;
+    margin-left: 60px;
+    margin-top: -14px;
   }
 
-  .label_11 {
-    width: 24px;
-    height: 24px;
-  }
-
-  .label_12 {
-    width: 22px;
-    height: 22px;
-    margin: 1px 0 0 8px;
-  }
-
-  .label_13 {
+  .social-icon {
     width: 24px;
     height: 24px;
     margin-left: 8px;
-  }
 
-  .label_14 {
-    width: 24px;
-    height: 21px;
-    margin-left: 10px;
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+    }
   }
 }
