@@ -35,18 +35,18 @@ function Footer() {
                 <div className="footer-right">
                     <div className="footer-middle">
                         <img
-                            className="middle-logo-left"
-                            src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPngbaa1fc61e6b8ef3443862360739e62c7e27cddabe3a0c67af6c37910d8ab5739'
-                            }
-                            alt="Middle logo left"
-                        />
-                        <img
                             className="middle-logo-right"
                             src={
                                 'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng80889ad0117f3c8d49390d3d0b790100a779ecc32065b4dd013d0352cac235c4'
                             }
                             alt="Middle logo right"
+                        />
+                        <img
+                            className="middle-logo-left"
+                            src={
+                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPngbaa1fc61e6b8ef3443862360739e62c7e27cddabe3a0c67af6c37910d8ab5739'
+                            }
+                            alt="Middle logo left"
                         />
                         <img
                             className="right-logo"

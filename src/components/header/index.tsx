@@ -1,5 +1,6 @@
 import './index.scss'
 import { Space } from 'antd';
+import { NavLink } from 'react-router';
 
 function Header() {
     return (
@@ -16,19 +17,23 @@ function Header() {
                     />
                     <span className="logo-text">AI-STEM</span>
                 </div>
-                
+
                 {/* 右侧导航菜单 */}
                 <div className="nav-container flex-row align-center">
                     <Space size="large" className="nav-items">
-                        <span className="nav-item active">首页</span>
+                        <NavLink className={({ isActive }) =>
+                            isActive ? "nav-item active" : "nav-item"
+                        } to="/">首页</NavLink>
                         <span className="nav-item">功能介绍</span>
-                        <span className="nav-item">课程</span>
+                        <NavLink className={({ isActive }) =>
+                            isActive ? "nav-item active" : "nav-item"
+                        } to="/course-preview">课程</NavLink>
                         <span className="nav-item">学习记录</span>
                         <span className="nav-item">账号管理</span>
                         <span className="nav-item">关于我们</span>
                         <span className="nav-item highlight">登录/注册</span>
                     </Space>
-                    
+
                     {/* 语言切换 */}
                     <div className="language-selector flex-row align-center">
                         <img
