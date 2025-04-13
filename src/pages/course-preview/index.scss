@@ -1,494 +1,267 @@
 .istem-course-preview-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
 
+    /* 顶部区域样式 */
+    .course-header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-    .group_3 {
-        background-color: rgba(87, 80, 158, 1);
-        width: 1920px;
-        height: 60px;
-
-        .thumbnail_1 {
-            width: 9px;
-            height: 18px;
-            margin: 21px 0 0 226px;
-        }
-
-        .text_1 {
-            width: 96px;
-            height: 24px;
-            overflow-wrap: break-word;
-            color: rgba(255, 255, 255, 1);
-            font-size: 24px;
-            font-family: PingFangSC-Semibold;
-            font-weight: 600;
-            text-align: left;
-            white-space: nowrap;
-            line-height: 24px;
-            margin: 18px 0 0 15px;
-        }
-
-        .thumbnail_2 {
-            width: 15px;
-            height: 16px;
-            margin: 22px 0 0 1055px;
-        }
-
-        .text_2 {
-            width: 48px;
-            height: 16px;
-            overflow-wrap: break-word;
-            color: rgba(255, 255, 255, 1);
-            font-size: 16px;
-            font-family: SourceHanSansCN-Medium;
-            font-weight: 500;
-            text-align: left;
-            white-space: nowrap;
-            line-height: 24px;
-            margin: 22px 0 0 4px;
-        }
-
-        .thumbnail_3 {
-            width: 12px;
-            height: 6px;
-            margin: 28px 0 0 4px;
-        }
-
-        .thumbnail_4 {
-            width: 16px;
-            height: 16px;
-            margin: 22px 0 0 88px;
-        }
-
-        .text-wrapper_1 {
-            width: 107px;
-            height: 16px;
-            overflow-wrap: break-word;
-            font-size: 0;
-            font-family: SourceHanSansCN-Medium;
-            font-weight: 500;
-            text-align: left;
-            white-space: nowrap;
-            line-height: 24px;
-            margin: 22px 220px 0 5px;
-
-            .text_3 {
-                width: 107px;
-                height: 16px;
-                overflow-wrap: break-word;
-                color: rgba(151, 148, 185, 1);
-                font-size: 16px;
-                font-family: SourceHanSansCN-Medium;
-                font-weight: 500;
-                text-align: left;
-                white-space: nowrap;
-                line-height: 24px;
-            }
-
-            .text_4 {
-                width: 107px;
-                height: 16px;
-                overflow-wrap: break-word;
-                color: rgba(255, 255, 255, 1);
-                font-size: 16px;
-                font-family: SourceHanSansCN-Medium;
-                font-weight: 500;
-                text-align: left;
-                white-space: nowrap;
-                line-height: 24px;
-            }
-        }
-    }
-
-    .group_4 {
-        background-image: url(https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/e8b97e0a6c074bfcac7d081fa842ba54_mergeImage.png);
-        height: 700px;
-        margin-bottom: 239px;
-        width: 1920px;
-
-        .group_5 {
-            background-color: rgba(12, 31, 67, 0.54);
+        .banner-container {
+            background-image: url(https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/e8b97e0a6c074bfcac7d081fa842ba54_mergeImage.png);
+            background-size: cover;
+            background-position: center;
+            width: 100%;
             height: 700px;
-            width: 1920px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
-            .group_6 {
-                width: 252px;
-                height: 48px;
-                margin: 61px 0 0 1241px;
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(12, 31, 67, 0.54);
+                z-index: 1;
+            }
 
-                .box_1 {
-                    background-color: rgba(247, 192, 10, 0);
+            /* 操作按钮区域 */
+            .action-buttons {
+                width: 100%;
+                max-width: 1200px;
+                padding: 0 20px;
+                margin-top: 60px;
+                z-index: 2;
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+
+                .edit-button, .add-button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     border-radius: 8px;
-                    width: 102px;
-                    height: 47px;
-                    border: 2px solid rgba(247, 192, 10, 1);
-                    margin-top: 1px;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
 
-                    .text_5 {
-                        width: 38px;
-                        height: 24px;
-                        overflow-wrap: break-word;
-                        color: rgba(255, 255, 255, 1);
+                    span {
+                        color: #FFFFFF;
                         font-size: 18px;
                         letter-spacing: 0.5625px;
                         font-family: PingFangSC-Semibold;
                         font-weight: 600;
-                        text-align: left;
-                        white-space: nowrap;
-                        line-height: 24px;
-                        margin: 11px 0 0 21px;
+                        margin-right: 8px;
                     }
 
-                    .thumbnail_5 {
+                    img {
                         width: 16px;
                         height: 16px;
-                        margin: 15px 19px 0 8px;
                     }
                 }
 
-                .box_2 {
-                    background-color: rgba(255, 95, 47, 1);
-                    border-radius: 8px;
-                    width: 140px;
-                    height: 48px;
+                .edit-button {
+                    border: 2px solid rgba(247, 192, 10, 1);
+                    background-color: transparent;
 
-                    .text_6 {
-                        text-shadow: 0px 2px 24px rgba(0, 0, 0, 0.1);
-                        width: 75px;
-                        height: 24px;
-                        overflow-wrap: break-word;
-                        color: rgba(255, 255, 255, 1);
-                        font-size: 18px;
-                        letter-spacing: 0.5625px;
-                        font-family: PingFangSC-Semibold;
-                        font-weight: 600;
-                        text-align: left;
-                        white-space: nowrap;
-                        line-height: 24px;
-                        margin: 11px 0 0 20px;
+                    &:hover {
+                        background-color: rgba(247, 192, 10, 0.1);
                     }
+                }
 
-                    .thumbnail_6 {
-                        width: 20px;
-                        height: 20px;
-                        margin: 12px 17px 0 8px;
+                .add-button {
+                    background-color: rgba(255, 95, 47, 1);
+
+                    &:hover {
+                        background-color: rgba(255, 95, 47, 0.9);
                     }
                 }
             }
 
-            .group_7 {
-                width: 428px;
-                height: 64px;
-                margin: 95px 0 0 742px;
+            /* 标题区域 */
+            .title-container {
+                margin-top: 95px;
+                z-index: 2;
+                width: 100%;
 
-                .text-wrapper_2 {
-                    width: 428px;
-                    height: 64px;
-                    overflow-wrap: break-word;
-                    font-size: 0;
+                .title-wrapper {
+                    display: flex;
                     letter-spacing: 4px;
-                    font-family: Arial-BoldMT;
-                    font-weight: normal;
-                    text-align: left;
-                    white-space: nowrap;
                     line-height: 64px;
+                    white-space: nowrap;
 
-                    .text_7 {
-                        width: 428px;
-                        height: 64px;
-                        overflow-wrap: break-word;
+                    .title-ai {
                         color: rgba(247, 192, 10, 1);
                         font-size: 64px;
                         font-family: Arial-BoldMT;
-                        font-weight: normal;
-                        text-align: left;
-                        white-space: nowrap;
-                        line-height: 64px;
+                        font-weight: bold;
                     }
 
-                    .text_8 {
-                        width: 428px;
-                        height: 64px;
-                        overflow-wrap: break-word;
+                    .title-course {
                         color: rgba(247, 192, 10, 1);
                         font-size: 64px;
                         font-family: PingFangSC-Semibold;
                         font-weight: 600;
-                        text-align: left;
-                        white-space: nowrap;
-                        line-height: 64px;
                     }
                 }
             }
 
-            .group_8 {
-                width: 1070px;
-                height: 174px;
-                margin: 30px 0 228px 417px;
+            /* STEM图标区域 */
+            .stem-icons {
+                margin-top: 30px;
+                z-index: 2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
 
-                .image_1 {
+                .icon-left {
                     width: 156px;
                     height: 174px;
                 }
 
-                .image-wrapper_1 {
-                    width: 598px;
-                    height: 137px;
-                    margin: 33px 0 0 40px;
+                .icons-middle {
+                    display: flex;
+                    gap: 117px;
+                    align-items: center;
 
-                    .image_2-0 {
+                    img {
                         width: 120px;
                         height: 137px;
-                        margin-right: 117px;
-                    }
-
-                    .image_2-1 {
-                        width: 120px;
-                        height: 137px;
-                        margin-right: 117px;
-                    }
-
-                    .image_2-2 {
-                        width: 120px;
-                        height: 137px;
-                        margin-right: 117px;
                     }
                 }
 
-                .image_3 {
+                .icon-right {
                     width: 149px;
                     height: 133px;
-                    margin: 35px 0 0 127px;
                 }
             }
         }
     }
+                        font-weight: normal;
+                        text-align: left;
+                    }
+                
+    /* 学科卡片区域 */
+    .subject-cards {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: -140px;
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 20px;
+        margin-bottom: 75px;
+        cursor: pointer;
 
-    .group_9 {
-        background-color: rgba(255, 255, 255, 1);
-        position: absolute;
-        left: 433px;
-        top: 645px;
-        width: 250px;
-        height: 280px;
-
-        .image-text_1 {
+        /* 通用卡片样式 */
+        .subject-card {
             width: 250px;
-            height: 215px;
+            height: 280px;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
 
-            .image_4 {
-                width: 250px;
-                height: 90px;
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             }
 
-            .text-group_1 {
-                width: 200px;
-                height: 104px;
-                margin: 21px 0 0 25px;
+            .card-content {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
 
-                .text_9 {
-                    width: 40px;
-                    height: 20px;
-                    overflow-wrap: break-word;
-                    color: rgba(50, 62, 69, 1);
-                    font-size: 20px;
-                    font-family: SourceHanSansCN-Bold;
-                    font-weight: 700;
-                    text-align: justify;
-                    white-space: nowrap;
-                    line-height: 30px;
-                    margin-left: 80px;
+                .card-image {
+                    width: 100%;
+                    height: 90px;
+                    object-fit: cover;
                 }
 
-                .text_10 {
-                    width: 200px;
-                    height: 74px;
-                    overflow-wrap: break-word;
-                    color: rgba(21, 27, 38, 1);
-                    font-size: 14px;
-                    font-family: SourceHanSansCN-Regular;
-                    font-weight: normal;
-                    text-align: justify;
-                    line-height: 24px;
-                    margin-top: 10px;
-                }
-            }
-        }
-    }
+                .card-text {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 20px 25px;
+                    flex: 1;
 
-    .group_10 {
-        background-color: rgba(255, 255, 255, 1);
-        position: absolute;
-        left: 968px;
-        top: 645px;
-        width: 250px;
-        height: 280px;
+                    .card-title {
+                        color: rgba(50, 62, 69, 1);
+                        font-size: 20px;
+                        font-family: SourceHanSansCN-Bold;
+                        font-weight: 700;
+                        text-align: center;
+                        margin-bottom: 10px;
+                    }
 
-        .image-text_2 {
-            width: 250px;
-            height: 215px;
-
-            .image_5 {
-                width: 250px;
-                height: 90px;
-            }
-
-            .text-group_2 {
-                width: 200px;
-                height: 107px;
-                margin: 18px 0 0 25px;
-
-                .text_11 {
-                    width: 40px;
-                    height: 20px;
-                    overflow-wrap: break-word;
-                    color: rgba(50, 62, 69, 1);
-                    font-size: 20px;
-                    font-family: SourceHanSansCN-Bold;
-                    font-weight: 700;
-                    text-align: right;
-                    white-space: nowrap;
-                    line-height: 30px;
-                    margin-left: 81px;
-                }
-
-                .text_12 {
-                    width: 200px;
-                    height: 74px;
-                    overflow-wrap: break-word;
-                    color: rgba(21, 27, 38, 1);
-                    font-size: 14px;
-                    font-family: SourceHanSansCN-Regular;
-                    font-weight: normal;
-                    text-align: justify;
-                    line-height: 24px;
-                    margin-top: 13px;
+                    .card-description {
+                        color: rgba(21, 27, 38, 1);
+                        font-size: 14px;
+                        font-family: SourceHanSansCN-Regular;
+                        font-weight: normal;
+                        text-align: justify;
+                        line-height: 24px;
+                    }
                 }
             }
         }
-    }
 
-    .group_11 {
-        background-color: rgba(255, 255, 255, 1);
-        position: absolute;
-        left: 1243px;
-        top: 645px;
-        width: 250px;
-        height: 280px;
-
-        .image-text_3 {
-            width: 250px;
-            height: 215px;
-
-            .image_6 {
-                width: 250px;
-                height: 90px;
+        /* 科学卡片特殊样式 */
+        .science-card {
+            .card-image {
+                background-color: #4ACDD5;
             }
 
-            .text-group_3 {
-                width: 200px;
-                height: 107px;
-                margin: 18px 0 0 25px;
+            &:hover {
+                //border-top: 3px solid #4ACDD5;
+            }
+        }
 
-                .text_13 {
-                    width: 40px;
-                    height: 20px;
-                    overflow-wrap: break-word;
-                    color: rgba(50, 62, 69, 1);
-                    font-size: 20px;
-                    font-family: SourceHanSansCN-Bold;
-                    font-weight: 700;
-                    text-align: right;
-                    white-space: nowrap;
-                    line-height: 30px;
-                    margin-left: 80px;
-                }
+        /* 技术卡片特殊样式 */
+        .technology-card {
+            .card-image {
+                background-color: #FF9642;
+            }
 
-                .text_14 {
-                    width: 200px;
-                    height: 74px;
-                    overflow-wrap: break-word;
-                    color: rgba(21, 27, 38, 1);
-                    font-size: 14px;
-                    font-family: SourceHanSansCN-Regular;
-                    font-weight: normal;
-                    text-align: justify;
-                    line-height: 24px;
-                    margin-top: 13px;
-                }
+            &:hover {
+                //border-top: 3px solid #FF9642;
+            }
+        }
+
+        /* 工程卡片特殊样式 */
+        .engineering-card {
+            .card-image {
+                background-color: #FF5F2F;
+            }
+
+            &:hover {
+                //border-top: 3px solid #FF5F2F;
+            }
+        }
+
+        /* 数学卡片特殊样式 */
+        .math-card {
+            .card-image {
+                background-color: #57509E;
+            }
+
+            &:hover {
+                //border-top: 3px solid #57509E;
             }
         }
     }
-
-    .group_12 {
-        background-color: rgba(255, 255, 255, 1);
-        position: absolute;
-        left: 703px;
-        top: 645px;
-        width: 250px;
-        height: 280px;
-
-        .image-text_4 {
-            width: 250px;
-            height: 215px;
-
-            .image_7 {
-                width: 250px;
-                height: 90px;
-            }
-
-            .text-group_4 {
-                width: 200px;
-                height: 104px;
-                margin: 21px 0 0 25px;
-
-                .text_15 {
-                    width: 40px;
-                    height: 20px;
-                    overflow-wrap: break-word;
-                    color: rgba(50, 62, 69, 1);
-                    font-size: 20px;
-                    font-family: SourceHanSansCN-Bold;
-                    font-weight: 700;
-                    text-align: right;
-                    white-space: nowrap;
-                    line-height: 30px;
-                    margin-left: 82px;
-                }
-
-                .text_16 {
-                    width: 200px;
-                    height: 74px;
-                    overflow-wrap: break-word;
-                    color: rgba(21, 27, 38, 1);
-                    font-size: 14px;
-                    font-family: SourceHanSansCN-Regular;
-                    font-weight: normal;
-                    text-align: justify;
-                    line-height: 24px;
-                    margin-top: 10px;
-                }
-            }
-        }
-    }
-}
-
-.text-wrapper_3 {
-    background-color: rgba(87, 80, 158, 1);
-    height: 82px;
-    width: 1920px;
-    margin: 998px 0 0 -1920px;
-
-    .text_17 {
-        width: 543px;
-        height: 16px;
-        overflow-wrap: break-word;
-        color: rgba(255, 255, 255, 1);
-        font-size: 16px;
-        letter-spacing: 1.7777777910232544px;
-        font-family: SourceHanSansCN-Medium;
-        font-weight: 500;
-        text-align: justify;
-        white-space: nowrap;
-        line-height: 24px;
-        margin: 32px 0 0 688px;
-    }
-}
+            
