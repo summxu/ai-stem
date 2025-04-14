@@ -253,7 +253,7 @@
                 {
                     "key": "grade",
                     "type": "string",
-                    "required": true,
+                    "required": false,
                     "array": false,
                     "elements": [
                         "一年级",

@@ -1,12 +1,13 @@
-import './index.scss';
-import { Button, Flex, Form, Input, message, Modal, Select, Space, Table, TableProps } from 'antd';
-import { Active } from '../../../types/db.ts';
-import { useAntdTable } from 'ahooks';
 import { PlusOutlined } from '@ant-design/icons';
+import { useAntdTable } from 'ahooks';
+import { Button, Flex, Form, Input, message, Modal, Select, Space, Table, TableProps } from 'antd';
+import { ID, Query } from 'appwrite';
 import { useState } from 'react';
+import { Active } from '../../../types/db.ts';
+import { CollectionName, DatabaseName, SubjectType } from '../../../types/enums.ts';
 import { databases } from '../../utils/appwrite.ts';
-import { CollectionName, DatabaseName } from '../../../types/enums.ts';
-import { ID } from 'appwrite';
+import './index.scss';
+import { useNavigate } from 'react-router';
 
 interface Result {
     total: number;
@@ -16,18 +17,28 @@ interface Result {
 function ActiveAdmin() {
 
     const getTableData = ({ current, pageSize }: any): Promise<Result> => {
-        const query = `page=${current}&size=${pageSize}`;
-        return fetch(`https://randomuser.me/api?results=55&${query}`)
-            .then((res) => res.json())
-            .then((res) => ({
-                total: res.info.results,
-                list: res.results,
-            }));
+        return new Promise((resolve, reject) => {
+            databases.listDocuments<Active>(DatabaseName.ai_stem, CollectionName.active, [
+                Query.limit(pageSize),
+                Query.offset((current - 1) * pageSize),
+                Query.orderDesc('$createdAt'),
+            ])
+                .then((res) => {
+                    resolve({
+                        total: res.total,
+                        list: res.documents,
+                    })
+                })
+                .catch((err) => {
+                    reject(err);
+                })
+        })
     };
 
     const { tableProps, run } = useAntdTable(getTableData);
     const [open, setOpen] = useState(false);
     const [form] = Form.useForm();
+    const navigate = useNavigate()
 
     const columns: TableProps<Active>['columns'] = [
         {
@@ -50,8 +61,10 @@ function ActiveAdmin() {
         {
             title: '学科',
             dataIndex: 'subject',
-            key: 'subject',
             align: 'center',
+            render: (_, { subject }) => (
+                <p>{SubjectType[subject as keyof typeof SubjectType]}</p>
+            )
         },
         {
             title: '课程数',
@@ -68,19 +81,41 @@ function ActiveAdmin() {
             align: 'center',
             render: (_, active) => (
                 <Space>
-                    <Button size="small" color="primary" variant="text">
+                    <Button onClick={() => navigate(`/course-preview/course-admin/${active.$id}`)} size="small" color="primary" variant="text">
                         管理课程
                     </Button>
-                    <Button size="small" color="default" variant="text">
+                    <Button onClick={() => handleUpdate(active)} size="small" color="default" variant="text">
                         修改
                     </Button>
-                    <Button size="small" color="danger" variant="text">
+                    <Button onClick={() => handleDeltet(active)} size="small" color="danger" variant="text">
                         删除
                     </Button>
                 </Space>
             ),
         },
     ];
+    
+    const handleDeltet = async (active: Active) => {
+        Modal.confirm({
+            title: '确认删除',
+            content: `确定要删除活动以及活动内的所有课程？`,
+            okText: '确定',
+            cancelText: '取消',
+            onOk: async () => {
+                try {
+                    await databases.deleteDocument(DatabaseName.ai_stem, CollectionName.active, active.$id);
+                    run({ current: tableProps.pagination.current, pageSize: tableProps.pagination.pageSize });
+                } catch (e) {
+                    message.error((e as Error).message);
+                }
+            }
+        });
+    }
+
+    const handleUpdate = (active: Active) => {
+        form.setFieldsValue(active);
+        setOpen(true);
+    }
 
     const handleCreate = async () => {
         const formData: Active = form.getFieldsValue();
@@ -88,11 +123,12 @@ function ActiveAdmin() {
         // 上传选项
         try {
             if (formData.$id) {
-                await databases.updateDocument<Active>(DatabaseName.ai_stem, CollectionName.interaction, formData.id, formData);
+                await databases.updateDocument<Active>(DatabaseName.ai_stem, CollectionName.active, formData.$id, formData);
+                run({ current: tableProps.pagination.current, pageSize: tableProps.pagination.pageSize });
             } else {
-                await databases.createDocument<Active>(DatabaseName.ai_stem, CollectionName.interaction, ID.unique(), formData);
+                await databases.createDocument<Active>(DatabaseName.ai_stem, CollectionName.active, ID.unique(), formData);
+                run({ current: 1, pageSize: tableProps.pagination.pageSize });
             }
-            run({});
             setOpen(false);
         } catch (e) {
             message.error((e as Error).message);
@@ -122,13 +158,14 @@ function ActiveAdmin() {
                             <Select.Option key="M" value="M">数学</Select.Option>
                         </Select>
                     </Form.Item>
+                    <Form.Item noStyle name="$id" />
                 </Form>
             </Modal>
             <div className="istem-active-admin-inner">
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
                     <p className="active-title">所有活动</p>
-                    <Button onClick={() => setOpen(true)}
-                            style={{ background: '#FF5F2F', color: 'white', border: 'none' }} icon={<PlusOutlined />}>
+                    <Button onClick={() => { form.resetFields(); setOpen(true) }}
+                        style={{ background: '#FF5F2F', color: 'white', border: 'none' }} icon={<PlusOutlined />}>
                         添加新活动
                     </Button>
                 </Flex>

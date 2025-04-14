@@ -19,8 +19,8 @@ createRoot(document.getElementById('root')!).render(
                     <Route index element={<Home />} />
                     <Route path="course-preview" element={<CoursePreview />} />
                     <Route path="course-preview/active-admin" element={<ActiveAdmin />} />
+                    <Route path="course-preview/course-admin/:activeId" element={<CourseAdmin />} />
                     <Route path="introduce" element={<Introduce />} />
-                    <Route path="course-admin" element={<CourseAdmin />} />
                 </Route>
             </Routes>
         </BrowserRouter>

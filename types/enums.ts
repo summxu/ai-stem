@@ -29,3 +29,10 @@ export enum InteractionTypeName {
     file = '附件上传题',
     flow = '流程排序题'
 }
+
+export enum SubjectType {
+    S = '科学',
+    T = '技术',
+    A = '工程',
+    M = '数学',
+}

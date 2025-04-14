@@ -10,7 +10,7 @@ function CoursePreview() {
                 <div className="banner-container flex-col">
                     {/* 操作按钮区域 */}
                     <div className="action-buttons flex-row justify-between">
-                        <div className="edit-button flex-row align-center">
+                        {/* <div className="edit-button flex-row align-center">
                             <span>修改</span>
                             <img
                                 src={
@@ -23,6 +23,17 @@ function CoursePreview() {
                             navigate('/course-preview/active-admin');
                         }} className="add-button flex-row align-center">
                             <span>添加课程</span>
+                            <img
+                                src={
+                                    'https://lanhu-oss.lanhuapp.com/SketchPng35f5a321ca03b58056e019b423beeed0db4060941c0c3c192538f9ddc65d0e57'
+                                }
+                                alt="添加图标"
+                            />
+                        </div> */}
+                        <div onClick={() => {
+                            navigate('/course-preview/active-admin');
+                        }} className="add-button flex-row align-center">
+                            <span>管理活动</span>
                             <img
                                 src={
                                     'https://lanhu-oss.lanhuapp.com/SketchPng35f5a321ca03b58056e019b423beeed0db4060941c0c3c192538f9ddc65d0e57'
