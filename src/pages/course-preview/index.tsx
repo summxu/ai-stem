@@ -69,6 +69,7 @@ function CoursePreview() {
                                 alt="E图标"
                             />
                             <img
+                                style={{ width: 160 }}
                                 src={
                                     'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/913760b73e3c4268b7bd61e711a35db9_mergeImage.png'
                                 }

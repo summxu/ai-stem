@@ -5,13 +5,20 @@ function Footer() {
     const location = useLocation();
     const path = location.pathname;
     const background = (() => {
-        console.log(path)
         if (path === '/course-preview/active-admin') {
             return '#F4F7FA';
         }
+        if (path === '/') {
+            return 'transparent';
+        }
+    })();
+    const marginTop = (() => {
+        if (path === '/') {
+            return '-60px';
+        }
     })();
     return (
-        <div style={{ background }} className="istem-footer-box">
+        <div style={{ background, marginTop }} className="istem-footer-box">
             <div className="footer-container">
                 <div className="footer-left">
                     <div className="logo-wrapper">
