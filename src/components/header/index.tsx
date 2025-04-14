@@ -1,14 +1,15 @@
-import './index.scss';
-import { Space, Dropdown, Avatar } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Dropdown, Space } from 'antd';
 import { NavLink } from 'react-router';
+import { useLanguage } from '../../hooks/useLanguage';
 import { useLoginModal } from '../../hooks/useLogin.tsx';
 import { useUser } from '../../hooks/user.tsx';
-import { Fragment } from 'react/jsx-runtime';
+import './index.scss';
 
 function Header() {
     const { showLoginModal } = useLoginModal();
     const { userInfo, logout } = useUser();
+    const { langType, toggleLanguage } = useLanguage();
 
     const handleLogout = async () => {
         await logout();
@@ -76,9 +77,19 @@ function Header() {
                             alt="Language"
                         />
                         <div className="language-options">
-                            <span className="language-option">English</span>
+                            <span 
+                                className={`language-option ${langType === 'simplified' ? 'active' : ''}`}
+                                onClick={() => toggleLanguage('simplified')}
+                            >
+                                简体
+                            </span>
                             <span className="language-separator">&nbsp;|&nbsp;</span>
-                            <span className="language-option active">中文</span>
+                            <span 
+                                className={`language-option ${langType === 'traditional' ? 'active' : ''}`}
+                                onClick={() => toggleLanguage('traditional')}
+                            >
+                                繁體
+                            </span>
                         </div>
                     </div>
                 </div>

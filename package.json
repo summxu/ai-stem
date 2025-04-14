@@ -19,6 +19,7 @@
         "ahooks": "^3.8.4",
         "antd": "^5.24.6",
         "appwrite": "^17.0.1",
+        "chinese-conv": "^3.2.2",
         "ckeditor5": "^45.0.0",
         "react": "^19.0.0",
         "react-beautiful-dnd": "^13.1.1",
