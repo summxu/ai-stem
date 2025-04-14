@@ -9,6 +9,7 @@ import { UserProvider } from './hooks/user.tsx';
 import '@ant-design/v5-patch-for-react-19';
 import CourseAdmin from './pages/course-admin';
 import CoursePreview from './pages/course-preview';
+import ActiveAdmin from './pages/active-admin';
 
 createRoot(document.getElementById('root')!).render(
     <UserProvider>
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="/" element={<App />}>
                     <Route index element={<Home />} />
                     <Route path="course-preview" element={<CoursePreview />} />
+                    <Route path="course-preview/active-admin" element={<ActiveAdmin />} />
                     <Route path="introduce" element={<Introduce />} />
                     <Route path="course-admin" element={<CourseAdmin />} />
                 </Route>

@@ -1,6 +1,8 @@
 import './index.scss';
+import { useNavigate } from 'react-router';
 
 function CoursePreview() {
+    const navigate = useNavigate();
     return (
         <div className="istem-course-preview-box">
             {/* 顶部区域 */}
@@ -17,7 +19,9 @@ function CoursePreview() {
                                 alt="编辑图标"
                             />
                         </div>
-                        <div className="add-button flex-row align-center">
+                        <div onClick={() => {
+                            navigate('/course-preview/active-admin');
+                        }} className="add-button flex-row align-center">
                             <span>添加课程</span>
                             <img
                                 src={
@@ -27,7 +31,7 @@ function CoursePreview() {
                             />
                         </div>
                     </div>
-                    
+
                     {/* 标题区域 */}
                     <div className="title-container flex-row justify-center">
                         <div className="title-wrapper">
@@ -35,7 +39,7 @@ function CoursePreview() {
                             <span className="title-course">课程</span>
                         </div>
                     </div>
-                    
+
                     {/* STEM图标区域 */}
                     <div className="stem-icons flex-row justify-center align-center">
                         <img
@@ -64,17 +68,17 @@ function CoursePreview() {
                                 }
                                 alt="E图标"
                             />
-                        <img
-                            src={
-                                'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/913760b73e3c4268b7bd61e711a35db9_mergeImage.png'
-                            }
-                            alt="M图标"
-                        />
+                            <img
+                                src={
+                                    'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/913760b73e3c4268b7bd61e711a35db9_mergeImage.png'
+                                }
+                                alt="M图标"
+                            />
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             {/* 学科卡片区域 */}
             <div className="subject-cards flex-row justify-center">
                 {/* 科学卡片 */}
@@ -95,7 +99,7 @@ function CoursePreview() {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* 技术卡片 */}
                 <div className="subject-card technology-card">
                     <div className="card-content flex-col">
@@ -114,7 +118,7 @@ function CoursePreview() {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* 工程卡片 */}
                 <div className="subject-card engineering-card">
                     <div className="card-content flex-col">
@@ -133,7 +137,7 @@ function CoursePreview() {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* 数学卡片 */}
                 <div className="subject-card math-card">
                     <div className="card-content flex-col">

@@ -1,8 +1,17 @@
-import './index.scss'
+import './index.scss';
+import { useLocation } from 'react-router';
 
 function Footer() {
+    const location = useLocation();
+    const path = location.pathname;
+    const background = (() => {
+        console.log(path)
+        if (path === '/course-preview/active-admin') {
+            return '#F4F7FA';
+        }
+    })();
     return (
-        <div className="istem-footer-box">
+        <div style={{ background }} className="istem-footer-box">
             <div className="footer-container">
                 <div className="footer-left">
                     <div className="logo-wrapper">

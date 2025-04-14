@@ -32,7 +32,7 @@ export interface GroupUser extends Models.Document {
 export interface Active extends Models.Document {
     name: string;
     description?: string;
-    grade: Grade;
+    grade?: Grade;
     subject: Subject;
     course?: string[]; // 关系字段
 }
