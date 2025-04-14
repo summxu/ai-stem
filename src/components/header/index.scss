@@ -60,6 +60,15 @@
     }
   }
   
+  .user-avatar {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  
   // 语言选择器样式
   .language-selector {
     display: flex;

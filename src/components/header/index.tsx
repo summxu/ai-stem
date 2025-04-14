@@ -1,17 +1,36 @@
-import './index.scss'
-import { Space } from 'antd';
+import './index.scss';
+import { Space, Dropdown, Avatar } from 'antd';
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router';
+import { useLoginModal } from '../../hooks/useLogin.tsx';
+import { useUser } from '../../hooks/user.tsx';
+import { Fragment } from 'react/jsx-runtime';
 
 function Header() {
+    const { showLoginModal } = useLoginModal();
+    const { userInfo, logout } = useUser();
+
+    const handleLogout = async () => {
+        await logout();
+    };
+
+    const userMenuItems = [
+        {
+            key: 'logout',
+            label: '退出登录',
+            icon: <LogoutOutlined />,
+            onClick: handleLogout,
+        },
+    ];
     return (
-        <div className='istem-header-box'>
+        <div className="istem-header-box">
             <div className="header-container flex-row justify-between align-center">
                 {/* 左侧Logo区域 */}
                 <div className="logo-container flex-row align-center">
                     <img
                         className="logo-image"
                         src={
-                            "https://lanhu-oss-2537-2.lanhuapp.com/SketchPng43fc4ea8997a0ebda5cead9dd0d4f835650b0ccb83407f320b6ef9a4d05e44dd"
+                            'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng43fc4ea8997a0ebda5cead9dd0d4f835650b0ccb83407f320b6ef9a4d05e44dd'
                         }
                         alt="AI-STEM Logo"
                     />
@@ -22,16 +41,29 @@ function Header() {
                 <div className="nav-container flex-row align-center">
                     <Space size="large" className="nav-items">
                         <NavLink className={({ isActive }) =>
-                            isActive ? "nav-item active" : "nav-item"
+                            isActive ? 'nav-item active' : 'nav-item'
                         } to="/">首页</NavLink>
                         <span className="nav-item">功能介绍</span>
                         <NavLink className={({ isActive }) =>
-                            isActive ? "nav-item active" : "nav-item"
+                            isActive ? 'nav-item active' : 'nav-item'
                         } to="/course-preview">课程</NavLink>
                         <span className="nav-item">学习记录</span>
                         <span className="nav-item">账号管理</span>
                         <span className="nav-item">关于我们</span>
-                        <span className="nav-item highlight">登录/注册</span>
+                        {userInfo ? (
+                            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+                                <div className="user-avatar flex align-center">
+                                    <Avatar
+                                        size={28}
+                                        icon={<UserOutlined />}
+                                        style={{ backgroundColor: '#FF5F2F', marginRight: '8px' }}
+                                    />
+                                    <span>{userInfo.name}</span>
+                                </div>
+                            </Dropdown>
+                        ) : (
+                            <span className="nav-item" onClick={showLoginModal}>登录</span>
+                        )}
                     </Space>
 
                     {/* 语言切换 */}
@@ -39,7 +71,7 @@ function Header() {
                         <img
                             className="language-icon"
                             src={
-                                "https://lanhu-oss-2537-2.lanhuapp.com/SketchPngdc90e1abd80337692577fa18f0203de9dc8e27f273c997596e7a5ab00175de62"
+                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPngdc90e1abd80337692577fa18f0203de9dc8e27f273c997596e7a5ab00175de62'
                             }
                             alt="Language"
                         />

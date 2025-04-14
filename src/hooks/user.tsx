@@ -31,7 +31,7 @@ export function UserProvider(props: PropsWithChildren) {
     async function login(email: string, password: string) {
         try {
             const { responseBody } = await functions.createExecution(FunctionName.login, JSON.stringify({
-                email,
+                email: `${email}@istem.com`,
                 password,
             }));
             const { status, data, message }: FunctionsReturn<Models.Token & {
@@ -44,6 +44,7 @@ export function UserProvider(props: PropsWithChildren) {
             init();
         } catch (e: any) {
             message.error(e.message);
+            throw new Error(e.message);
         }
     }
 

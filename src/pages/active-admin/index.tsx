@@ -111,10 +111,10 @@ function ActiveAdmin() {
                 keyboard={false}
                 onOk={handleCreate}>
                 <Form form={form} layout="vertical">
-                    <Form.Item name="name" label="活动名称" rules={[{ required: true }]}>
+                    <Form.Item name="name" label="活动名称" rules={[{ required: true, message: '请输入活动名称' }]}>
                         <Input placeholder="请输入活动名称" />
                     </Form.Item>
-                    <Form.Item name="subject" label="学科类型" rules={[{ required: true }]}>
+                    <Form.Item name="subject" label="学科类型" rules={[{ required: true, message: '请选择学科类型' }]}>
                         <Select placeholder="请选择学科">
                             <Select.Option key="S" value="S">科学</Select.Option>
                             <Select.Option key="T" value="T">技术</Select.Option>
