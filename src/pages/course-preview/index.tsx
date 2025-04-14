@@ -64,14 +64,13 @@ function CoursePreview() {
                                 }
                                 alt="E图标"
                             />
-                        </div>
                         <img
-                            className="icon-right"
                             src={
                                 'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/913760b73e3c4268b7bd61e711a35db9_mergeImage.png'
                             }
                             alt="M图标"
                         />
+                        </div>
                     </div>
                 </div>
             </div>
