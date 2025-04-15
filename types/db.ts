@@ -44,7 +44,6 @@ export interface Chapter extends Models.Document {
 
 // Learning 集合
 export interface Learning extends Models.Document {
-    completed?: boolean;
     answer?: string[]; // 数组类型
     chapter?: string; // 关系字段
     interaction?: string; // 关系字段

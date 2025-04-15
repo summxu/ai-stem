@@ -200,7 +200,7 @@
                     "type": "string",
                     "required": true,
                     "array": false,
-                    "size": 500,
+                    "size": 10000,
                     "default": null
                 },
                 {
@@ -328,6 +328,18 @@
                     "min": -9223372036854775808,
                     "max": 9223372036854775807,
                     "default": null
+                },
+                {
+                    "key": "interaction",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f65f0300181798df20",
+                    "relationType": "manyToOne",
+                    "twoWay": true,
+                    "twoWayKey": "chapter",
+                    "onDelete": "cascade",
+                    "side": "child"
                 }
             ],
             "indexes": [
@@ -424,19 +436,23 @@
         },
         {
             "$id": "67f0d09400061c9c9fe0",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"label:teachers\")",
+                "read(\"label:teachers\")",
+                "update(\"label:teachers\")",
+                "create(\"label:students\")",
+                "read(\"label:students\")",
+                "update(\"label:students\")",
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
+            ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "learning",
             "enabled": true,
             "documentSecurity": true,
             "attributes": [
-                {
-                    "key": "completed",
-                    "type": "boolean",
-                    "required": false,
-                    "array": false,
-                    "default": false
-                },
                 {
                     "key": "answer",
                     "type": "string",
@@ -569,9 +585,9 @@
                     "array": false,
                     "relatedCollection": "67f0b8cb00277ce1d71b",
                     "relationType": "manyToOne",
-                    "twoWay": false,
-                    "twoWayKey": "67fdc7a6003b15c88bf6",
-                    "onDelete": "setNull",
+                    "twoWay": true,
+                    "twoWayKey": "interaction",
+                    "onDelete": "cascade",
                     "side": "parent"
                 }
             ],
@@ -784,12 +800,12 @@
                 "read(\"label:admin\")",
                 "update(\"label:admin\")",
                 "delete(\"label:admin\")",
-                "create(\"label:teacher\")",
-                "read(\"label:teacher\")",
-                "update(\"label:teacher\")",
                 "create(\"label:students\")",
                 "read(\"label:students\")",
-                "update(\"label:students\")"
+                "update(\"label:students\")",
+                "create(\"label:teachers\")",
+                "read(\"label:teachers\")",
+                "update(\"label:teachers\")"
             ],
             "fileSecurity": true,
             "name": "learning",

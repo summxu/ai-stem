@@ -92,7 +92,7 @@ function CourseAdmin() {
             align: 'center',
             render: (_, course) => (
                 <Space>
-                    <Button onClick={() => navigate(`/course-preview/${course.$id}`)} size="small" color="primary" variant="text">
+                    <Button onClick={() => window.open(`/course-preview/course-learning/${course.$id}`)} size="small" color="primary" variant="text">
                         预览
                     </Button>
                     <Button onClick={() => handleCourseContent(course)} size="small" color="primary" variant="text">
