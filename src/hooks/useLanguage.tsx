@@ -11,7 +11,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [langType, setLangType] = useState<LanguageType>('simplified'); // 默认简体中文
+    const [langType, setLangType] = useState<LanguageType>('traditional'); // 默认简体中文
 
     // 处理文本节点的函数
     const processTextNodes = (element: Node, convertFunc: (text: string) => string) => {

@@ -81,14 +81,14 @@ function Header() {
                                 className={`language-option ${langType === 'simplified' ? 'active' : ''}`}
                                 onClick={() => toggleLanguage('simplified')}
                             >
-                                简体
+                                简
                             </span>
                             <span className="language-separator">&nbsp;|&nbsp;</span>
                             <span 
                                 className={`language-option ${langType === 'traditional' ? 'active' : ''}`}
                                 onClick={() => toggleLanguage('traditional')}
                             >
-                                繁體
+                                繁
                             </span>
                         </div>
                     </div>
