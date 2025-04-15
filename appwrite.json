@@ -87,140 +87,6 @@
     ],
     "collections": [
         {
-            "$id": "67ef70d4002e731b6402",
-            "$permissions": [
-                "read(\"team:67eff5af002bb3b74a49\")",
-                "create(\"team:67f33e5300326073bc00\")",
-                "read(\"team:67f33e5300326073bc00\")",
-                "update(\"team:67f33e5300326073bc00\")",
-                "delete(\"team:67f33e5300326073bc00\")"
-            ],
-            "databaseId": "67ef70bd0025644c3858",
-            "name": "group",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "name",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 24,
-                    "default": null
-                },
-                {
-                    "key": "description",
-                    "type": "string",
-                    "required": false,
-                    "array": false,
-                    "size": 500,
-                    "default": ""
-                },
-                {
-                    "key": "school",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 36,
-                    "default": null
-                },
-                {
-                    "key": "grade",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "elements": [
-                        "一年级",
-                        "二年级",
-                        "三年级",
-                        "四年级",
-                        "五年级",
-                        "六年级"
-                    ],
-                    "format": "enum",
-                    "default": null
-                },
-                {
-                    "key": "groupUser",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67eff830002a2869b11c",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "group",
-                    "onDelete": "cascade",
-                    "side": "parent"
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "index_1",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "$id"
-                    ],
-                    "orders": [
-                        "DESC"
-                    ]
-                }
-            ]
-        },
-        {
-            "$id": "67eff830002a2869b11c",
-            "$permissions": [
-                "read(\"team:67eff5af002bb3b74a49\")",
-                "create(\"team:67f33e5300326073bc00\")",
-                "read(\"team:67f33e5300326073bc00\")",
-                "update(\"team:67f33e5300326073bc00\")",
-                "delete(\"team:67f33e5300326073bc00\")"
-            ],
-            "databaseId": "67ef70bd0025644c3858",
-            "name": "group_user",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "group",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67ef70d4002e731b6402",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "groupUser",
-                    "onDelete": "cascade",
-                    "side": "child"
-                },
-                {
-                    "key": "learning",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0d09400061c9c9fe0",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "groupUser",
-                    "onDelete": "cascade",
-                    "side": "parent"
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "index_1",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "$id"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
-        },
-        {
             "$id": "67f0a408002f85969a31",
             "$permissions": [
                 "read(\"guests\")",
@@ -354,18 +220,6 @@
                     "default": null
                 },
                 {
-                    "key": "step",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0b9eb0002bb4a7658",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "course",
-                    "onDelete": "setNull",
-                    "side": "parent"
-                },
-                {
                     "key": "active",
                     "type": "relationship",
                     "required": false,
@@ -374,8 +228,20 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "course",
-                    "onDelete": "setNull",
+                    "onDelete": "cascade",
                     "side": "child"
+                },
+                {
+                    "key": "chapter",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0b8cb00277ce1d71b",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "course",
+                    "onDelete": "cascade",
+                    "side": "parent"
                 }
             ],
             "indexes": [
@@ -416,38 +282,6 @@
                     "default": null
                 },
                 {
-                    "key": "step",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0b9eb0002bb4a7658",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "chapter",
-                    "onDelete": "cascade",
-                    "side": "child"
-                },
-                {
-                    "key": "name",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "interaction",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f65f0300181798df20",
-                    "relationType": "manyToOne",
-                    "twoWay": true,
-                    "twoWayKey": "chapter",
-                    "onDelete": "setNull",
-                    "side": "child"
-                },
-                {
                     "key": "learning",
                     "type": "relationship",
                     "required": false,
@@ -456,8 +290,44 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "chapter",
-                    "onDelete": "setNull",
+                    "onDelete": "cascade",
                     "side": "parent"
+                },
+                {
+                    "key": "course",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0a530000e5c01c41e",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "chapter",
+                    "onDelete": "cascade",
+                    "side": "child"
+                },
+                {
+                    "key": "step",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "empathize",
+                        "define",
+                        "ideate",
+                        "prototype",
+                        "test"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "sort",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807,
+                    "default": null
                 }
             ],
             "indexes": [
@@ -584,7 +454,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "learning",
-                    "onDelete": "setNull",
+                    "onDelete": "cascade",
                     "side": "child"
                 },
                 {
@@ -596,7 +466,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "learning",
-                    "onDelete": "setNull",
+                    "onDelete": "cascade",
                     "side": "child"
                 }
             ],
@@ -656,18 +526,6 @@
                     "default": null
                 },
                 {
-                    "key": "chapter",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0b8cb00277ce1d71b",
-                    "relationType": "manyToOne",
-                    "twoWay": true,
-                    "twoWayKey": "interaction",
-                    "onDelete": "setNull",
-                    "side": "parent"
-                },
-                {
                     "key": "explain",
                     "type": "string",
                     "required": false,
@@ -684,7 +542,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "interaction",
-                    "onDelete": "setNull",
+                    "onDelete": "cascade",
                     "side": "parent"
                 },
                 {
@@ -703,6 +561,18 @@
                     "array": false,
                     "format": "url",
                     "default": null
+                },
+                {
+                    "key": "chapter",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0b8cb00277ce1d71b",
+                    "relationType": "manyToOne",
+                    "twoWay": false,
+                    "twoWayKey": "67fdc7a6003b15c88bf6",
+                    "onDelete": "setNull",
+                    "side": "parent"
                 }
             ],
             "indexes": [
@@ -788,7 +658,7 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "active",
-                    "onDelete": "setNull",
+                    "onDelete": "cascade",
                     "side": "parent"
                 }
             ],

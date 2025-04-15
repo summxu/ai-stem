@@ -35,3 +35,11 @@ export enum SubjectType {
     A = '工程',
     M = '数学',
 }
+
+export enum StepType {
+    empathize = '移情',
+    define = '定义',
+    ideate = '构思',
+    prototype = '原型',
+    test = '测试',
+}

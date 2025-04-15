@@ -92,7 +92,10 @@ function CourseAdmin() {
                     <Button onClick={() => navigate(`/course-preview/${course.$id}`)} size="small" color="primary" variant="text">
                         预览
                     </Button>
-                    <Button onClick={() => handleUpdate(course)} size="small" color="default" variant="text">
+                    <Button onClick={() => navigate(`/course-preview/${course.$id}`)} size="small" color="primary" variant="text">
+                        课程内容
+                    </Button>
+                    <Button onClick={() => handleUpdate(course)} size="small" color="primary" variant="text">
                         修改
                     </Button>
                     <Button onClick={() => handleDelete(course)} size="small" color="danger" variant="text">
@@ -169,7 +172,7 @@ function CourseAdmin() {
     };
 
     const uploadProps: UploadProps = {
-        onRemove: file => {
+        onRemove: () => {
             form.setFieldValue('attachment', [])
             forceUpdate(Math.random())
         },
