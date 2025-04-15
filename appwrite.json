@@ -289,8 +289,8 @@
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "active",
-                    "onDelete": "setNull",
-                    "side": "parent"
+                    "onDelete": "cascade",
+                    "side": "child"
                 }
             ],
             "indexes": [
@@ -354,18 +354,6 @@
                     "default": null
                 },
                 {
-                    "key": "active",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0a408002f85969a31",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "course",
-                    "onDelete": "setNull",
-                    "side": "child"
-                },
-                {
                     "key": "step",
                     "type": "relationship",
                     "required": false,
@@ -376,6 +364,18 @@
                     "twoWayKey": "course",
                     "onDelete": "setNull",
                     "side": "parent"
+                },
+                {
+                    "key": "active",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67fcdcae0038b2a34fd5",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "course",
+                    "onDelete": "setNull",
+                    "side": "child"
                 }
             ],
             "indexes": [
@@ -718,6 +718,81 @@
                     ]
                 }
             ]
+        },
+        {
+            "$id": "67fcdcae0038b2a34fd5",
+            "$permissions": [
+                "read(\"guests\")",
+                "create(\"label:admin\")",
+                "read(\"label:admin\")",
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")"
+            ],
+            "databaseId": "67ef70bd0025644c3858",
+            "name": "active",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null
+                },
+                {
+                    "key": "grade",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "elements": [
+                        "一年级",
+                        "二年级",
+                        "三年级",
+                        "四年级",
+                        "五年级",
+                        "六年级"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "subject",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "S",
+                        "T",
+                        "E",
+                        "M"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "course",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0a530000e5c01c41e",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "active",
+                    "onDelete": "setNull",
+                    "side": "parent"
+                }
+            ],
+            "indexes": []
         }
     ],
     "teams": [
@@ -779,11 +854,11 @@
         {
             "$id": "67f677ac001d18127125",
             "$permissions": [
+                "create(\"label:admin\")",
                 "read(\"label:admin\")",
-                "create(\"guests\")",
-                "read(\"guests\")",
-                "update(\"guests\")",
-                "delete(\"guests\")"
+                "update(\"label:admin\")",
+                "delete(\"label:admin\")",
+                "read(\"guests\")"
             ],
             "fileSecurity": false,
             "name": "course",

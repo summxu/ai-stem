@@ -1,28 +1,49 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { useAntdTable } from 'ahooks';
-import { Button, Flex, Form, Input, message, Modal, Select, Space, Table, TableProps } from 'antd';
+import { Button, Flex, Form, Input, message, Modal, Space, Table, TableProps, Upload, UploadFile, UploadProps } from 'antd';
 import { ID, Query } from 'appwrite';
-import { useState } from 'react';
-import { Active } from '../../../types/db.ts';
-import { CollectionName, DatabaseName, SubjectType } from '../../../types/enums.ts';
-import { databases } from '../../utils/appwrite.ts';
+import { useEffect, useReducer, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { Active, Course } from '../../../types/db.ts';
+import { BucketName, CollectionName, DatabaseName } from '../../../types/enums.ts';
+import { databases, storage } from '../../utils/appwrite.ts';
 import './index.scss';
-import { useNavigate } from 'react-router';
 
 interface Result {
     total: number;
-    list: Active[];
+    list: Course[];
 }
 
-function ActiveAdmin() {
+function CourseAdmin() {
+    const { activeId } = useParams<{ activeId: string }>();
+    const [activeName, setActiveName] = useState<string>('');
+
+    useEffect(() => {
+        if (activeId) {
+            databases.getDocument<Active>(DatabaseName.ai_stem, CollectionName.active, activeId)
+                .then((res) => {
+                    setActiveName(res.name);
+                })
+                .catch((err) => {
+                    message.error('获取活动信息失败');
+                });
+        }
+    }, [activeId]);
 
     const getTableData = ({ current, pageSize }: any): Promise<Result> => {
         return new Promise((resolve, reject) => {
-            databases.listDocuments<Active>(DatabaseName.ai_stem, CollectionName.active, [
+            const queries = [
                 Query.limit(pageSize),
                 Query.offset((current - 1) * pageSize),
                 Query.orderDesc('$createdAt'),
-            ])
+            ];
+
+            // 如果有activeId，添加筛选条件
+            if (activeId) {
+                queries.push(Query.equal('active', [activeId]));
+            }
+
+            databases.listDocuments<Course>(DatabaseName.ai_stem, CollectionName.course, queries)
                 .then((res) => {
                     resolve({
                         total: res.total,
@@ -38,72 +59,59 @@ function ActiveAdmin() {
     const { tableProps, run } = useAntdTable(getTableData);
     const [open, setOpen] = useState(false);
     const [form] = Form.useForm();
-    const navigate = useNavigate()
+    const [_, forceUpdate] = useState(0)
+    const navigate = useNavigate();
+    // 不再单独维护fileList状态，改为由Form.Item托管
 
-    const columns: TableProps<Active>['columns'] = [
+    const columns: TableProps<Course>['columns'] = [
         {
-            title: '活动名称',
+            title: '课程名称',
             dataIndex: 'name',
             key: 'name',
             align: 'center',
         },
         {
-            title: '活动ID',
+            title: '课程ID',
             dataIndex: '$id',
             key: 'id',
             align: 'center',
         },
-        // {
-        //     title: '年级',
-        //     dataIndex: 'grade',
-        //     key: 'grade',
-        // },
         {
-            title: '学科',
-            dataIndex: 'subject',
+            title: '课程时长',
+            dataIndex: 'duration',
+            key: 'duration',
             align: 'center',
-            render: (_, { subject }) => (
-                <p>{SubjectType[subject as keyof typeof SubjectType]}</p>
-            )
-        },
-        {
-            title: '课程数',
-            dataIndex: 'courseCount',
-            align: 'center',
-            render: (_, { course }) => (
-                <p>{course?.length || 0}</p>
-            ),
         },
         {
             title: '操作',
             dataIndex: 'options',
             width: 200,
             align: 'center',
-            render: (_, active) => (
+            render: (_, course) => (
                 <Space>
-                    <Button onClick={() => navigate(`/course-preview/course-admin/${active.$id}`)} size="small" color="primary" variant="text">
-                        管理课程
+                    <Button onClick={() => navigate(`/course-preview/${course.$id}`)} size="small" color="primary" variant="text">
+                        预览
                     </Button>
-                    <Button onClick={() => handleUpdate(active)} size="small" color="default" variant="text">
+                    <Button onClick={() => handleUpdate(course)} size="small" color="default" variant="text">
                         修改
                     </Button>
-                    <Button onClick={() => handleDeltet(active)} size="small" color="danger" variant="text">
+                    <Button onClick={() => handleDelete(course)} size="small" color="danger" variant="text">
                         删除
                     </Button>
                 </Space>
             ),
         },
     ];
-    
-    const handleDeltet = async (active: Active) => {
+
+    const handleDelete = async (course: Course) => {
         Modal.confirm({
             title: '确认删除',
-            content: `确定要删除活动以及活动内的所有课程？`,
+            content: `确定要删除课程？`,
             okText: '确定',
             cancelText: '取消',
             onOk: async () => {
                 try {
-                    await databases.deleteDocument(DatabaseName.ai_stem, CollectionName.active, active.$id);
+                    await databases.deleteDocument(DatabaseName.ai_stem, CollectionName.course, course.$id);
                     run({ current: tableProps.pagination.current, pageSize: tableProps.pagination.pageSize });
                 } catch (e) {
                     message.error((e as Error).message);
@@ -112,21 +120,46 @@ function ActiveAdmin() {
         });
     }
 
-    const handleUpdate = (active: Active) => {
-        form.setFieldsValue(active);
+    const handleUpdate = (course: Course) => {
+        // 如果有attachment，转换为fileList格式以便显示已上传的课程封面
+        if (course.attachment) {
+            const uploadFile: UploadFile = {
+                uid: course.$id,
+                name: course.name,
+                status: 'done',
+                url: course.attachment
+            };
+            form.setFieldsValue({
+                ...course,
+                attachment: [uploadFile]
+            });
+        } else {
+            form.setFieldsValue(course);
+        }
         setOpen(true);
     }
 
     const handleCreate = async () => {
-        const formData: Active = form.getFieldsValue();
         await form.validateFields();
+        const formData: Course = form.getFieldsValue();
+
+        // 处理附件，从数组转为URL字符串
+        const attachmentFiles = formData.attachment as unknown as UploadFile[];
+        if (Array.isArray(attachmentFiles) && attachmentFiles.length > 0) {
+            formData.attachment = attachmentFiles[0].url || attachmentFiles[0].response.url || '';
+        }
+
         // 上传选项
         try {
             if (formData.$id) {
-                await databases.updateDocument<Active>(DatabaseName.ai_stem, CollectionName.active, formData.$id, formData);
+                await databases.updateDocument<Course>(DatabaseName.ai_stem, CollectionName.course, formData.$id, formData);
                 run({ current: tableProps.pagination.current, pageSize: tableProps.pagination.pageSize });
             } else {
-                await databases.createDocument<Active>(DatabaseName.ai_stem, CollectionName.active, ID.unique(), formData);
+                // 如果有activeId，添加到课程的active字段
+                if (activeId && !formData.active) {
+                    formData.active = activeId;
+                }
+                await databases.createDocument<Course>(DatabaseName.ai_stem, CollectionName.course, ID.unique(), formData);
                 run({ current: 1, pageSize: tableProps.pagination.pageSize });
             }
             setOpen(false);
@@ -135,44 +168,82 @@ function ActiveAdmin() {
         }
     };
 
+    const uploadProps: UploadProps = {
+        onRemove: file => {
+            form.setFieldValue('attachment', [])
+            forceUpdate(Math.random())
+        },
+        customRequest: async ({ file, onSuccess, onError }) => {
+            const customFile = file as unknown as File;
+            try {
+                const { bucketId, $id } = await storage.createFile(BucketName.course, ID.unique(), customFile);
+                const fileContent = storage.getFileView(bucketId, $id);
+
+                // 更新文件信息
+                const updatedFile = {
+                    uid: $id,
+                    name: customFile.name,
+                    status: 'done',
+                    url: fileContent
+                } as any;
+
+                // 通知上传成功
+                onSuccess?.(updatedFile, new XMLHttpRequest());
+            } catch (e) {
+                onError?.(e as Error);
+                message.error((e as Error).message);
+            }
+        },
+
+        listType: 'picture-card',
+        maxCount: 1,
+    };
+
     return (
-        <div className="istem-active-admin">
+        <div className="istem-course-admin">
             <Modal
                 open={open}
                 onCancel={() => setOpen(false)}
-                title="创建活动"
+                title="创建课程"
                 okText="确定"
                 cancelText="取消"
                 maskClosable={false}
                 keyboard={false}
                 onOk={handleCreate}>
                 <Form form={form} layout="vertical">
-                    <Form.Item name="name" label="活动名称" rules={[{ required: true, message: '请输入活动名称' }]}>
-                        <Input placeholder="请输入活动名称" />
+                    <Form.Item name="name" label="课程名称" rules={[{ required: true, message: '请输入课程名称' }]}>
+                        <Input placeholder="请输入课程名称" />
                     </Form.Item>
-                    <Form.Item name="subject" label="学科类型" rules={[{ required: true, message: '请选择学科类型' }]}>
-                        <Select placeholder="请选择学科">
-                            <Select.Option key="S" value="S">科学</Select.Option>
-                            <Select.Option key="T" value="T">技术</Select.Option>
-                            <Select.Option key="A" value="A">工程</Select.Option>
-                            <Select.Option key="M" value="M">数学</Select.Option>
-                        </Select>
+                    <Form.Item name="attachment" label="课程封面" rules={[{ required: true, message: '请上传课程封面' }]} valuePropName="fileList" getValueFromEvent={e => Array.isArray(e) ? e : e?.fileList}>
+                        <Upload {...uploadProps}>
+                            {!form.getFieldValue('attachment')?.length ? <button style={{ border: 0, background: 'none' }} type="button">
+                                <PlusOutlined />
+                                <div style={{ marginTop: 8 }}>上传</div>
+                            </button> : null}
+                        </Upload>
+                    </Form.Item>
+                    <Form.Item name="description" label="课程描述" rules={[{ required: true, message: '请输入课程描述' }]}>
+                        <Input.TextArea rows={3} placeholder="请输入课程描述" />
+                    </Form.Item>
+                    <Form.Item name="duration" label="课程时长" rules={[{ required: true, message: '请输入课程时长' }]}>
+                        <Input placeholder="请输入课程时长" />
                     </Form.Item>
                     <Form.Item noStyle name="$id" />
+                    <Form.Item noStyle name="active" />
                 </Form>
             </Modal>
-            <div className="istem-active-admin-inner">
+            <div className="istem-course-admin-inner">
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
-                    <p className="active-title">所有活动</p>
+                    <p className="course-title">{activeId ? activeName : '所有课程'}</p>
                     <Button onClick={() => { form.resetFields(); setOpen(true) }}
                         style={{ background: '#FF5F2F', color: 'white', border: 'none' }} icon={<PlusOutlined />}>
-                        添加新活动
+                        添加新课程
                     </Button>
                 </Flex>
-                <Table<Active> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
+                <Table<Course> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
             </div>
         </div>
     );
 }
 
-export default ActiveAdmin;
+export default CourseAdmin;

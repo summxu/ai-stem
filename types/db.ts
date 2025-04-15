@@ -43,7 +43,7 @@ export interface Course extends Models.Document {
     description: string;
     duration: string;
     attachment: string; // URL格式
-    active?: string[]; // 关系字段
+    active?: string; // 关系字段
     step?: string[]; // 关系字段
 }
 

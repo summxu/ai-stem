@@ -98,7 +98,7 @@ function ActiveAdmin() {
     const handleDeltet = async (active: Active) => {
         Modal.confirm({
             title: '确认删除',
-            content: `确定要删除活动以及活动内的所有课程？`,
+            content: `确定要删除课程以及课程内的所有步骤？`,
             okText: '确定',
             cancelText: '取消',
             onOk: async () => {
@@ -154,7 +154,7 @@ function ActiveAdmin() {
                         <Select placeholder="请选择学科">
                             <Select.Option key="S" value="S">科学</Select.Option>
                             <Select.Option key="T" value="T">技术</Select.Option>
-                            <Select.Option key="A" value="A">工程</Select.Option>
+                            <Select.Option key="E" value="E">工程</Select.Option>
                             <Select.Option key="M" value="M">数学</Select.Option>
                         </Select>
                     </Form.Item>

@@ -4,10 +4,9 @@ export enum DatabaseName {
 
 export enum CollectionName {
     leaning = '67f0d09400061c9c9fe0',
-    step = '67f0b9eb0002bb4a7658',
     chapter = '67f0b8cb00277ce1d71b',
     course = '67f0a530000e5c01c41e',
-    active = '67f0a408002f85969a31',
+    active = '67fcdcae0038b2a34fd5',
     interaction = '67f65f0300181798df20'
 }
 
