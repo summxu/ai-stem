@@ -132,7 +132,10 @@ function CourseLearning() {
                 <div className="learning-center-left">
                     {!chapterId ? (
                         <div className="course-intro">
-                            <p className='course-title'>{course.name}课程介绍：</p>
+                            <Flex justify='space-between'>
+                                <p className='course-title'>{course.name}课程介绍：</p>
+                                <p className='course-duration'>学习时长：{course.duration}</p>
+                            </Flex>
                             <p className='course-desc'>
                                 <img className='course-img' src={course.attachment} alt="course-cover" />
                                 {course.description}
@@ -151,13 +154,13 @@ function CourseLearning() {
                                             style={{ background: "#FF5F2F", color: "white", border: "none" }}
                                             onClick={handlePrevChapter}
                                         >
-                                            上一题
+                                            上一个
                                         </Button>
                                     )}
                                     {chapters.indexOf(currentChapter!) === chapters.length - 1 ? <Button style={{ background: "#FF5F2F", color: "white", border: "none" }} onClick={handleOverChapter}>
                                         完成学习
                                     </Button> : <Button style={{ background: "#FF5F2F", color: "white", border: "none" }} onClick={handleNextChapter}>
-                                        下一题
+                                        下一个
                                     </Button>}
                                 </Space>
                             </Flex>
