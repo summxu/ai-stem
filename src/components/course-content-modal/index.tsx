@@ -1,12 +1,12 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Collapse, Form, Modal, ModalProps, Space, message } from 'antd';
+import { Button, Collapse, Form, Modal, ModalProps, message } from 'antd';
+import { ID, Query } from 'appwrite';
+import { ClassicEditor, EventInfo } from 'ckeditor5';
 import { useEffect, useState } from 'react';
-import { Chapter, Course, Step } from '../../../types/db';
+import { Chapter } from '../../../types/db';
 import { CollectionName, DatabaseName, StepType } from '../../../types/enums';
 import { databases } from '../../utils/appwrite';
-import { ID, Query } from 'appwrite';
 import CKeditor from '../ckeditor';
-import { ClassicEditor, EventInfo } from 'ckeditor5';
 import './index.scss';
 
 interface CourseContentModalProps extends ModalProps {
@@ -74,14 +74,14 @@ function CourseContentModal({ courseId, onSuccess, ...props }: CourseContentModa
     // 添加新章节
     const addChapter = async (step: StepType) => {
         try {
-            const sort = stepChapters[step]?.length || 0;
             const stepKey = Object.keys(StepType).find(key => StepType[key as keyof typeof StepType] === step) as StepType
+            const sort = stepChapters[stepKey]?.length || 0;
             const newChapter = await databases.createDocument<Chapter>(
                 DatabaseName.ai_stem,
                 CollectionName.chapter,
                 ID.unique(),
                 {
-                    content: '<p>请在此编辑内容</p>',
+                    content: '',
                     step: stepKey,
                     sort,
                     course: courseId

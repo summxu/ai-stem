@@ -247,7 +247,6 @@ function CourseAdmin() {
                 open={contentModalOpen}
                 onCancel={() => setContentModalOpen(false)}
                 courseId={currentCourseId}
-                onSuccess={() => message.success('课程内容保存成功')}
             />
             <div className="istem-course-admin-inner">
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
