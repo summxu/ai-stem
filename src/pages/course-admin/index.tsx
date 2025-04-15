@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Active, Course } from '../../../types/db.ts';
 import { BucketName, CollectionName, DatabaseName } from '../../../types/enums.ts';
 import { databases, storage } from '../../utils/appwrite.ts';
+import CourseContentModal from '../../components/course-content-modal';
 import './index.scss';
 
 interface Result {
@@ -58,6 +59,8 @@ function CourseAdmin() {
 
     const { tableProps, run } = useAntdTable(getTableData);
     const [open, setOpen] = useState(false);
+    const [contentModalOpen, setContentModalOpen] = useState(false);
+    const [currentCourseId, setCurrentCourseId] = useState<string>('');
     const [form] = Form.useForm();
     const [_, forceUpdate] = useState(0)
     const navigate = useNavigate();
@@ -92,7 +95,7 @@ function CourseAdmin() {
                     <Button onClick={() => navigate(`/course-preview/${course.$id}`)} size="small" color="primary" variant="text">
                         预览
                     </Button>
-                    <Button onClick={() => navigate(`/course-preview/${course.$id}`)} size="small" color="primary" variant="text">
+                    <Button onClick={() => handleCourseContent(course)} size="small" color="primary" variant="text">
                         课程内容
                     </Button>
                     <Button onClick={() => handleUpdate(course)} size="small" color="primary" variant="text">
@@ -105,6 +108,11 @@ function CourseAdmin() {
             ),
         },
     ];
+
+    const handleCourseContent = (course: Course) => {
+        setCurrentCourseId(course.$id);
+        setContentModalOpen(true);
+    };
 
     const handleDelete = async (course: Course) => {
         Modal.confirm({
@@ -235,6 +243,12 @@ function CourseAdmin() {
                     <Form.Item noStyle name="active" />
                 </Form>
             </Modal>
+            <CourseContentModal
+                open={contentModalOpen}
+                onCancel={() => setContentModalOpen(false)}
+                courseId={currentCourseId}
+                onSuccess={() => message.success('课程内容保存成功')}
+            />
             <div className="istem-course-admin-inner">
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
                     <p className="course-title">{activeId ? activeName : '所有课程'}</p>

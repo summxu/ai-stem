@@ -56,13 +56,23 @@ const LICENSE_KEY = 'GPL'; // or <YOUR_LICENSE_KEY>.
 
 interface CKeditorProps {
     initialData: string;
+    value?: string;
     onChange: (data: EventInfo<string, unknown>, editor: ClassicEditor) => void;
     onButtonExecuted?: (event: { command: string; blockType?: string; buttonName: string }) => void;
 }
 
-function CKeditor({ initialData, onChange }: CKeditorProps) {
+function CKeditor({ initialData, value, onChange }: CKeditorProps) {
+    // 使用value属性（如果提供）或initialData作为编辑器的初始内容
+    const editorContent = value || initialData;
     const editorContainerRef = useRef<HTMLDivElement>(null);
     const editorRef = useRef<ClassicEditor | null>(null);
+    
+    // 当value属性变化时更新编辑器内容
+    useEffect(() => {
+        if (editorRef.current && value !== undefined && value !== editorRef.current.data.get()) {
+            editorRef.current.data.set(value);
+        }
+    }, [value]);
     const [eventParams, setEventParams] = useState({
         command: '',
         blockType: 'choice' as InteractionType,
@@ -225,7 +235,7 @@ function CKeditor({ initialData, onChange }: CKeditorProps) {
                         'resizeImage',
                     ],
                 },
-                initialData: initialData,
+                initialData: editorContent,
                 language: 'zh',
                 licenseKey: LICENSE_KEY,
                 link: {

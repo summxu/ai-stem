@@ -8,6 +8,9 @@ function Footer() {
         if (path === '/course-preview/active-admin') {
             return '#F4F7FA';
         }
+        if (path.includes('/course-preview/course-admin')) {
+            return '#F4F7FA';
+        }
         if (path === '/') {
             return 'transparent';
         }
@@ -44,7 +47,7 @@ function Footer() {
                         <div className="green-circle" />
                     </div>
                     <div className="disclaimer-wrapper">
-                        <span className="disclaimer-text">本资料所表达的任何观点、发现、结论或建议均为作者个人观点。</span>
+                        <span className="disclaimer-text">Powered by Dr. Sun Daner Team；由 Sun Daner 博士团队提供</span>
                     </div>
                 </div>
 
