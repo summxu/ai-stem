@@ -20,8 +20,13 @@ function Footer() {
             return '-60px';
         }
     })();
+    const display = (() => {
+        if (path.includes('/course-preview/course-learning')) {
+            return 'none';
+        }
+    })();
     return (
-        <div style={{ background, marginTop }} className="istem-footer-box">
+        <div style={{ background, marginTop, display }} className="istem-footer-box">
             <div className="footer-container">
                 <div className="footer-left">
                     <div className="logo-wrapper">

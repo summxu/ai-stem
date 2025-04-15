@@ -10,6 +10,7 @@ import '@ant-design/v5-patch-for-react-19';
 import CourseAdmin from './pages/course-admin';
 import CoursePreview from './pages/course-preview';
 import ActiveAdmin from './pages/active-admin';
+import CourseLearning from './pages/course-learning/index.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <UserProvider>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="course-preview" element={<CoursePreview />} />
                     <Route path="course-preview/active-admin" element={<ActiveAdmin />} />
                     <Route path="course-preview/course-admin/:activeId" element={<CourseAdmin />} />
+                    <Route path="course-preview/course-learning/:courseId/:chapterId?" element={<CourseLearning />} />
                     <Route path="introduce" element={<Introduce />} />
                 </Route>
             </Routes>

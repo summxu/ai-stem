@@ -1,0 +1,72 @@
+.istem-course-learning-box {
+    display: flex;
+
+    .learning-left-box {
+        width: 350px;
+        height: calc(100vh - 60px);
+        background: #57509E;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .learning-left-item {
+        height: 48px;
+        background: #463E98;
+        border-radius: 8px;
+        font-family: SourceHanSansCN, SourceHanSansCN;
+        font-weight: 500;
+        font-size: 16px;
+        color: #FFFFFF;
+        line-height: 24px;
+        text-align: justify;
+        font-style: normal;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .learning-left-title {
+        height: 23px;
+        font-family: SourceHanSansCN, SourceHanSansCN;
+        font-weight: 500;
+        font-size: 18px;
+        color: #FFFFFF;
+        line-height: 27px;
+        letter-spacing: 1px;
+        font-style: normal;
+        margin-bottom: 25px;
+    }
+
+    .learning-center-box {
+        height: calc(100vh - 60px);
+        background: #F4F7FA;
+        display: flex;
+        justify-content: space-between;
+        flex: 1;
+        display: flex;
+        padding: 20px;
+    }
+
+    .learning-center-left {
+        width: 1000px;
+        height: 100%;
+        background: #FFFFFF;
+        box-shadow: 0px 2px 36px 0px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 30px;
+    }
+
+    .learning-center-left::-webkit-scrollbar {
+        display: none; 
+    }
+
+    .learning-right-chat {
+        flex: 1;
+        height: 100%;
+        background: #FFFFFF;
+        box-shadow: 0px 2px 36px 0px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 30px;
+        margin-left: 20px;
+    }
+}
