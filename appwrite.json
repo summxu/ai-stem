@@ -282,18 +282,6 @@
                     "default": null
                 },
                 {
-                    "key": "learning",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0d09400061c9c9fe0",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "chapter",
-                    "onDelete": "cascade",
-                    "side": "parent"
-                },
-                {
                     "key": "course",
                     "type": "relationship",
                     "required": false,
@@ -328,18 +316,6 @@
                     "min": -9223372036854775808,
                     "max": 9223372036854775807,
                     "default": null
-                },
-                {
-                    "key": "interaction",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f65f0300181798df20",
-                    "relationType": "manyToOne",
-                    "twoWay": true,
-                    "twoWayKey": "chapter",
-                    "onDelete": "cascade",
-                    "side": "child"
                 }
             ],
             "indexes": [
@@ -467,11 +443,11 @@
                     "required": false,
                     "array": false,
                     "relatedCollection": "67f0b8cb00277ce1d71b",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "learning",
+                    "relationType": "manyToOne",
+                    "twoWay": false,
+                    "twoWayKey": "67ff2170001244ee1f1e",
                     "onDelete": "cascade",
-                    "side": "child"
+                    "side": "parent"
                 },
                 {
                     "key": "interaction",
@@ -479,11 +455,11 @@
                     "required": false,
                     "array": false,
                     "relatedCollection": "67f65f0300181798df20",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "learning",
+                    "relationType": "manyToOne",
+                    "twoWay": false,
+                    "twoWayKey": "67ff217e0033428a159c",
                     "onDelete": "cascade",
-                    "side": "child"
+                    "side": "parent"
                 }
             ],
             "indexes": []
@@ -550,27 +526,6 @@
                     "default": null
                 },
                 {
-                    "key": "learning",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0d09400061c9c9fe0",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "interaction",
-                    "onDelete": "cascade",
-                    "side": "parent"
-                },
-                {
-                    "key": "answer",
-                    "type": "integer",
-                    "required": false,
-                    "array": false,
-                    "min": 0,
-                    "max": 255,
-                    "default": null
-                },
-                {
                     "key": "attachment",
                     "type": "string",
                     "required": false,
@@ -579,16 +534,13 @@
                     "default": null
                 },
                 {
-                    "key": "chapter",
-                    "type": "relationship",
+                    "key": "answer",
+                    "type": "integer",
                     "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0b8cb00277ce1d71b",
-                    "relationType": "manyToOne",
-                    "twoWay": true,
-                    "twoWayKey": "interaction",
-                    "onDelete": "cascade",
-                    "side": "parent"
+                    "array": true,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807,
+                    "default": null
                 }
             ],
             "indexes": [

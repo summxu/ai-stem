@@ -108,7 +108,7 @@ function InteractionModal(props: InteractionModalProps) {
                                                   },
                                               ]}
                                               noStyle>
-                                              <Input placeholder="请输入选项内容" onChange={handleOptionsChange} />
+                                              <Input style={{width:'calc(100% - 110px)'}} placeholder="请输入选项内容" onChange={handleOptionsChange} />
                                           </Form.Item>
                                           <Button
                                               icon={<ArrowUpOutlined />}

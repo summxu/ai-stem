@@ -357,7 +357,7 @@ function CourseLearning() {
                                 <p className='course-title'>{course.name}课程介绍：</p>
                                 <p className='course-duration'>学习时长：{course.duration}</p>
                             </Flex>
-                            <p className='course-desc'>
+                            <p className='course-desc' style={{ whiteSpace: 'pre-wrap' }}>
                                 {course.description}
                             </p>
                             <Flex justify='flex-end'>
