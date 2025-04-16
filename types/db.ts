@@ -20,7 +20,7 @@ export interface Active extends Models.Document {
     description?: string;
     grade?: Grade;
     subject: Subject;
-    course?: Course[]; // 关系字段
+    course: Course[]; // 关系字段
 }
 
 // Course 集合
@@ -30,7 +30,7 @@ export interface Course extends Models.Document {
     duration: string;
     attachment: string; // URL格式
     active?: string; // 关系字段
-    chapter?: Chapter[]; // 关系字段
+    chapter: Chapter[]; // 关系字段
 }
 
 // Chapter 集合
@@ -43,7 +43,7 @@ export interface Chapter extends Models.Document {
 
 // Learning 集合
 export interface Learning extends Models.Document {
-    answer?: string[]; // 数组类型
+    answer: string[]; // 数组类型
     chapter?: Chapter; // 关系字段
     interaction?: Interaction; // 关系字段
 }
@@ -51,7 +51,7 @@ export interface Learning extends Models.Document {
 // Interaction 集合
 export interface Interaction extends Models.Document {
     title: string;
-    options?: string[]; // 数组类型
+    options: string[]; // 数组类型
     answer?: number;
     content?: string;
     attachment?: string; // URL格式

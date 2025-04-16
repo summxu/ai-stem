@@ -15,7 +15,7 @@ function CourseLearning() {
     const [course, setCourse] = useState<Course>();
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const [currentChapter, setCurrentChapter] = useState<Chapter>();
-    const [learningRecords, setLearningRecords] = useState<{[key: string]: Learning}>({});
+    const [learningRecords, setLearningRecords] = useState<{ [key: string]: Learning }>({});
 
     const transform = (node: any, index: number) => {
         if (node.type === 'tag' && node.name === 'div' && node.attribs['data-locked'] === 'true') {
@@ -24,11 +24,11 @@ function CourseLearning() {
             // 查找该交互题是否有学习记录
             const learningRecord = Object.values(learningRecords).find(record => record.interaction?.$id === dataId);
             return (
-                <InteractionRender 
-                    key={dataId} 
-                    id={dataId} 
-                    savedAnswer={learningRecord?.answer} 
-                    disabled={!!learningRecord} 
+                <InteractionRender
+                    key={dataId}
+                    id={dataId}
+                    savedAnswer={learningRecord?.answer}
+                    disabled={!!learningRecord}
                     onAnswer={(answer) => handleInteractionAnswer(dataId, answer)}
                 />
             );
@@ -40,36 +40,19 @@ function CourseLearning() {
         const fetchCourse = async () => {
             if (!courseId) return;
             try {
-                const response = await databases.getDocument(
+                const response = await databases.getDocument<Course>(
                     DatabaseName.ai_stem,
                     CollectionName.course,
                     courseId
                 );
-                setCourse(response as Course);
+                setCourse(response);
+                setChapters(response.chapter.sort((a, b) => a.sort - b.sort));
             } catch (error) {
                 console.error('Error fetching course:', error);
             }
         };
 
-        const fetchChapters = async () => {
-            if (!courseId) return;
-            try {
-                const response = await databases.listDocuments(
-                    DatabaseName.ai_stem,
-                    CollectionName.chapter,
-                    [
-                        Query.equal('course', [courseId]),
-                        Query.orderAsc('sort')
-                    ]
-                );
-                setChapters(response.documents as Chapter[]);
-            } catch (error) {
-                console.error('Error fetching chapters:', error);
-            }
-        };
-
         fetchCourse();
-        fetchChapters();
     }, [courseId]);
 
     useEffect(() => {
@@ -80,14 +63,14 @@ function CourseLearning() {
             if (chapter) setCurrentChapter(chapter);
         }
     }, [chapterId, chapters]);
-    
+
     // 获取当前章节的学习记录
     useEffect(() => {
         if (chapterId) {
             fetchLearningRecords(chapterId);
         }
     }, [chapterId]);
-    
+
     // 获取学习记录
     const fetchLearningRecords = async (chapterId: string) => {
         try {
@@ -98,14 +81,14 @@ function CourseLearning() {
                     Query.equal('chapter', [chapterId])
                 ]
             );
-            
-            const records: {[key: string]: Learning} = {};
+
+            const records: { [key: string]: Learning } = {};
             (response.documents as Learning[]).forEach(record => {
                 if (record.interaction) {
                     records[record.interaction.$id] = record;
                 }
             });
-            
+
             setLearningRecords(records);
         } catch (error) {
             console.error('Error fetching learning records:', error);
@@ -124,7 +107,7 @@ function CourseLearning() {
                     Query.limit(1) // 只需要确认是否存在，限制返回数量
                 ]
             );
-            
+
             // 如果没有学习记录，才创建新的
             if (response.documents.length === 0) {
                 await databases.createDocument(
@@ -140,7 +123,7 @@ function CourseLearning() {
             console.error('Error creating learning record:', error);
         }
     };
-    
+
     // 处理交互题答案提交
     const handleInteractionAnswer = async (interactionId: string, answer: string) => {
         try {
@@ -155,7 +138,7 @@ function CourseLearning() {
                     answer: answer.split(',') // 将答案字符串转为数组
                 }
             );
-            
+
             // 更新本地学习记录状态
             setLearningRecords(prev => ({
                 ...prev,
