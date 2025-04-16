@@ -75,7 +75,6 @@ function CourseContentModal({ courseId, onSuccess, ...props }: CourseContentModa
     const addChapter = async (step: StepType) => {
         try {
             const stepKey = Object.keys(StepType).find(key => StepType[key as keyof typeof StepType] === step) as StepType
-            const sort = stepChapters[step]?.length || 0;
             const newChapter = await databases.createDocument<Chapter>(
                 DatabaseName.ai_stem,
                 CollectionName.chapter,
@@ -83,7 +82,7 @@ function CourseContentModal({ courseId, onSuccess, ...props }: CourseContentModa
                 {
                     content: '',
                     step: stepKey,
-                    sort,
+                    sort: 0,
                     course: courseId
                 }
             );
@@ -139,14 +138,17 @@ function CourseContentModal({ courseId, onSuccess, ...props }: CourseContentModa
             const formValues = form.getFieldsValue();
 
             // 批量更新所有章节
-            const updatePromises = Object.keys(formValues).map(key => {
+            const updatePromises = Object.keys(formValues).map((key, index) => {
                 if (key.startsWith('chapter_')) {
                     const chapterId = key.replace('chapter_', '');
                     return databases.updateDocument<Chapter>(
                         DatabaseName.ai_stem,
                         CollectionName.chapter,
                         chapterId,
-                        { content: formValues[key] }
+                        {
+                            content: formValues[key],
+                            sort: index
+                        }
                     );
                 }
                 return Promise.resolve();

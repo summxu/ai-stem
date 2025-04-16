@@ -23,7 +23,7 @@ interface SortableItemProps {
 
 const SortableItem: React.FC<SortableItemProps> = ({ id, option, isSubmitted }) => {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-    
+
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
@@ -31,14 +31,14 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, option, isSubmitted }) 
         position: 'relative' as const,
         zIndex: isDragging ? 1 : 0,
     };
-    
+
     return (
         <div ref={setNodeRef} style={style} className="flow-node">
             <div className="flow-item">
                 <div style={{ flex: 1, fontSize: 16 }}>{option}</div>
                 {!isSubmitted && (
-                    <div 
-                        {...attributes} 
+                    <div
+                        {...attributes}
                         {...listeners}
                         style={{ cursor: 'grab', padding: '0 8px' }}
                     >
@@ -55,7 +55,7 @@ const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, on
     const [sortedOptions, setSortedOptions] = useState<string[]>([]);
     // 正确的选项顺序
     const [correctOrder, setCorrectOrder] = useState<string[]>([]);
-    
+
     // 配置传感器
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -78,13 +78,13 @@ const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, on
             setCorrectOrder([...data.options]);
         }
     }, [data.options, savedAnswer]);
-    
+
     // 处理拖拽结束事件
     const handleDragEnd = (event: DragEndEvent) => {
         if (isSubmitted || disabled) return;
-        
+
         const { active, over } = event;
-        
+
         if (over && active.id !== over.id) {
             setSortedOptions((items) => {
                 const oldIndex = items.findIndex(item => item === active.id);
@@ -103,14 +103,14 @@ const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, on
 
     return (
         <div className="flow-interaction-container">
-            <DndContext 
+            <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragEnd={handleDragEnd}
             >
                 <div className="flow-chart">
-                    <SortableContext 
-                        items={sortedOptions} 
+                    <SortableContext
+                        items={sortedOptions}
                         strategy={verticalListSortingStrategy}
                     >
                         {sortedOptions.map((option, index) => (
@@ -120,10 +120,10 @@ const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, on
                                         <div className="flow-arrow"></div>
                                     </div>
                                 )}
-                                <SortableItem 
-                                    id={option} 
-                                    option={option} 
-                                    isSubmitted={isSubmitted || disabled} 
+                                <SortableItem
+                                    id={option}
+                                    option={option}
+                                    isSubmitted={isSubmitted || disabled}
                                 />
                             </React.Fragment>
                         ))}

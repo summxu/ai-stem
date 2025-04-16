@@ -1,4 +1,4 @@
-import { Button, Flex, Form, Input, InputNumber, message, Modal, ModalProps } from 'antd';
+import { Button, Flex, Form, Input, InputNumber, message, Modal, ModalProps, Checkbox, Space } from 'antd';
 import { Fragment, useEffect, useState } from 'react';
 import type { Interaction, InteractionType } from '../../../types/db';
 import { databases } from '../../utils/appwrite.ts';
@@ -16,17 +16,23 @@ function InteractionModal(props: InteractionModalProps) {
     const [form] = Form.useForm();
     const [optionsCount, setOptionsCount] = useState<number>(0);
 
-    // 当options变化时更新答案的最大值
+    // 当options变化时更新选项数量和检查答案
     const handleOptionsChange = () => {
         const options = form.getFieldValue('options');
         setOptionsCount(options?.length || 0);
-        // 如果当前答案大于选项数量，则重置答案
-        const currentAnswer = form.getFieldValue('answer');
-        if (currentAnswer > options?.length) {
-            form.setFieldValue('answer', options?.length);
+        
+        // 检查答案是否在选项范围内
+        const currentAnswers = form.getFieldValue('answer') || [];
+        if (Array.isArray(currentAnswers) && currentAnswers.length > 0) {
+            // 过滤掉不在选项范围内的答案
+            const validAnswers = currentAnswers.filter((ans: number) => ans <= options?.length);
+            if (validAnswers.length !== currentAnswers.length) {
+                form.setFieldValue('answer', validAnswers);
+            }
         }
+        
         if (!options?.length) {
-            form.setFieldValue('answer', undefined);
+            form.setFieldValue('answer', []);
         }
     };
 
@@ -170,9 +176,23 @@ function InteractionModal(props: InteractionModalProps) {
                     <Input.TextArea rows={4} placeholder="请输入填空内容" />
                   </Form.Item>}
 
-                {props.type === 'choice' && <Form.Item name="answer" label="正确答案" tooltip="正确答案的序号，从1开始">
-                  <InputNumber min={1} max={optionsCount || 1} placeholder="请输入正确答案的序号"
-                               style={{ width: '100%' }} />
+                {props.type === 'choice' && <Form.Item name="answer" label="正确答案" tooltip="可选择多个正确答案" rules={[
+                    {
+                        validator: async (_, value) => {
+                            if (!value || value.length === 0) {
+                                return Promise.reject(new Error('请至少选择一个正确答案'));
+                            }
+                            return Promise.resolve();
+                        },
+                    },
+                ]}>
+                  <Checkbox.Group style={{ width: '100%' }}>
+                    <Space direction="vertical" style={{ width: '100%' }}>
+                      {form.getFieldValue('options')?.map((option: string, index: number) => (
+                        <Checkbox key={index} value={index + 1}>{option}</Checkbox>
+                      ))}
+                    </Space>
+                  </Checkbox.Group>
                 </Form.Item>}
 
                 {(props.type === 'choice' || props.type === 'flow' || props.type === 'gap') &&

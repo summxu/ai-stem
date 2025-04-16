@@ -21,7 +21,6 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAn
     const [data, setData] = useState<Interaction>();
     useEffect(() => {
         const getData = async () => {
-            console.log(123)
             try {
                 const interactionData = await databases.getDocument<Interaction>(
                     DatabaseName.ai_stem,
@@ -48,9 +47,38 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAn
         let isAnswerCorrect = false;
 
         if (interactionData.type === 'choice') {
-            // 选择题判断
-            const selectedIndex = parseInt(answer[0]) - 1;
-            isAnswerCorrect = selectedIndex === interactionData.answer! - 1;
+            // 选择题判断 - 支持多选
+            if (Array.isArray(interactionData.answer)) {
+                // 多选题判断
+                if (answer.length === interactionData.answer.length) {
+                    // 将用户答案转换为索引数组
+                    const answerIndexes: number[] = [];
+                    
+                    answer.forEach(ans => {
+                        const index = parseInt(ans);
+                        if (!isNaN(index)) {
+                            answerIndexes.push(index);
+                        } else if (interactionData.options) {
+                            // 如果答案是选项文本，查找对应的索引
+                            const optIndex = interactionData.options.findIndex(opt => opt === ans);
+                            if (optIndex !== -1) {
+                                answerIndexes.push(optIndex + 1);
+                            }
+                        }
+                    });
+                    
+                    // 检查所有答案是否匹配
+                    isAnswerCorrect = interactionData.answer.every(ans => 
+                        answerIndexes.includes(ans)
+                    ) && answerIndexes.every(idx => 
+                        interactionData.answer!.includes(idx)
+                    );
+                }
+            } else {
+                // 兼容旧的单选逻辑
+                const selectedIndex = parseInt(answer[0]) - 1;
+                isAnswerCorrect = selectedIndex === interactionData.answer! - 1;
+            }
         } else if (interactionData.type === 'gap' && interactionData.content) {
             // 填空题判断
             const correctAnswers = interactionData.content
@@ -158,7 +186,9 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAn
                     message={
                         isCorrect ? '恭喜你回答正确🎉' :
                             data.type === 'choice' ?
-                                `正确答案是：${data?.options![data.answer! - 1]}` :
+                                Array.isArray(data.answer) ?
+                                    `正确答案是：${data.answer.map(ans => data?.options![ans - 1]).join(', ')}` :
+                                    `正确答案是：${data?.options![data.answer! - 1]}` :
                                 data.type === 'gap' && data.content ?
                                     `正确答案是：${data.content.match(/\{\{([^}]*)\}\}/g)?.map(match => match.slice(2, -2)).join(', ')}` :
                                     '答案不正确'
