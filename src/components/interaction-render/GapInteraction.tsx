@@ -6,10 +6,12 @@ interface GapInteractionProps {
     data: Interaction;
     isSubmitted: boolean;
     onSubmit: (answers: string[], isCorrect: boolean) => void;
+    savedAnswer?: string[];
+    disabled?: boolean;
 }
 
-const GapInteraction: React.FC<GapInteractionProps> = ({ data, isSubmitted, onSubmit }) => {
-    const [gapAnswers, setGapAnswers] = useState<string[]>([]);
+const GapInteraction: React.FC<GapInteractionProps> = ({ data, isSubmitted, onSubmit, savedAnswer, disabled = false }) => {
+    const [gapAnswers, setGapAnswers] = useState<string[]>(savedAnswer || []);
     const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
     const [isEssayQuestion, setIsEssayQuestion] = useState<boolean>(false);
 
@@ -35,7 +37,18 @@ const GapInteraction: React.FC<GapInteractionProps> = ({ data, isSubmitted, onSu
         // 判断是否为简答题（只有一个填空）
         setIsEssayQuestion(matchCount === 1);
         setCorrectAnswers(answers);
-        setGapAnswers(new Array(answers.length).fill(''));
+        
+        // 如果没有保存的答案，则初始化为空数组
+        if (!savedAnswer || savedAnswer.length === 0) {
+            setGapAnswers(new Array(answers.length).fill(''));
+        } else {
+            // 确保savedAnswer长度与答案数量匹配
+            const filledAnswers = [...savedAnswer];
+            while (filledAnswers.length < answers.length) {
+                filledAnswers.push('');
+            }
+            setGapAnswers(filledAnswers);
+        }
     };
 
     // 渲染填空题内容
@@ -66,7 +79,7 @@ const GapInteraction: React.FC<GapInteractionProps> = ({ data, isSubmitted, onSu
                         className="gap-essay-input"
                         key={`gap-${index}`}
                         data-index={index}
-                        disabled={isSubmitted}
+                        disabled={isSubmitted || disabled}
                         value={gapAnswers[index]}
                         autoSize={{ minRows: 3, maxRows: 6 }}
                         style={{ width: '100%', margin: '8px 0' }}
@@ -85,7 +98,7 @@ const GapInteraction: React.FC<GapInteractionProps> = ({ data, isSubmitted, onSu
                         className="gap-input"
                         key={`gap-${index}`}
                         data-index={index}
-                        disabled={isSubmitted}
+                        disabled={isSubmitted || disabled}
                         value={gapAnswers[index]}
                         onChange={(e) => {
                             const dataIndex = Number(e.target.getAttribute('data-index'));
@@ -126,7 +139,7 @@ const GapInteraction: React.FC<GapInteractionProps> = ({ data, isSubmitted, onSu
     return (
         <div>
             {renderGapContent()}
-            {!isSubmitted && gapAnswers.some(answer => answer.trim() !== '') && (
+            {!isSubmitted && !disabled && gapAnswers.some(answer => answer.trim() !== '') && (
                 <div style={{ marginTop: 16 }}><Button type="primary" onClick={handleSubmit}> 确认答案 </Button></div>
             )}
         </div>

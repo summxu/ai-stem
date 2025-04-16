@@ -3,7 +3,7 @@ import { ID, Query } from 'appwrite';
 import { useEffect, useState } from 'react';
 import ReactHtmlParser, { convertNodeToElement } from 'react-html-parser';
 import { useNavigate, useParams } from 'react-router';
-import { Chapter, Course } from '../../../types/db';
+import { Chapter, Course, Learning } from '../../../types/db';
 import { CollectionName, DatabaseName, StepType } from '../../../types/enums';
 import InteractionRender from '../../components/interaction-render';
 import { databases } from '../../utils/appwrite';
@@ -15,12 +15,23 @@ function CourseLearning() {
     const [course, setCourse] = useState<Course>();
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const [currentChapter, setCurrentChapter] = useState<Chapter>();
+    const [learningRecords, setLearningRecords] = useState<{[key: string]: Learning}>({});
 
     const transform = (node: any, index: number) => {
         if (node.type === 'tag' && node.name === 'div' && node.attribs['data-locked'] === 'true') {
             // 转换自定义解析题
             const dataId: string = node.attribs['data-id'];
-            return <InteractionRender key={index} id={dataId} />;
+            // 查找该交互题是否有学习记录
+            const learningRecord = Object.values(learningRecords).find(record => record.interaction?.$id === dataId);
+            return (
+                <InteractionRender 
+                    key={dataId} 
+                    id={dataId} 
+                    savedAnswer={learningRecord?.answer} 
+                    disabled={!!learningRecord} 
+                    onAnswer={(answer) => handleInteractionAnswer(dataId, answer)}
+                />
+            );
         }
         return convertNodeToElement(node, index, transform);
     };
@@ -69,36 +80,106 @@ function CourseLearning() {
             if (chapter) setCurrentChapter(chapter);
         }
     }, [chapterId, chapters]);
-
-    const createLearningRecord = async (chapterId: string) => {
+    
+    // 获取当前章节的学习记录
+    useEffect(() => {
+        if (chapterId) {
+            fetchLearningRecords(chapterId);
+        }
+    }, [chapterId]);
+    
+    // 获取学习记录
+    const fetchLearningRecords = async (chapterId: string) => {
         try {
-            await databases.createDocument(
+            const response = await databases.listDocuments(
                 DatabaseName.ai_stem,
                 CollectionName.leaning,
-                ID.unique(),
-                {
-                    chapter: chapterId
-                }
+                [
+                    Query.equal('chapter', [chapterId])
+                ]
             );
+            
+            const records: {[key: string]: Learning} = {};
+            (response.documents as Learning[]).forEach(record => {
+                if (record.interaction) {
+                    records[record.interaction.$id] = record;
+                }
+            });
+            
+            setLearningRecords(records);
+        } catch (error) {
+            console.error('Error fetching learning records:', error);
+        }
+    };
+
+    // 检查章节是否已有学习记录，如果没有则创建
+    const createLearningRecord = async (chapterId: string) => {
+        try {
+            // 先查询该章节是否已有学习记录
+            const response = await databases.listDocuments(
+                DatabaseName.ai_stem,
+                CollectionName.leaning,
+                [
+                    Query.equal('chapter', [chapterId]),
+                    Query.limit(1) // 只需要确认是否存在，限制返回数量
+                ]
+            );
+            
+            // 如果没有学习记录，才创建新的
+            if (response.documents.length === 0) {
+                await databases.createDocument(
+                    DatabaseName.ai_stem,
+                    CollectionName.leaning,
+                    ID.unique(),
+                    {
+                        chapter: chapterId
+                    }
+                );
+            }
         } catch (error) {
             console.error('Error creating learning record:', error);
         }
     };
+    
+    // 处理交互题答案提交
+    const handleInteractionAnswer = async (interactionId: string, answer: string) => {
+        try {
+            // 创建学习记录并保存答案
+            const response = await databases.createDocument(
+                DatabaseName.ai_stem,
+                CollectionName.leaning,
+                ID.unique(),
+                {
+                    chapter: chapterId,
+                    interaction: interactionId,
+                    answer: answer.split(',') // 将答案字符串转为数组
+                }
+            );
+            
+            // 更新本地学习记录状态
+            setLearningRecords(prev => ({
+                ...prev,
+                [interactionId]: response as Learning
+            }));
+        } catch (error) {
+            console.error('Error saving interaction answer:', error);
+        }
+    };
 
-    const handleStartLearning = () => {
+    const handleStartLearning = async () => {
         if (chapters.length > 0) {
             const firstChapter = chapters[0];
-            createLearningRecord(firstChapter.$id);
+            await createLearningRecord(firstChapter.$id);
             navigate(`/course-preview/course-learning/${courseId}/${firstChapter.$id}`);
         }
     };
 
-    const handleNextChapter = () => {
+    const handleNextChapter = async () => {
         if (!currentChapter || !chapters.length) return;
         const currentIndex = chapters.findIndex(c => c.$id === currentChapter.$id);
         if (currentIndex < chapters.length - 1) {
             const nextChapter = chapters[currentIndex + 1];
-            createLearningRecord(nextChapter.$id);
+            await createLearningRecord(nextChapter.$id);
             navigate(`/course-preview/course-learning/${courseId}/${nextChapter.$id}`);
         }
     };

@@ -1,5 +1,5 @@
 import { Button, Upload, message } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Interaction } from '../../../types/db';
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadFile, UploadProps } from 'antd';
@@ -11,9 +11,11 @@ interface FileInteractionProps {
     data: Interaction;
     isSubmitted: boolean;
     onSubmit: (answer: string, isCorrect: boolean) => void;
+    savedAnswer?: string[];
+    disabled?: boolean;
 }
 
-const FileInteraction: React.FC<FileInteractionProps> = ({ isSubmitted, onSubmit }) => {
+const FileInteraction: React.FC<FileInteractionProps> = ({ isSubmitted, onSubmit, savedAnswer, disabled = false }) => {
     const [fileList, setFileList] = useState<UploadFile[]>([]);
 
     // 文件上传题目没有标准答案，只要提交了文件就视为完成
@@ -27,8 +29,24 @@ const FileInteraction: React.FC<FileInteractionProps> = ({ isSubmitted, onSubmit
         }
     };
 
+    // 初始化时如果有保存的答案，显示文件名信息
+    useEffect(() => {
+        if (savedAnswer && savedAnswer.length > 0) {
+            // 从savedAnswer中提取文件名，创建模拟的文件列表
+            const fileNames = savedAnswer[0].split(',');
+            const mockFileList = fileNames.map((name, index) => ({
+                uid: `-${index}`,
+                name,
+                status: 'done',
+                url: '', // 没有实际URL，只显示文件名
+            })) as UploadFile[];
+            setFileList(mockFileList);
+        }
+    }, [savedAnswer]);
+
     const uploadProps: UploadProps = {
         onRemove: file => {
+            if (isSubmitted || disabled) return;
             const index = fileList.indexOf(file);
             const newFileList = fileList.slice();
             newFileList.splice(index, 1);
@@ -54,22 +72,24 @@ const FileInteraction: React.FC<FileInteractionProps> = ({ isSubmitted, onSubmit
             }
         },
         beforeUpload: file => {
+            if (isSubmitted || disabled) return false;
             setFileList([...fileList, file]);
+            return false;
         },
         listType: 'picture',
         fileList,
-        disabled: isSubmitted,
+        disabled: isSubmitted || disabled,
     };
 
     return (
         <div>
             <Upload {...uploadProps}>
-                {!isSubmitted && <Button icon={<UploadOutlined />}>
+                {!isSubmitted && !disabled && <Button icon={<UploadOutlined />}>
                   选择文件
                 </Button>}
             </Upload>
 
-            {!isSubmitted && fileList.length > 0 && (
+            {!isSubmitted && !disabled && fileList.length > 0 && (
                 <div style={{ marginTop: 16 }}><Button type="primary" onClick={handleSubmit}> 确认答案 </Button></div>
             )}
         </div>

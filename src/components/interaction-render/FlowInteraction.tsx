@@ -10,6 +10,8 @@ interface FlowInteractionProps {
     data: Interaction;
     isSubmitted: boolean;
     onSubmit: (answers: string[], isCorrect: boolean) => void;
+    savedAnswer?: string[];
+    disabled?: boolean;
 }
 
 // 可排序的单个流程项组件
@@ -48,7 +50,7 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, option, isSubmitted }) 
     );
 };
 
-const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, onSubmit }) => {
+const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, onSubmit, savedAnswer, disabled = false }) => {
     // 用户排序后的选项
     const [sortedOptions, setSortedOptions] = useState<string[]>([]);
     // 正确的选项顺序
@@ -64,17 +66,22 @@ const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, on
 
     useEffect(() => {
         if (data.options && data.options.length > 0) {
-            // 初始化时随机打乱选项顺序
-            const shuffled = [...data.options].sort(() => Math.random() - 0.5);
-            setSortedOptions(shuffled);
+            if (savedAnswer && savedAnswer.length > 0) {
+                // 如果有保存的答案，使用保存的答案顺序
+                setSortedOptions([...savedAnswer]);
+            } else {
+                // 初始化时随机打乱选项顺序
+                const shuffled = [...data.options].sort(() => Math.random() - 0.5);
+                setSortedOptions(shuffled);
+            }
             // 保存正确顺序
             setCorrectOrder([...data.options]);
         }
-    }, [data.options]);
+    }, [data.options, savedAnswer]);
     
     // 处理拖拽结束事件
     const handleDragEnd = (event: DragEndEvent) => {
-        if (isSubmitted) return;
+        if (isSubmitted || disabled) return;
         
         const { active, over } = event;
         
@@ -116,7 +123,7 @@ const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, on
                                 <SortableItem 
                                     id={option} 
                                     option={option} 
-                                    isSubmitted={isSubmitted} 
+                                    isSubmitted={isSubmitted || disabled} 
                                 />
                             </React.Fragment>
                         ))}
@@ -124,7 +131,7 @@ const FlowInteraction: React.FC<FlowInteractionProps> = ({ data, isSubmitted, on
                 </div>
             </DndContext>
 
-            {!isSubmitted && (
+            {!isSubmitted && !disabled && (
                 <div style={{ marginTop: 16 }}><Button type="primary" onClick={handleSubmit}> 确认答案 </Button></div>
             )}
         </div>

@@ -11,19 +11,21 @@ import GapInteraction from './GapInteraction.tsx';
 interface InteractionBaseProps {
     id: string;
     onAnswer?: (answer: string) => void;
+    savedAnswer?: string[];
+    disabled?: boolean;
 }
 
-const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer }) => {
-    const [isSubmitted, setIsSubmitted] = useState(false);
+const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAnswer, disabled = false }) => {
+    const [isSubmitted, setIsSubmitted] = useState(!!savedAnswer);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [data, setData] = useState<Interaction>();
-
     useEffect(() => {
         const getData = async () => {
+            console.log(123)
             try {
                 const interactionData = await databases.getDocument<Interaction>(
-                    DatabaseName.ai_stem, 
-                    CollectionName.interaction, 
+                    DatabaseName.ai_stem,
+                    CollectionName.interaction,
                     id
                 );
                 setData(interactionData);
@@ -33,6 +35,33 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer }) => {
         };
         getData();
     }, [id]);
+
+    useEffect(() => {
+        // 如果有保存的答案，检查是否正确
+        if (savedAnswer && savedAnswer.length > 0 && data) {
+            checkAnswerCorrect(savedAnswer, data);
+        }
+    }, [savedAnswer])
+
+    // 检查答案是否正确
+    const checkAnswerCorrect = (answer: string[], interactionData: Interaction) => {
+        let isAnswerCorrect = false;
+
+        if (interactionData.type === 'choice') {
+            // 选择题判断
+            const selectedIndex = parseInt(answer[0]) - 1;
+            isAnswerCorrect = selectedIndex === interactionData.answer! - 1;
+        } else if (interactionData.type === 'gap' && interactionData.content) {
+            // 填空题判断
+            const correctAnswers = interactionData.content
+                .match(/\{\{([^}]*)\}\}/g)
+                ?.map(match => match.slice(2, -2)) || [];
+            isAnswerCorrect = correctAnswers.every((correct, index) =>
+                answer[index] && answer[index].trim().toLowerCase() === correct.trim().toLowerCase());
+        }
+
+        setIsCorrect(isAnswerCorrect);
+    };
 
     // 处理加载状态和不支持的类型
     if (!data) {
@@ -70,34 +99,42 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer }) => {
         switch (data.type) {
             case 'choice':
                 return (
-                    <ChoiceInteraction 
-                        data={data} 
-                        isSubmitted={isSubmitted} 
-                        onSubmit={handleSubmit} 
+                    <ChoiceInteraction
+                        data={data}
+                        isSubmitted={isSubmitted}
+                        onSubmit={handleSubmit}
+                        savedAnswer={savedAnswer}
+                        disabled={disabled}
                     />
                 );
             case 'gap':
                 return (
-                    <GapInteraction 
-                        data={data} 
-                        isSubmitted={isSubmitted} 
-                        onSubmit={handleSubmit} 
+                    <GapInteraction
+                        data={data}
+                        isSubmitted={isSubmitted}
+                        onSubmit={handleSubmit}
+                        savedAnswer={savedAnswer}
+                        disabled={disabled}
                     />
                 );
             case 'flow':
                 return (
-                    <FlowInteraction 
-                        data={data} 
-                        isSubmitted={isSubmitted} 
-                        onSubmit={handleSubmit} 
+                    <FlowInteraction
+                        data={data}
+                        isSubmitted={isSubmitted}
+                        onSubmit={handleSubmit}
+                        savedAnswer={savedAnswer}
+                        disabled={disabled}
                     />
                 );
             case 'file':
                 return (
-                    <FileInteraction 
-                        data={data} 
-                        isSubmitted={isSubmitted} 
-                        onSubmit={handleSubmit} 
+                    <FileInteraction
+                        data={data}
+                        isSubmitted={isSubmitted}
+                        onSubmit={handleSubmit}
+                        savedAnswer={savedAnswer}
+                        disabled={disabled}
                     />
                 );
             default:
@@ -120,11 +157,11 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer }) => {
                     style={{ padding: '8px 12px' }}
                     message={
                         isCorrect ? '恭喜你回答正确🎉' :
-                        data.type === 'choice' ?
-                            `正确答案是：${data?.options![data.answer! - 1]}` :
-                            data.type === 'gap' && data.content ?
-                                `正确答案是：${data.content.match(/\{\{([^}]*)\}\}/g)?.map(match => match.slice(2, -2)).join(', ')}` :
-                                '答案不正确'
+                            data.type === 'choice' ?
+                                `正确答案是：${data?.options![data.answer! - 1]}` :
+                                data.type === 'gap' && data.content ?
+                                    `正确答案是：${data.content.match(/\{\{([^}]*)\}\}/g)?.map(match => match.slice(2, -2)).join(', ')}` :
+                                    '答案不正确'
                     }
                     description={`答案解析：${data?.explain}`}
                     type={isCorrect ? 'success' : 'error'}
