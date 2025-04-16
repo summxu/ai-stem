@@ -23,6 +23,25 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 10px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: #5A51A8;
+        }
+
+        &.active {
+            background: #FF5F2F;
+        }
+
+        .step-completed-icon {
+            position: absolute;
+            right: 15px;
+            color: #4CAF50;
+            font-size: 18px;
+        }
     }
 
     .learning-left-title {
@@ -102,15 +121,16 @@
         text-align: justify;
         line-height: 1.6;
 
-        .course-img {
-            float: left;
-            width: 400px;
-            height: 286px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin: 0 20px 20px 0;
-        }
+    }
+
+    .course-img {
+        float: left;
+        width: 300px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-right: 20px;
     }
 
     .course-duration {
