@@ -1,4 +1,5 @@
 import './index.scss';
+import LogoImage from '../../assets/logo.png';
 import { useLocation } from 'react-router';
 
 function Footer() {
@@ -31,23 +32,12 @@ function Footer() {
                 <div className="footer-left">
                     <div className="logo-wrapper">
                         <div className="logo-content">
-                            <div className="logo-icon">
-                                <img
-                                    className="logo-icon-top"
-                                    src={
-                                        'https://lanhu-oss-2537-2.lanhuapp.com/SketchPngf40c33c2f8e50d2a194bfdae6f42ed26914f6a3af4e9d38aa413e92fe05a9011'
-                                    }
-                                    alt="Logo top"
-                                />
-                                <img
-                                    className="logo-icon-bottom"
-                                    src={
-                                        'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng76c7dcf0461979c309d9594c0cf2841a0863a4edda707c7f5be5b9e5a01e1c0e'
-                                    }
-                                    alt="Logo bottom"
-                                />
-                            </div>
-                            <span className="logo-text">AI-STEM</span>
+                            <img
+                                className="logo-icon"
+                                src={LogoImage}
+                                alt="AI-STEM Logo"
+                            />
+                            <span className="logo-text">I-STEM</span>
                         </div>
                         <div className="green-circle" />
                     </div>

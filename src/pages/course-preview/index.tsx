@@ -46,7 +46,7 @@ function CoursePreview() {
                     {/* 标题区域 */}
                     <div className="title-container flex-row justify-center">
                         <div className="title-wrapper">
-                            <span className="title-ai">AI-STEM</span>
+                            <span className="title-ai">I-STEM</span>
                             <span className="title-course">课程</span>
                         </div>
                     </div>

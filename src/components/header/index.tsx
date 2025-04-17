@@ -4,6 +4,7 @@ import { NavLink } from 'react-router';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useLoginModal } from '../../hooks/useLogin.tsx';
 import { useUser } from '../../hooks/user.tsx';
+import LogoImage from '../../assets/logo.png';
 import './index.scss';
 
 function Header() {
@@ -30,12 +31,10 @@ function Header() {
                 <div className="logo-container flex-row align-center">
                     <img
                         className="logo-image"
-                        src={
-                            'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng43fc4ea8997a0ebda5cead9dd0d4f835650b0ccb83407f320b6ef9a4d05e44dd'
-                        }
+                        src={LogoImage}
                         alt="AI-STEM Logo"
                     />
-                    <span className="logo-text">AI-STEM</span>
+                    <span className="logo-text">I-STEM</span>
                 </div>
 
                 {/* 右侧导航菜单 */}

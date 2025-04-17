@@ -73,7 +73,7 @@ function Home() {
                     <div className="box_6 flex-col" />
                     <div className="block_10 flex-col justify-between">
                 <span className="text_14">
-                  本研究旨在开发一款&nbsp;AI-STEM&nbsp;智能辅导系统,该系统致力于通过&nbsp;A1与个性化的学习体验来提升学生的问题解决能力。我们结合了设计思维方法与人工智能技术，为小学阶段的学生提供了一个独特且高效的&nbsp;STEM&nbsp;学习平台。
+                  本研究旨在开发一款&nbsp;I-STEM&nbsp;智能辅导系统,该系统致力于通过&nbsp;A1与个性化的学习体验来提升学生的问题解决能力。我们结合了设计思维方法与人工智能技术，为小学阶段的学生提供了一个独特且高效的&nbsp;STEM&nbsp;学习平台。
                 </span>
                         <div className="section_7 flex-row align-center justify-center">
                             <div className="image-text_8 flex-row justify-between">
