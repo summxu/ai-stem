@@ -1,8 +1,10 @@
+import { useUser } from '../../hooks/user';
 import './index.scss';
 import { useNavigate } from 'react-router';
 
 function CoursePreview() {
     const navigate = useNavigate();
+    const { userInfo } = useUser();
     return (
         <div className="istem-course-preview-box">
             {/* 顶部区域 */}
@@ -30,17 +32,17 @@ function CoursePreview() {
                                 alt="添加图标"
                             />
                         </div> */}
-                        <div onClick={() => {
+                        {userInfo?.labels.includes('admin') && <div onClick={() => {
                             navigate('/course-preview/active-admin');
                         }} className="add-button flex-row align-center">
-                            <span>管理活动</span>
+                            <span>管理课程</span>
                             <img
                                 src={
                                     'https://lanhu-oss.lanhuapp.com/SketchPng35f5a321ca03b58056e019b423beeed0db4060941c0c3c192538f9ddc65d0e57'
                                 }
                                 alt="添加图标"
                             />
-                        </div>
+                        </div>}
                     </div>
 
                     {/* 标题区域 */}
@@ -169,7 +171,7 @@ function CoursePreview() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
