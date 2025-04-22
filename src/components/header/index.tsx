@@ -51,7 +51,9 @@ function Header() {
                         } to="/course-preview">课程</NavLink>
                         <span className="nav-item">学习记录</span>
                         <span className="nav-item">账号管理</span>
-                        <span className="nav-item">关于我们</span>
+                        <NavLink className={({ isActive }) =>
+                            isActive ? 'nav-item active' : 'nav-item'
+                        } to="/about">关于我们</NavLink>
                         {userInfo ? (
                             <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
                                 <div className="user-avatar flex align-center">
@@ -78,14 +80,14 @@ function Header() {
                             alt="Language"
                         />
                         <div className="language-options">
-                            <span 
+                            <span
                                 className={`language-option ${langType === 'simplified' ? 'active' : ''}`}
                                 onClick={() => toggleLanguage('simplified')}
                             >
                                 简
                             </span>
                             <span className="language-separator">&nbsp;|&nbsp;</span>
-                            <span 
+                            <span
                                 className={`language-option ${langType === 'traditional' ? 'active' : ''}`}
                                 onClick={() => toggleLanguage('traditional')}
                             >
