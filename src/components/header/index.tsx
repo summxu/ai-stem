@@ -43,7 +43,9 @@ function Header() {
                         <NavLink className={({ isActive }) =>
                             isActive ? 'nav-item active' : 'nav-item'
                         } to="/">首页</NavLink>
-                        <span className="nav-item">功能介绍</span>
+                        <NavLink className={({ isActive }) =>
+                            isActive ? 'nav-item active' : 'nav-item'
+                        } to="/introduce">功能介绍</NavLink>
                         <NavLink className={({ isActive }) =>
                             isActive ? 'nav-item active' : 'nav-item'
                         } to="/course-preview">课程</NavLink>
