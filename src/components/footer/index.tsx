@@ -15,9 +15,16 @@ function Footer() {
         if (path === '/') {
             return 'transparent';
         }
+        if (path === '/introduce') {
+            return 'transparent';
+        }
     })();
     const marginTop = (() => {
         if (path === '/') {
+            return '-60px';
+        }
+        if (path === '/introduce') {
+            console.log('path', path);
             return '-60px';
         }
     })();
@@ -35,9 +42,9 @@ function Footer() {
                             <img
                                 className="logo-icon"
                                 src={LogoImage}
-                                alt="AI-STEM Logo"
+                                alt="i-STEM Logo"
                             />
-                            <span className="logo-text">I-STEM</span>
+                            <span className="logo-text">i-STEM</span>
                         </div>
                         <div className="green-circle" />
                     </div>

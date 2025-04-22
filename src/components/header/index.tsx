@@ -32,9 +32,9 @@ function Header() {
                     <img
                         className="logo-image"
                         src={LogoImage}
-                        alt="AI-STEM Logo"
+                        alt="i-STEM Logo"
                     />
-                    <span className="logo-text">I-STEM</span>
+                    <span className="logo-text">i-STEM</span>
                 </div>
 
                 {/* 右侧导航菜单 */}

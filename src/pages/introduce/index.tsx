@@ -6,7 +6,7 @@ function Introduce() {
             <div className="group_1 flex-row">
                 <div className="box_88">
                     <div className="box_8 flex-col justify-between">
-                        <span className="text_11">AI-STEM&nbsp;Learning&nbsp;Platform如何发挥作用？</span>
+                        <span className="text_11">i-STEM&nbsp;Learning&nbsp;Platform如何发挥作用？</span>
                         <img
                             className="image_1"
                             src={
