@@ -4,7 +4,7 @@ import './index.scss';
 
 interface InteractionRenderProps {
     id: string;
-    onAnswer?: (answer: string) => void;
+    onAnswer?: (answer: string[], isCorrect: boolean) => void;
     savedAnswer?: string[];
     disabled?: boolean;
 }

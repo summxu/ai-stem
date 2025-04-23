@@ -10,7 +10,7 @@ import { ID } from 'appwrite';
 interface FileInteractionProps {
     data: Interaction;
     isSubmitted: boolean;
-    onSubmit: (answer: string, isCorrect: boolean) => void;
+    onSubmit: (answer: string[]) => void;
     savedAnswer?: string[];
     disabled?: boolean;
 }
@@ -21,9 +21,7 @@ const FileInteraction: React.FC<FileInteractionProps> = ({ isSubmitted, onSubmit
     // 文件上传题目没有标准答案，只要提交了文件就视为完成
     const handleSubmit = () => {
         if (fileList.length > 0) {
-            // 传递文件名作为答案，文件上传题不判断对错
-            const fileNames = fileList.map(file => file.name).join(',');
-            onSubmit(fileNames, true);
+            onSubmit([fileList[0].url!]);
         } else {
             message.error('请先上传文件');
         }
@@ -33,12 +31,11 @@ const FileInteraction: React.FC<FileInteractionProps> = ({ isSubmitted, onSubmit
     useEffect(() => {
         if (savedAnswer && savedAnswer.length > 0) {
             // 从savedAnswer中提取文件名，创建模拟的文件列表
-            const fileNames = savedAnswer[0].split(',');
-            const mockFileList = fileNames.map((name, index) => ({
+            const mockFileList = savedAnswer.map((name, index) => ({
                 uid: `-${index}`,
                 name,
                 status: 'done',
-                url: '', // 没有实际URL，只显示文件名
+                url: name, // 没有实际URL，只显示文件名
             })) as UploadFile[];
             setFileList(mockFileList);
         }
@@ -52,29 +49,27 @@ const FileInteraction: React.FC<FileInteractionProps> = ({ isSubmitted, onSubmit
             newFileList.splice(index, 1);
             setFileList(newFileList);
         },
-        customRequest: async ({ file }) => {
+        customRequest: async ({ file, onSuccess, onError }) => {
             const customFile = file as unknown as File;
             try {
                 // 还未添加权限
                 const { bucketId, $id } = await storage.createFile(BucketName.leaning, ID.unique(), customFile);
                 const fileContent = storage.getFileView(bucketId, $id);
-                const tempUploadFile = fileList.map(f => {
-                    // @ts-ignore
-                    if (f.uid === file.uid) {
-                        f.url = fileContent;
-                        f.uid = $id;
-                    }
-                    return f;
-                });
-                setFileList(tempUploadFile);
+                // 更新文件信息
+                const updatedFile = {
+                    uid: $id,
+                    name: customFile.name,
+                    status: 'done',
+                    url: fileContent
+                } as any;
+
+                // 通知上传成功
+                onSuccess?.(updatedFile, new XMLHttpRequest());
+                setFileList([updatedFile]);
             } catch (e) {
+                onError?.(e as Error);
                 message.error((e as Error).message);
             }
-        },
-        beforeUpload: file => {
-            if (isSubmitted || disabled) return false;
-            setFileList([...fileList, file]);
-            return false;
         },
         listType: 'picture',
         fileList,
@@ -85,7 +80,7 @@ const FileInteraction: React.FC<FileInteractionProps> = ({ isSubmitted, onSubmit
         <div>
             <Upload {...uploadProps}>
                 {!isSubmitted && !disabled && <Button icon={<UploadOutlined />}>
-                  选择文件
+                    选择文件
                 </Button>}
             </Upload>
 

@@ -7,7 +7,7 @@ export class UpdateLockedBlockCommand extends Command {
         const editor = this.editor;
         const selection = editor.model.document.selection;
         const selectedElement = selection.getSelectedElement();
-        const { type, title } = interactionData;
+        const { type, title, $id } = interactionData;
         if (selectedElement && selectedElement.name === 'lockedBlock') {
             // 获取模型写入器
             editor.model.change(writer => {
@@ -16,7 +16,7 @@ export class UpdateLockedBlockCommand extends Command {
                 // 删除原有内容
                 writer.remove(firstChild);
                 // 创建新文本节点并插入
-                const text = writer.createText(`${InteractionTypeName[type]}：${title}`);
+                const text = writer.createText(`${InteractionTypeName[type]}：${title || $id}`);
                 writer.insert(text, selectedElement, 0);
                 return writer;
             });

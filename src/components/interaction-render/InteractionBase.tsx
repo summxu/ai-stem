@@ -1,24 +1,27 @@
 import { Alert, message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Interaction } from '../../../types/db';
+import { Interaction, Learning } from '../../../types/db';
 import { CollectionName, DatabaseName } from '../../../types/enums';
 import { databases } from '../../utils/appwrite';
 import FlowInteraction from './FlowInteraction';
 import FileInteraction from './FileInteraction';
 import ChoiceInteraction from './ChoiceInteraction.tsx';
 import GapInteraction from './GapInteraction.tsx';
+import { Query } from 'appwrite';
 
 interface InteractionBaseProps {
     id: string;
-    onAnswer?: (answer: string) => void;
+    onAnswer?: (answer: string[], isCorrect: boolean) => void;
     savedAnswer?: string[];
     disabled?: boolean;
 }
 
 const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAnswer, disabled = false }) => {
-    const [isSubmitted, setIsSubmitted] = useState(!!savedAnswer);
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [data, setData] = useState<Interaction>();
+    const [promptIndex, setPromptIndex] = useState<number>(0); // 当前显示的提示索引
+    const [showPrompt, setShowPrompt] = useState<boolean>(false); // 是否显示提示
     useEffect(() => {
         const getData = async () => {
             try {
@@ -53,7 +56,7 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAn
                 if (answer.length === interactionData.answer.length) {
                     // 将用户答案转换为索引数组
                     const answerIndexes: number[] = [];
-                    
+
                     answer.forEach(ans => {
                         const index = parseInt(ans);
                         if (!isNaN(index)) {
@@ -66,11 +69,11 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAn
                             }
                         }
                     });
-                    
+
                     // 检查所有答案是否匹配
-                    isAnswerCorrect = interactionData.answer.every(ans => 
+                    isAnswerCorrect = interactionData.answer.every(ans =>
                         answerIndexes.includes(ans)
-                    ) && answerIndexes.every(idx => 
+                    ) && answerIndexes.every(idx =>
                         interactionData.answer!.includes(idx)
                     );
                 }
@@ -87,7 +90,7 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAn
             isAnswerCorrect = correctAnswers.every((correct, index) =>
                 answer[index] && answer[index].trim().toLowerCase() === correct.trim().toLowerCase());
         }
-
+        setIsSubmitted(true);
         setIsCorrect(isAnswerCorrect);
     };
 
@@ -108,16 +111,36 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAn
         return <div>填空题数据不完整</div>;
     }
 
-    const handleSubmit = (answer: string | string[], isAnswerCorrect: boolean) => {
-        setIsSubmitted(true);
-        setIsCorrect(isAnswerCorrect);
+    const handleSubmit = async (answer: string | string[], isAnswerCorrect?: boolean) => {
+        const { documents } = await databases.listDocuments<Learning>(
+            DatabaseName.ai_stem,
+            CollectionName.leaning,
+            [
+                Query.equal('interaction', [id]),
+                Query.orderDesc('$createdAt')
+            ]
+        );
+        // 如果回答错误且有提示可用，显示提示而不是提交
+        if (!isAnswerCorrect && data?.prompt && data.prompt.length > 0 && promptIndex < data.prompt.length) {
+            setShowPrompt(true);
+            setPromptIndex(documents.length + 1);
+        } else {
+            setIsSubmitted(true);
+            // 如果回答正确，更新状态，如果
+            setIsCorrect(isAnswerCorrect || false);
+        }
+
+        let isCompleted = false;
+        if (promptIndex >= data.prompt.length) {
+            isCompleted = true;
+        }
 
         // 如果有回调函数，传递答案
         if (onAnswer) {
             if (Array.isArray(answer)) {
-                onAnswer(answer.join(','));
+                onAnswer(answer, isCompleted || isCorrect!);
             } else {
-                onAnswer(answer);
+                onAnswer([answer], isCompleted || isCorrect!);
             }
         }
     };
@@ -179,6 +202,16 @@ const InteractionBase: React.FC<InteractionBaseProps> = ({ id, onAnswer, savedAn
             <div className="interaction-content" style={{ margin: '16px 0' }}>
                 {renderInteractionByType()}
             </div>
+
+            {showPrompt && !isSubmitted && data?.prompt && promptIndex > 0 && (
+                <Alert
+                    style={{ padding: '8px 12px', marginBottom: '16px' }}
+                    message={`提示 ${promptIndex}/${data.prompt.length}`}
+                    description={data.prompt[promptIndex - 1]}
+                    type="warning"
+                    showIcon
+                />
+            )}
 
             {isSubmitted && data?.explain && (
                 <Alert

@@ -45,6 +45,7 @@ export interface Learning extends Models.Document {
     answer: string[]; // 数组类型
     chapter?: Chapter; // 关系字段
     interaction?: Interaction; // 关系字段
+    complete: boolean;
 }
 
 // Interaction 集合
@@ -56,4 +57,5 @@ export interface Interaction extends Models.Document {
     attachment?: string; // URL格式
     type: InteractionType;
     explain?: string;
+    prompt: string[];
 }

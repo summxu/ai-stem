@@ -1,13 +1,13 @@
+import { CheckCircleFilled } from '@ant-design/icons';
 import { Button, Flex, Space, Tooltip } from 'antd';
 import { ID, Query } from 'appwrite';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactHtmlParser, { convertNodeToElement } from 'react-html-parser';
 import { useNavigate, useParams } from 'react-router';
 import { Chapter, Course, Learning, Step } from '../../../types/db';
 import { CollectionName, DatabaseName, StepType } from '../../../types/enums';
 import InteractionRender from '../../components/interaction-render';
 import { databases } from '../../utils/appwrite';
-import { CheckCircleFilled } from '@ant-design/icons';
 import './index.scss';
 
 function CourseLearning() {
@@ -18,22 +18,26 @@ function CourseLearning() {
     const [currentChapter, setCurrentChapter] = useState<Chapter>();
     const [learningRecords, setLearningRecords] = useState<{ [key: string]: Learning }>({});
     const [completedSteps, setCompletedSteps] = useState<{ [key in Step]?: boolean }>({});
-    const [chapterInteractions, setChapterInteractions] = useState<string[]>([]);
+    const chapterInteractions = useRef<string[]>([])
     const [allInteractionsAnswered, setAllInteractionsAnswered] = useState<boolean>(false);
 
     const transform = (node: any, index: number) => {
         if (node.type === 'tag' && node.name === 'div' && node.attribs['data-locked'] === 'true') {
             // 转换自定义解析题
             const dataId: string = node.attribs['data-id'];
-            // 查找该交互题是否有学习记录
-            const learningRecord = Object.values(learningRecords).find(record => record.interaction?.$id === dataId);
+            // 查找该交互题是否有完成的学习记录
+            const learningRecord = Object.values(learningRecords).find(record => {
+                return (
+                    record.interaction?.$id === dataId && record.complete
+                )
+            });
             return (
                 <InteractionRender
                     key={dataId}
                     id={dataId}
-                    savedAnswer={learningRecord?.answer}
-                    disabled={!!learningRecord}
-                    onAnswer={(answer) => handleInteractionAnswer(dataId, answer)}
+                    savedAnswer={(learningRecord && learningRecord.complete) ? learningRecord.answer : []}
+                    disabled={learningRecord && learningRecord.complete}
+                    onAnswer={(answer, isCorrect) => handleInteractionAnswer(dataId, answer, isCorrect)}
                 />
             );
         }
@@ -79,12 +83,12 @@ function CourseLearning() {
     // 获取当前章节的学习记录
     useEffect(() => {
         if (chapterId) {
-            fetchLearningRecords(chapterId);
             // 获取当前章节中的所有交互题ID
             if (currentChapter) {
                 const interactionIds = extractInteractionIds(currentChapter.content);
-                setChapterInteractions(interactionIds);
+                chapterInteractions.current = interactionIds
             }
+            fetchLearningRecords(chapterId);
         }
     }, [chapterId, currentChapter]);
 
@@ -145,12 +149,13 @@ function CourseLearning() {
 
             // 如果没有学习记录，才创建新的
             if (response.documents.length === 0) {
-                await databases.createDocument(
+                await databases.createDocument<Learning>(
                     DatabaseName.ai_stem,
                     CollectionName.leaning,
                     ID.unique(),
                     {
-                        chapter: chapterId
+                        chapter: chapterId,
+                        complete: true
                     }
                 );
             }
@@ -200,14 +205,14 @@ function CourseLearning() {
 
             setCompletedSteps(completed);
 
-            // 检查当前章节的所有交互题是否都已回答
-            if (chapterInteractions.length > 0) {
-                const allAnswered = chapterInteractions.every(id => {
+            // 检查当前章节的所有交互题是否都已完成（根据complete字段判断）
+            if (chapterInteractions.current.length > 0) {
+                const allCompleted = chapterInteractions.current.every(id => {
                     return Object.values(learningRecords).some(record =>
-                        record.interaction && record.interaction.$id === id
+                        record.interaction && record.interaction.$id === id && record.complete
                     );
                 });
-                setAllInteractionsAnswered(allAnswered);
+                setAllInteractionsAnswered(allCompleted);
             } else {
                 // 如果没有交互题，则视为已完成
                 setAllInteractionsAnswered(true);
@@ -218,42 +223,39 @@ function CourseLearning() {
     };
 
     // 处理交互题答案提交
-    const handleInteractionAnswer = async (interactionId: string, answer: string) => {
-        try {
-            // 创建学习记录并保存答案
-            const response = await databases.createDocument(
-                DatabaseName.ai_stem,
-                CollectionName.leaning,
-                ID.unique(),
-                {
-                    chapter: chapterId,
-                    interaction: interactionId,
-                    answer: answer.split(',') // 将答案字符串转为数组
-                }
+    const handleInteractionAnswer = async (interactionId: string, answer: string[], isCorrect: boolean) => {
+        // 创建学习记录并保存答案
+        const response = await databases.createDocument<Learning>(
+            DatabaseName.ai_stem,
+            CollectionName.leaning,
+            ID.unique(),
+            {
+                chapter: chapterId,
+                interaction: interactionId,
+                answer: answer,
+                complete: isCorrect
+            }
+        );
+
+        // 更新本地学习记录状态
+        setLearningRecords(prev => ({
+            ...prev,
+            [interactionId]: response as Learning
+        }));
+
+        // 检查是否所有交互题都已完成（根据complete字段判断）
+        const updatedRecords = {
+            ...learningRecords,
+            [interactionId]: response as Learning
+        };
+
+        const allCompleted = chapterInteractions.current.every(id => {
+            return Object.values(updatedRecords).some(record =>
+                record.interaction && record.interaction.$id === id && record.complete
             );
+        });
 
-            // 更新本地学习记录状态
-            setLearningRecords(prev => ({
-                ...prev,
-                [interactionId]: response as Learning
-            }));
-
-            // 检查是否所有交互题都已回答
-            const updatedRecords = {
-                ...learningRecords,
-                [interactionId]: response as Learning
-            };
-
-            const allAnswered = chapterInteractions.every(id => {
-                return Object.values(updatedRecords).some(record =>
-                    record.interaction && record.interaction.$id === id
-                );
-            });
-
-            setAllInteractionsAnswered(allAnswered);
-        } catch (error) {
-            console.error('Error saving interaction answer:', error);
-        }
+        setAllInteractionsAnswered(allCompleted);
     };
 
     const handleStartLearning = async () => {
@@ -388,6 +390,7 @@ function CourseLearning() {
                                     {chapters.indexOf(currentChapter!) === chapters.length - 1 ?
                                         <Tooltip title={!allInteractionsAnswered ? "请先完成本章节的所有互动题目" : ""}>
                                             <Button
+                                                disabled={!allInteractionsAnswered}
                                                 style={{ background: "#FF5F2F", color: "white", border: "none" }}
                                                 onClick={handleOverChapter}
                                             >

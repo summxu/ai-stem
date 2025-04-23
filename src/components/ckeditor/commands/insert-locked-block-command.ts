@@ -14,9 +14,8 @@ export class InsertLockedBlockCommand extends Command {
             writer.setAttribute('class', 'locked-block', block);
             writer.setAttribute('type', type || 'default', block);
             writer.setAttribute('id', id, block);
-
             // 添加文本内容
-            const text = writer.createText(`${InteractionTypeName[type]}：${title}`);
+            const text = writer.createText(`${InteractionTypeName[type]}：${title || id}`);
             writer.append(text, block);
 
             // 创建空段落

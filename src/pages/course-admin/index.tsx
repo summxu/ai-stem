@@ -205,7 +205,6 @@ function CourseAdmin() {
                 message.error((e as Error).message);
             }
         },
-
         listType: 'picture-card',
         maxCount: 1,
     };
