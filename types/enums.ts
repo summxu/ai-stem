@@ -32,7 +32,7 @@ export enum InteractionTypeName {
 export enum SubjectType {
     S = '科学',
     T = '技术',
-    A = '工程',
+    E = '工程',
     M = '数学',
 }
 

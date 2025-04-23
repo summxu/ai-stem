@@ -176,11 +176,11 @@
         {
             "$id": "67f0a530000e5c01c41e",
             "$permissions": [
-                "read(\"guests\")",
                 "create(\"label:admin\")",
                 "read(\"label:admin\")",
                 "update(\"label:admin\")",
-                "delete(\"label:admin\")"
+                "delete(\"label:admin\")",
+                "read(\"guests\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "course",
@@ -230,18 +230,6 @@
                     "twoWayKey": "course",
                     "onDelete": "cascade",
                     "side": "child"
-                },
-                {
-                    "key": "chapter",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0b8cb00277ce1d71b",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "course",
-                    "onDelete": "cascade",
-                    "side": "parent"
                 }
             ],
             "indexes": [
@@ -282,18 +270,6 @@
                     "default": null
                 },
                 {
-                    "key": "course",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0a530000e5c01c41e",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "chapter",
-                    "onDelete": "cascade",
-                    "side": "child"
-                },
-                {
                     "key": "step",
                     "type": "string",
                     "required": true,
@@ -316,6 +292,18 @@
                     "min": -9223372036854775808,
                     "max": 9223372036854775807,
                     "default": null
+                },
+                {
+                    "key": "course",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "67f0a530000e5c01c41e",
+                    "relationType": "manyToOne",
+                    "twoWay": false,
+                    "twoWayKey": "68085a12000d6184b032",
+                    "onDelete": "cascade",
+                    "side": "parent"
                 }
             ],
             "indexes": [
@@ -560,11 +548,11 @@
         {
             "$id": "67fcdcae0038b2a34fd5",
             "$permissions": [
-                "read(\"guests\")",
                 "create(\"label:admin\")",
                 "read(\"label:admin\")",
                 "update(\"label:admin\")",
-                "delete(\"label:admin\")"
+                "delete(\"label:admin\")",
+                "read(\"guests\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "active",

@@ -18,7 +18,6 @@ import { Models } from 'appwrite';
 export interface Active extends Models.Document {
     name: string;
     description?: string;
-    grade?: Grade;
     subject: Subject;
     course: Course[]; // 关系字段
 }
@@ -30,7 +29,7 @@ export interface Course extends Models.Document {
     duration: string;
     attachment: string; // URL格式
     active?: string; // 关系字段
-    chapter: Chapter[]; // 关系字段
+    // chapter: Chapter[]; // 关系字段
 }
 
 // Chapter 集合
