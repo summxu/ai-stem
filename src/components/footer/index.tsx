@@ -18,13 +18,15 @@ function Footer() {
         if (path === '/introduce') {
             return 'transparent';
         }
+        if (path === '/course-preview/course-list') {
+            return '#F5F5F5';
+        }
     })();
     const marginTop = (() => {
         if (path === '/') {
             return '-60px';
         }
         if (path === '/introduce') {
-            console.log('path', path);
             return '-60px';
         }
     })();

@@ -1,0 +1,179 @@
+.istem-course-list-box {
+    width: 100%;
+    padding: 20px;
+    background-color: #f5f5f5;
+    .istem-course-list-inner {
+        width: 1280px;
+        margin: 0 auto;
+        min-height: 610px;
+    }
+    .ant-collapse-header {
+        align-items: center!important;
+    }
+
+    .image-box{
+        transition: all 3s ease;
+    }
+    .image-item{
+        width: 105px;
+        height: 78px;
+    }
+
+    /* 顶部提示条样式 */
+    .top-alert {
+        margin-bottom: 20px;
+        border-radius: 4px;
+        background-color: #fffbe6;
+        border: 1px solid #ffe58f;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    /* 搜索筛选区域样式 */
+    .search-filter-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+
+        .search-input {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .type-select {
+            min-width: 120px;
+        }
+
+        button {
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            }
+        }
+    }
+
+    /* 课程列表容器样式 */
+    .course-list-container {
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+
+        /* 活动手风琴样式 */
+        .activity-collapse {
+            background-color: white;
+
+            .activity-panel {
+                margin-bottom: 10px;
+                border-radius: 4px;
+                overflow: hidden;
+                transition: all 0.3s ease;
+
+                .ant-collapse-header {
+                    background-color: #f9f9f9;
+                    padding: 12px 16px;
+                    border-radius: 4px;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background-color: #f0f0f0;
+                    }
+                }
+
+                .activity-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+
+                .ant-collapse-content {
+                    border-top: 1px solid #f0f0f0;
+                    background-color: white;
+                }
+            }
+        }
+
+        /* 课程网格样式 */
+        .course-grid {
+            padding: 15px 0;
+        }
+
+        /* 课程卡片样式 */
+        .course-card-col {
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+            }
+
+            .course-card {
+                height: 100%;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+
+                &:hover {
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                }
+
+                .ant-card-cover {
+                    img {
+                        height: 150px;
+                        object-fit: cover;
+                    }
+                }
+
+                .ant-card-body {
+                    padding: 16px;
+                }
+
+                .ant-card-meta-title {
+                    color: #333;
+                    font-size: 14px;
+                    font-weight: 500;
+                    margin-bottom: 8px;
+                    white-space: normal;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+
+                .course-code {
+                    color: #999;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+        .search-filter-container {
+            flex-direction: column;
+
+            .search-input {
+                max-width: 100%;
+            }
+
+            .type-select {
+                width: 100% !important;
+            }
+        }
+    }
+}

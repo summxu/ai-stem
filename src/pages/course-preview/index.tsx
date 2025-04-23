@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { useUser } from '../../hooks/user';
 import './index.scss';
 import { useNavigate } from 'react-router';
@@ -96,7 +97,7 @@ function CoursePreview() {
             {/* 学科卡片区域 */}
             <div className="subject-cards flex-row justify-center">
                 {/* 科学卡片 */}
-                <div className="subject-card science-card">
+                <div onClick={() => navigate('/course-preview/course-list')} className="subject-card science-card">
                     <div className="card-content flex-col">
                         <img
                             className="card-image"
@@ -115,7 +116,7 @@ function CoursePreview() {
                 </div>
 
                 {/* 技术卡片 */}
-                <div className="subject-card technology-card">
+                <div onClick={() => message.info('课程暂未开通，敬请期待！')} className="subject-card technology-card">
                     <div className="card-content flex-col">
                         <img
                             className="card-image"
@@ -134,7 +135,7 @@ function CoursePreview() {
                 </div>
 
                 {/* 工程卡片 */}
-                <div className="subject-card engineering-card">
+                <div onClick={() => message.info('课程暂未开通，敬请期待！')} className="subject-card engineering-card">
                     <div className="card-content flex-col">
                         <img
                             className="card-image"
@@ -153,7 +154,7 @@ function CoursePreview() {
                 </div>
 
                 {/* 数学卡片 */}
-                <div className="subject-card math-card">
+                <div onClick={() => message.info('课程暂未开通，敬请期待！')} className="subject-card math-card">
                     <div className="card-content flex-col">
                         <img
                             className="card-image"
