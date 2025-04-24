@@ -3,9 +3,10 @@ import { useAntdTable } from 'ahooks';
 import { Button, Flex, Form, Input, message, Modal, Space, Table, TableProps } from 'antd';
 import { ID, Models, Query } from 'appwrite';
 import { useState } from 'react';
-import { teams } from '../../utils/appwrite.ts';
+import { functions, teams } from '../../utils/appwrite.ts';
 import './index.scss';
 import { useNavigate } from 'react-router';
+import { FunctionName } from '../../../types/enums.ts';
 
 interface Result {
     total: number;
@@ -91,7 +92,12 @@ function TeamAdmin() {
             cancelText: '取消',
             onOk: async () => {
                 try {
-
+                    await functions.createExecution(
+                        FunctionName.teams,
+                        JSON.stringify({ $id: team.$id }),
+                        false,
+                        '/delete'
+                    );
                     run({ current: tableProps.pagination.current, pageSize: tableProps.pagination.pageSize });
                 } catch (e) {
                     message.error((e as Error).message);
@@ -105,6 +111,12 @@ function TeamAdmin() {
         const formData = form.getFieldsValue();
         try {
             if (formData.$id) {
+                await functions.createExecution(
+                    FunctionName.teams,
+                    JSON.stringify({ name: formData.name, $id: formData.$id }),
+                    false,
+                    '/updateName'
+                );
                 run({ current: 1, pageSize: tableProps.pagination.pageSize });
             } else {
                 await teams.create(ID.unique(), formData.name, [])

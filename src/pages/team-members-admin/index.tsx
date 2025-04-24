@@ -4,8 +4,10 @@ import { Button, Flex, Form, InputNumber, message, Modal, Space, Table, TablePro
 import { Models, Query } from 'appwrite';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { teams } from '../../utils/appwrite.ts';
+import { functions, teams } from '../../utils/appwrite.ts';
 import './index.scss';
+import { FunctionName } from '../../../types/enums.ts';
+import { TeamGenerateResponse } from '../../../functions/teams/src/main.ts';
 
 interface Result {
     total: number;
@@ -126,8 +128,15 @@ function TeamMembersAdmin() {
         await form.validateFields();
         const formData = form.getFieldsValue();
         try {
-            console.log(formData);
-            run({ current: tableProps.pagination.current, pageSize: tableProps.pagination.pageSize });
+            const { responseBody } = await functions.createExecution(
+                FunctionName.teams,
+                JSON.stringify({ teamId, teacherCount: formData.teacherCount, studentCount: formData.studentCount }),
+                false,
+                '/generate'
+            );
+            const { teachers, students } = JSON.parse(responseBody) as TeamGenerateResponse;
+            console.log(teachers, students);
+            // run({ current: tableProps.pagination.current, pageSize: tableProps.pagination.pageSize });
             setOpen(false);
         } catch (e) {
             message.error((e as Error).message);
@@ -146,11 +155,11 @@ function TeamMembersAdmin() {
                 keyboard={false}
                 onOk={handleCreate}>
                 <Form form={form} layout="vertical">
-                    <Form.Item name="name" label="教师数量" >
-                        <InputNumber min={0} placeholder="请输入教师数量" />
+                    <Form.Item initialValue={0} name="teacherCount" label="教师数量" >
+                        <InputNumber style={{ width: '100%' }} min={0} placeholder="请输入教师数量" />
                     </Form.Item>
-                    <Form.Item name="name" label="学生数量" >
-                        <InputNumber min={0} placeholder="请输入学生数量" />
+                    <Form.Item initialValue={0} name="studentCount" label="学生数量" >
+                        <InputNumber style={{ width: '100%' }} min={0} placeholder="请输入学生数量" />
                     </Form.Item>
                 </Form>
             </Modal>

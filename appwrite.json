@@ -2,24 +2,6 @@
     "projectId": "67ee2731001981539fcb",
     "functions": [
         {
-            "$id": "67f346ff0010a45f8fe6",
-            "name": "starterTemplate",
-            "runtime": "node-20.0",
-            "specification": "s-1vcpu-512mb",
-            "execute": [],
-            "events": [],
-            "scopes": [
-                "users.read"
-            ],
-            "schedule": "",
-            "timeout": 15,
-            "enabled": true,
-            "logging": true,
-            "entrypoint": "dist/main.js",
-            "commands": "npm install && npm run build",
-            "path": "functions/starterTemplate"
-        },
-        {
             "$id": "67f346ff0010a45f8fe7",
             "name": "login",
             "runtime": "node-21.0",
@@ -39,6 +21,24 @@
             "entrypoint": "dist/main.js",
             "commands": "npm install && npm run build",
             "path": "functions/login"
+        },
+        {
+            "$id": "6809d6d00031d6bf67c2",
+            "execute": [
+                "label:admin"
+            ],
+            "name": "teams",
+            "enabled": true,
+            "logging": true,
+            "runtime": "node-21.0",
+            "scopes": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "entrypoint": "dist/main.js",
+            "commands": "npm install && npm run build",
+            "specification": "s-1vcpu-512mb",
+            "path": "functions/teams"
         }
     ],
     "projectName": "Ai-STEM",
@@ -145,18 +145,6 @@
                     ],
                     "format": "enum",
                     "default": null
-                },
-                {
-                    "key": "course",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0a530000e5c01c41e",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "active",
-                    "onDelete": "cascade",
-                    "side": "child"
                 }
             ],
             "indexes": [
@@ -352,51 +340,15 @@
                     "default": null
                 },
                 {
-                    "key": "course",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0a530000e5c01c41e",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "step",
-                    "onDelete": "setNull",
-                    "side": "child"
-                },
-                {
                     "key": "code",
                     "type": "string",
                     "required": true,
                     "array": false,
                     "size": 12,
                     "default": null
-                },
-                {
-                    "key": "chapter",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedCollection": "67f0b8cb00277ce1d71b",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "step",
-                    "onDelete": "cascade",
-                    "side": "parent"
                 }
             ],
-            "indexes": [
-                {
-                    "key": "index_1",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "$id"
-                    ],
-                    "orders": [
-                        "ASC"
-                    ]
-                }
-            ]
+            "indexes": []
         },
         {
             "$id": "67f0d09400061c9c9fe0",
@@ -448,6 +400,13 @@
                     "twoWayKey": "67ff217e0033428a159c",
                     "onDelete": "cascade",
                     "side": "parent"
+                },
+                {
+                    "key": "complete",
+                    "type": "boolean",
+                    "required": false,
+                    "array": false,
+                    "default": false
                 }
             ],
             "indexes": []
@@ -629,24 +588,7 @@
             "indexes": []
         }
     ],
-    "teams": [
-        {
-            "$id": "67eff5700011a25bf625",
-            "name": "student"
-        },
-        {
-            "$id": "67eff5af002bb3b74a49",
-            "name": "teacher"
-        },
-        {
-            "$id": "67eff5cd002d982e9eac",
-            "name": "admin"
-        },
-        {
-            "$id": "67f33e5300326073bc00",
-            "name": "admin"
-        }
-    ],
+    "teams": [],
     "buckets": [
         {
             "$id": "67f5d09e000a4d858f1a",
