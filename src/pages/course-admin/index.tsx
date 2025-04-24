@@ -2,12 +2,12 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useAntdTable } from 'ahooks';
 import { Button, Flex, Form, Input, message, Modal, Space, Table, TableProps, Upload, UploadFile, UploadProps } from 'antd';
 import { ID, Query } from 'appwrite';
-import { useEffect, useReducer, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { Active, Course } from '../../../types/db.ts';
 import { BucketName, CollectionName, DatabaseName } from '../../../types/enums.ts';
-import { databases, storage } from '../../utils/appwrite.ts';
 import CourseContentModal from '../../components/course-content-modal';
+import { databases, storage } from '../../utils/appwrite.ts';
 import './index.scss';
 
 interface Result {
@@ -63,7 +63,6 @@ function CourseAdmin() {
     const [currentCourseId, setCurrentCourseId] = useState<string>('');
     const [form] = Form.useForm();
     const [_, forceUpdate] = useState(0)
-    const navigate = useNavigate();
     // 不再单独维护fileList状态，改为由Form.Item托管
 
     const columns: TableProps<Course>['columns'] = [

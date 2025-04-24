@@ -13,6 +13,8 @@ import ActiveAdmin from './pages/active-admin';
 import CourseLearning from './pages/course-learning/index.tsx';
 import CourseList from './pages/course-list';
 import About from './pages/about';
+import TeamAdmin from './pages/team-admin/index.tsx';
+import TeamMembersAdmin from './pages/team-members-admin/index.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <UserProvider>
@@ -26,6 +28,8 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="course-preview/course-learning/:courseId/:chapterId?" element={<CourseLearning />} />
                     <Route path="course-preview/course-list" element={<CourseList />} />
                     <Route path="introduce" element={<Introduce />} />
+                    <Route path="teams" element={<TeamAdmin />} />
+                    <Route path="teams/teams-member/:teamId" element={<TeamMembersAdmin />} />
                     <Route path="about" element={<About />} />
                 </Route>
             </Routes>

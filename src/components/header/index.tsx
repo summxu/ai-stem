@@ -50,7 +50,9 @@ function Header() {
                             isActive ? 'nav-item active' : 'nav-item'
                         } to="/course-preview">课程</NavLink>
                         <span className="nav-item">学习记录</span>
-                        <span className="nav-item">账号管理</span>
+                        {userInfo && userInfo.labels.includes('admin') && <NavLink className={({ isActive }) =>
+                            isActive ? 'nav-item active' : 'nav-item'
+                        } to="/teams">账号管理</NavLink>}
                         <NavLink className={({ isActive }) =>
                             isActive ? 'nav-item active' : 'nav-item'
                         } to="/about">关于我们</NavLink>
