@@ -21,6 +21,12 @@ function Footer() {
         if (path === '/course-preview/course-list') {
             return '#F5F5F5';
         }
+        if (path === '/teams') {
+            return '#F5F5F5';
+        }
+        if (path.includes('/teams/teams-member')) {
+            return '#F5F5F5';
+        }
     })();
     const marginTop = (() => {
         if (path === '/') {

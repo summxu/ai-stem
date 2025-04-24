@@ -1,6 +1,6 @@
 import * as argon2 from 'argon2';
 import { Client, ID, Models, Teams, Users } from 'node-appwrite';
-import { generateRandomPassword, generateRandomString, numberToLetter, pinyinToInitials } from './utils.js';
+import { generateRandomPassword, generateRandomString, getLastSixCharacters } from './utils.js';
 
 export interface TeamGenerateResponse {
     teachers: Models.User<Models.Preferences>[],
@@ -21,10 +21,38 @@ export default async ({ req, res, log, error }: any) => {
 
     if (req.path === '/delete') {
         const { $id } = req.bodyJson;
+        // 删除小组成员所有关联的user
+        const team = await teams.listMemberships($id)
         const data = await teams.delete($id);
+        for (const member of team.memberships) {
+            if (member.roles.includes('owner')) {
+                continue;
+            }
+            await users.delete(member.userId)
+        }
         return res.json({
             status: true,
             data
+        });
+    }
+
+    if (req.path === '/deleteMember') {
+        const { $id, userId, teamId } = req.bodyJson;
+        await teams.deleteMembership(teamId, $id)
+        await users.delete(userId)
+        return res.json({
+            status: true,
+            data: {}
+        });
+    }
+
+    if (req.path === '/resetPassword') {
+        const { userId } = req.bodyJson;
+        const password = generateRandomPassword()
+        const user = await users.updatePassword(userId, password)
+        return res.json({
+            status: true,
+            data: { ...user, password }
         });
     }
 
@@ -37,41 +65,61 @@ export default async ({ req, res, log, error }: any) => {
         });
     }
 
+    if (req.path === '/get') {
+        const { teamId } = req.bodyJson;
+        const team = await teams.listMemberships(teamId)
+        return res.json({
+            status: true,
+            data: team
+        });
+    }
+
     if (req.path === '/generate') {
         const { teamId, teacherCount, studentCount } = req.bodyJson;
-        const teamInfo = await teams.get(teamId)
+        const teamMixId = getLastSixCharacters(teamId);
         const responseData: TeamGenerateResponse = {
             teachers: [],
             students: []
         }
-        new Array(teacherCount).fill(0).forEach(async (_, index) => {
-            const letter = numberToLetter(index)
-            const user = await users.createArgon2User(
-                ID.unique(),
-                `${pinyinToInitials(teamInfo.name)}teacher${letter}@istem.com`,
-                await argon2.hash(generateRandomPassword()),
-                `${teamInfo.name}教师${letter}`
-            );
-            log(user)
-            users.updateLabels(user.$id, ['teachers']);
-            await teams.createMembership(teamId, ['teacher'], undefined, user.$id);
-            responseData.teachers.push(user)
-        })
-        new Array(studentCount).fill(0).forEach(async () => {
-            const number = generateRandomString()
-            const user = await users.create(
-                ID.unique(),
-                `${pinyinToInitials(teamInfo.name)}student${number}@istem.com`,
-                await argon2.hash(generateRandomPassword()),
-                `${teamInfo.name}学生${number}`
-            );
-            users.updateLabels(user.$id, ['students']);
-            await teams.createMembership(teamId, ['student'], undefined, user.$id);
-            responseData.students.push(user)
-        })
-        return res.json({
-            status: true,
-            data: responseData
-        });
+        try {
+            for (let i = 0; i < teacherCount; i++) {
+                const number = generateRandomString()
+                const password = generateRandomPassword()
+                const user = await users.createArgon2User(
+                    ID.unique(),
+                    `${teamMixId}Teacher${number}@istem.com`,
+                    await argon2.hash(password),
+                    `教师${number}`
+                );
+                await users.updateLabels(user.$id, ['teachers']);
+                await users.updateEmailVerification(user.$id, true);
+                await teams.createMembership(teamId, ['teacher'], user.email, user.$id, undefined, undefined, user.name);
+                responseData.teachers.push({ ...user, password: password })
+            }
+            for (let i = 0; i < studentCount; i++) {
+                const number = generateRandomString()
+                const password = generateRandomPassword()
+                const user = await users.createArgon2User(
+                    ID.unique(),
+                    `${teamMixId}Student${number}@istem.com`,
+                    await argon2.hash(password),
+                    `学生${number}`
+                );
+                await users.updateLabels(user.$id, ['students']);
+                await users.updateEmailVerification(user.$id, true);
+                await teams.createMembership(teamId, ['student'], user.email, user.$id, undefined, undefined, user.name);
+                responseData.students.push({ ...user, password: password })
+            }
+            return res.json({
+                status: true,
+                data: responseData
+            });
+        } catch (err) {
+            error(err)
+            return res.json({
+                status: false,
+                message: (err as Error).message,
+            });
+        }
     }
 }

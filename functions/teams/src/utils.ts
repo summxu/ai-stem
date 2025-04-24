@@ -1,13 +1,10 @@
 /**
- * 拼音转首字母
- * @param str
- * @returns
+ * 获取字符串的后6位
+ * @param str 输入的字符串
+ * @returns 字符串的后6位
  */
-export function pinyinToInitials(str: string) {
-    return str.replace(/[\u4e00-\u9fa5]/g, (match) => {
-        const unicode = match.charCodeAt(0) - 19968;
-        return String.fromCharCode(unicode / 26 + 97);
-    });
+export function getLastSixCharacters(str: string): string {
+    return str.slice(-6);
 }
 
 /**
@@ -16,15 +13,6 @@ export function pinyinToInitials(str: string) {
  */
 export function generateRandomString() {
     return Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-}
-
-/**
- * 数字转大写字母，从0开始
- * @param num
- * @returns
- */
-export function numberToLetter(num: number) {
-    return String.fromCharCode(65 + num);
 }
 
 /**
