@@ -57,6 +57,24 @@
             "commands": "npm install && npm run build",
             "specification": "s-1vcpu-512mb",
             "path": "functions/chapter"
+        },
+        {
+            "$id": "6809d6d00031d6bf67c4",
+            "execute": [
+                "users"
+            ],
+            "name": "learning",
+            "enabled": true,
+            "logging": true,
+            "runtime": "node-21.0",
+            "scopes": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "entrypoint": "dist/main.js",
+            "commands": "npm install && npm run build",
+            "specification": "s-1vcpu-512mb",
+            "path": "functions/learning"
         }
     ],
     "projectName": "Ai-STEM",

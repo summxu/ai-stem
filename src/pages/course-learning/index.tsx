@@ -1,14 +1,16 @@
 import { CheckCircleFilled } from '@ant-design/icons';
 import { Button, Flex, Space, Tooltip } from 'antd';
-import { ID, Query } from 'appwrite';
+import { ID, Permission, Query, Role } from 'appwrite';
 import { useEffect, useRef, useState } from 'react';
 import ReactHtmlParser, { convertNodeToElement } from 'react-html-parser';
 import { useNavigate, useParams } from 'react-router';
 import { Chapter, Course, Learning, Step } from '../../../types/db';
-import { CollectionName, DatabaseName, StepType } from '../../../types/enums';
+import { CollectionName, DatabaseName, FunctionName, StepType } from '../../../types/enums';
 import InteractionRender from '../../components/interaction-render';
-import { databases } from '../../utils/appwrite';
+import { databases, functions } from '../../utils/appwrite';
 import './index.scss';
+import { useUser } from '../../hooks/user';
+import { FunctionsReturn } from '../../../types/common';
 
 function CourseLearning() {
     const { courseId, chapterId } = useParams<{ courseId: string; chapterId?: string }>();
@@ -20,7 +22,7 @@ function CourseLearning() {
     const [completedSteps, setCompletedSteps] = useState<{ [key in Step]?: boolean }>({});
     const chapterInteractions = useRef<string[]>([])
     const [allInteractionsAnswered, setAllInteractionsAnswered] = useState<boolean>(false);
-
+    const { userInfo } = useUser()
     const transform = (node: any, index: number) => {
         if (node.type === 'tag' && node.name === 'div' && node.attribs['data-locked'] === 'true') {
             // 转换自定义解析题
@@ -149,14 +151,17 @@ function CourseLearning() {
 
             // 如果没有学习记录，才创建新的
             if (response.documents.length === 0) {
-                await databases.createDocument<Learning>(
-                    DatabaseName.ai_stem,
-                    CollectionName.leaning,
-                    ID.unique(),
-                    {
-                        chapter: chapterId,
-                        complete: true
-                    }
+                await functions.createExecution(
+                    FunctionName.leaning,
+                    JSON.stringify({
+                        data: {
+                            chapter: chapterId,
+                            complete: true
+                        },
+                        teamId: userInfo?.prefs.teamId
+                    }),
+                    false,
+                    '/create'
                 );
             }
         } catch (error) {
@@ -225,17 +230,21 @@ function CourseLearning() {
     // 处理交互题答案提交
     const handleInteractionAnswer = async (interactionId: string, answer: string[], isCorrect: boolean) => {
         // 创建学习记录并保存答案
-        const response = await databases.createDocument<Learning>(
-            DatabaseName.ai_stem,
-            CollectionName.leaning,
-            ID.unique(),
-            {
-                chapter: chapterId,
-                interaction: interactionId,
-                answer: answer,
-                complete: isCorrect
-            }
+        const { responseBody } = await functions.createExecution(
+            FunctionName.leaning,
+            JSON.stringify({
+                data: {
+                    chapter: chapterId,
+                    interaction: interactionId,
+                    answer: answer,
+                    complete: isCorrect
+                },
+                teamId: userInfo?.prefs.teamId
+            }),
+            false,
+            '/create'
         );
+        const { data: response } = JSON.parse(responseBody) as FunctionsReturn<Learning>;
 
         // 更新本地学习记录状态
         setLearningRecords(prev => ({

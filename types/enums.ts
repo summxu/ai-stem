@@ -13,7 +13,8 @@ export enum CollectionName {
 export enum FunctionName {
     teams = '6809d6d00031d6bf67c2',
     login = '67f346ff0010a45f8fe7',
-    chapter = '6809d6d00031d6bf67c3'
+    chapter = '6809d6d00031d6bf67c3',
+    leaning = '6809d6d00031d6bf67c4'
 }
 
 export enum BucketName {

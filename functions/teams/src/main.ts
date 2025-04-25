@@ -93,6 +93,7 @@ export default async ({ req, res, log, error }: any) => {
                 );
                 await users.updateLabels(user.$id, ['teachers']);
                 await users.updateEmailVerification(user.$id, true);
+                await users.updatePrefs(user.$id, { teamId: teamId })
                 await teams.createMembership(teamId, ['teacher'], user.email, user.$id, undefined, undefined, user.name);
                 responseData.teachers.push({ ...user, password: password })
             }
@@ -107,6 +108,7 @@ export default async ({ req, res, log, error }: any) => {
                 );
                 await users.updateLabels(user.$id, ['students']);
                 await users.updateEmailVerification(user.$id, true);
+                await users.updatePrefs(user.$id, { teamId: teamId })
                 await teams.createMembership(teamId, ['student'], user.email, user.$id, undefined, undefined, user.name);
                 responseData.students.push({ ...user, password: password })
             }
