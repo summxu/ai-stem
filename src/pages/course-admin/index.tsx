@@ -1,13 +1,14 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { useAntdTable } from 'ahooks';
-import { Button, Flex, Form, Input, message, Modal, Space, Table, TableProps, Upload, UploadFile, UploadProps } from 'antd';
-import { ID, Query } from 'appwrite';
+import { Button, Flex, Form, Input, message, Modal, Select, Space, Table, TableProps, Upload, UploadFile, UploadProps } from 'antd';
+import { ID, Models, Permission, Query, Role } from 'appwrite';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Active, Course } from '../../../types/db.ts';
-import { BucketName, CollectionName, DatabaseName } from '../../../types/enums.ts';
+import { extractTeamId } from '../../../functions/teams/src/utils.ts';
+import { Active, Chapter, Course } from '../../../types/db.ts';
+import { BucketName, CollectionName, DatabaseName, FunctionName } from '../../../types/enums.ts';
 import CourseContentModal from '../../components/course-content-modal';
-import { databases, storage } from '../../utils/appwrite.ts';
+import { databases, functions, storage, teams } from '../../utils/appwrite.ts';
 import './index.scss';
 
 interface Result {
@@ -62,7 +63,10 @@ function CourseAdmin() {
     const [contentModalOpen, setContentModalOpen] = useState(false);
     const [currentCourseId, setCurrentCourseId] = useState<string>('');
     const [form] = Form.useForm();
+    const [formPremission] = Form.useForm();
+    const [showTeamPremission, setShowTeamPremission] = useState(false)
     const [_, forceUpdate] = useState(0)
+    const [teamList, setTeamList] = useState<Models.Team<Models.Preferences>[]>([])
     // 不再单独维护fileList状态，改为由Form.Item托管
 
     const columns: TableProps<Course>['columns'] = [
@@ -87,7 +91,7 @@ function CourseAdmin() {
         {
             title: '操作',
             dataIndex: 'options',
-            width: 200,
+            width: 260,
             align: 'center',
             render: (_, course) => (
                 <Space>
@@ -96,6 +100,9 @@ function CourseAdmin() {
                     </Button>
                     <Button onClick={() => handleCourseContent(course)} size="small" color="primary" variant="text">
                         课程内容
+                    </Button>
+                    <Button onClick={() => handleTeamPremission(course)} size="small" color="primary" variant="text">
+                        小组权限
                     </Button>
                     <Button onClick={() => handleUpdate(course)} size="small" color="primary" variant="text">
                         修改
@@ -107,6 +114,47 @@ function CourseAdmin() {
             ),
         },
     ];
+
+    const handleTeamPremission = async (course: Course) => {
+        // 获取小组下第一个章节的权限
+        const { total, documents } = await databases.listDocuments<Chapter>(DatabaseName.ai_stem, CollectionName.chapter, [
+            Query.equal('course', course.$id),
+            Query.limit(1000)
+        ])
+        if (total !== 0) {
+            // 取出来所有的team读取权限
+            const teamReadPermissions = documents[0].$permissions.filter(permission => permission.includes(`read("team:`))
+            // 取出来所有的team读取权限的teamId
+            const teamIds = teamReadPermissions.map(permission => extractTeamId(permission))
+            formPremission.setFieldValue('premission', teamIds);
+            const chapterIds = documents.map(chapter => chapter.$id)
+            formPremission.setFieldValue('chapterIds', chapterIds);
+        }
+        setShowTeamPremission(true);
+    }
+
+    const handleSetPremission = async () => {
+        await formPremission.validateFields();
+        const formData = formPremission.getFieldsValue();
+        await functions.createExecution(
+            FunctionName.chapter,
+            JSON.stringify(formData),
+            false,
+            '/updatePermission'
+        );
+        formPremission.resetFields()
+        setShowTeamPremission(false)
+    }
+
+    useEffect(() => {
+        teams.list()
+            .then((res) => {
+                setTeamList(res.teams)
+            })
+            .catch((err) => {
+                message.error('获取团队信息失败')
+            })
+    }, [])
 
     const handleCourseContent = (course: Course) => {
         setCurrentCourseId(course.$id);
@@ -152,6 +200,10 @@ function CourseAdmin() {
     const handleCreate = async () => {
         await form.validateFields();
         const formData: Course = form.getFieldsValue();
+        
+        // 获取所有小组
+        const { teams: teamsList } = await teams.list()
+        const teamsIdList = teamsList.map(item => item.$id)
 
         // 处理附件，从数组转为URL字符串
         const attachmentFiles = formData.attachment as unknown as UploadFile[];
@@ -159,7 +211,6 @@ function CourseAdmin() {
             formData.attachment = attachmentFiles[0].url || attachmentFiles[0].response.url || '';
         }
 
-        // 上传选项
         try {
             if (formData.$id) {
                 await databases.updateDocument<Course>(DatabaseName.ai_stem, CollectionName.course, formData.$id, formData);
@@ -169,7 +220,10 @@ function CourseAdmin() {
                 if (activeId && !formData.active) {
                     formData.active = activeId;
                 }
-                await databases.createDocument<Course>(DatabaseName.ai_stem, CollectionName.course, ID.unique(), formData);
+                await databases.createDocument<Course>(DatabaseName.ai_stem, CollectionName.course, ID.unique(), {
+                    ...formData,
+                    teamPremissionIds: teamsIdList
+                });
                 run({ current: 1, pageSize: tableProps.pagination.pageSize });
             }
             setOpen(false);
@@ -246,6 +300,30 @@ function CourseAdmin() {
                 onCancel={() => setContentModalOpen(false)}
                 courseId={currentCourseId}
             />
+            <Modal
+                open={showTeamPremission}
+                onCancel={() => setShowTeamPremission(false)}
+                title="设置小组权限"
+                okText="确定"
+                cancelText="取消"
+                maskClosable={false}
+                keyboard={false}
+                onOk={handleSetPremission}>
+                <Form form={formPremission} layout="vertical">
+                    <Form.Item initialValue="all" name="premission" label="小组权限" rules={[{ required: true, message: '请选择小组权限' }]}>
+                        <Select
+                            showSearch
+                            mode="multiple"
+                            optionFilterProp="label"
+                            options={teamList.map(item => ({
+                                value: item.$id,
+                                label: item.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item noStyle name="chapterIds" />
+                </Form>
+            </Modal>
             <div className="istem-course-admin-inner">
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
                     <p className="course-title">{activeId ? activeName : '所有课程'}</p>

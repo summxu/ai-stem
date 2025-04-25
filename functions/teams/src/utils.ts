@@ -27,3 +27,13 @@ export function generateRandomPassword() {
     }
     return password;
 }
+
+/**
+ * 从权限字符串中提取teamId
+ * @param permission 权限字符串
+ * @returns 提取出的teamId
+ */
+export function extractTeamId(permission: string): string | null {
+    const match = permission.match(/team:(\w+)/);
+    return match ? match[1] : null;
+}

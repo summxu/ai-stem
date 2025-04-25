@@ -1,11 +1,11 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Collapse, Form, Modal, ModalProps, message } from 'antd';
-import { ID, Query } from 'appwrite';
+import { ID, Permission, Query, Role } from 'appwrite';
 import { ClassicEditor, EventInfo } from 'ckeditor5';
 import { useEffect, useState } from 'react';
-import { Chapter } from '../../../types/db';
+import { Chapter, Course } from '../../../types/db';
 import { CollectionName, DatabaseName, StepType } from '../../../types/enums';
-import { databases } from '../../utils/appwrite';
+import { databases, teams } from '../../utils/appwrite';
 import CKeditor from '../ckeditor';
 import './index.scss';
 
@@ -75,6 +75,11 @@ function CourseContentModal({ courseId, onSuccess, ...props }: CourseContentModa
     const addChapter = async (step: StepType) => {
         try {
             const stepKey = Object.keys(StepType).find(key => StepType[key as keyof typeof StepType] === step) as StepType
+            const { teamPremissionIds } = await databases.getDocument<Course>(
+                DatabaseName.ai_stem,
+                CollectionName.course,
+                courseId!
+            )
             const newChapter = await databases.createDocument<Chapter>(
                 DatabaseName.ai_stem,
                 CollectionName.chapter,
@@ -84,7 +89,13 @@ function CourseContentModal({ courseId, onSuccess, ...props }: CourseContentModa
                     step: stepKey,
                     sort: 0,
                     course: courseId
-                }
+                },
+                [
+                    Permission.update(Role.label("admin")),
+                    Permission.delete(Role.label("admin")),
+                    Permission.read(Role.label("admin")),
+                    ...teamPremissionIds.map(item => Permission.read(Role.team(item)))
+                ]
             );
 
             // 更新状态

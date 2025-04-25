@@ -29,6 +29,7 @@ export interface Course extends Models.Document {
     duration: string;
     attachment: string; // URL格式
     active?: string; // 关系字段
+    teamPremissionIds: string[];
     // chapter: Chapter[]; // 关系字段
 }
 

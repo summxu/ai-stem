@@ -3,11 +3,11 @@ import { Button, Card, Col, Collapse, Empty, Input, Row, Select, Spin, Tag, mess
 import { Query } from 'appwrite';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Active, Course } from '../../../types/db';
+import { Active, Chapter, Course } from '../../../types/db';
 import { CollectionName, DatabaseName, SubjectType } from '../../../types/enums';
 import { useLoginModal } from '../../hooks/useLogin';
 import { useUser } from '../../hooks/user';
-import { databases } from '../../utils/appwrite';
+import { account, databases, teams } from '../../utils/appwrite';
 import './index.scss';
 
 const { Panel } = Collapse;
@@ -90,9 +90,22 @@ function CourseList() {
     };
 
     // 处理课程点击，跳转到课程学习页面
-    const handleCourseClick = (courseId: string) => {
+    const handleCourseClick = async (courseId: string) => {
         if (!userInfo) {
             showLoginModal()
+            return
+        }
+        const { total } = await databases.listDocuments<Chapter>(
+            DatabaseName.ai_stem,
+            CollectionName.chapter,
+            [
+                Query.equal('course', courseId),
+                Query.limit(1),
+                Query.offset(0)
+            ]
+        )
+        if (!total) {
+            message.warning('你没有权限学习该课程')
             return
         }
         navigate(`/course-preview/course-learning/${courseId}`);

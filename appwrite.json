@@ -39,6 +39,24 @@
             "commands": "npm install && npm run build",
             "specification": "s-1vcpu-512mb",
             "path": "functions/teams"
+        },
+        {
+            "$id": "6809d6d00031d6bf67c3",
+            "execute": [
+                "label:admin"
+            ],
+            "name": "chapter",
+            "enabled": true,
+            "logging": true,
+            "runtime": "node-21.0",
+            "scopes": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "entrypoint": "dist/main.js",
+            "commands": "npm install && npm run build",
+            "specification": "s-1vcpu-512mb",
+            "path": "functions/chapter"
         }
     ],
     "projectName": "Ai-STEM",
@@ -87,88 +105,13 @@
     ],
     "collections": [
         {
-            "$id": "67f0a408002f85969a31",
-            "$permissions": [
-                "read(\"guests\")",
-                "create(\"label:admin\")",
-                "read(\"label:admin\")",
-                "update(\"label:admin\")",
-                "delete(\"label:admin\")"
-            ],
-            "databaseId": "67ef70bd0025644c3858",
-            "name": "active",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "name",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 36,
-                    "default": null
-                },
-                {
-                    "key": "description",
-                    "type": "string",
-                    "required": false,
-                    "array": false,
-                    "size": 500,
-                    "default": null
-                },
-                {
-                    "key": "grade",
-                    "type": "string",
-                    "required": false,
-                    "array": false,
-                    "elements": [
-                        "一年级",
-                        "二年级",
-                        "三年级",
-                        "四年级",
-                        "五年级",
-                        "六年级"
-                    ],
-                    "format": "enum",
-                    "default": null
-                },
-                {
-                    "key": "subject",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "elements": [
-                        "S",
-                        "T",
-                        "E",
-                        "M"
-                    ],
-                    "format": "enum",
-                    "default": null
-                }
-            ],
-            "indexes": [
-                {
-                    "key": "index_1",
-                    "type": "key",
-                    "status": "available",
-                    "attributes": [
-                        "$id"
-                    ],
-                    "orders": [
-                        "DESC"
-                    ]
-                }
-            ]
-        },
-        {
             "$id": "67f0a530000e5c01c41e",
             "$permissions": [
                 "create(\"label:admin\")",
                 "read(\"label:admin\")",
                 "update(\"label:admin\")",
                 "delete(\"label:admin\")",
-                "read(\"guests\")"
+                "read(\"any\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "course",
@@ -218,6 +161,14 @@
                     "twoWayKey": "course",
                     "onDelete": "cascade",
                     "side": "child"
+                },
+                {
+                    "key": "teamPremissionIds",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 255,
+                    "default": null
                 }
             ],
             "indexes": [
@@ -237,8 +188,6 @@
         {
             "$id": "67f0b8cb00277ce1d71b",
             "$permissions": [
-                "read(\"label:teachers\")",
-                "read(\"label:students\")",
                 "create(\"label:admin\")",
                 "read(\"label:admin\")",
                 "update(\"label:admin\")",
@@ -247,7 +196,7 @@
             "databaseId": "67ef70bd0025644c3858",
             "name": "chapter",
             "enabled": true,
-            "documentSecurity": false,
+            "documentSecurity": true,
             "attributes": [
                 {
                     "key": "content",
@@ -307,48 +256,6 @@
                     ]
                 }
             ]
-        },
-        {
-            "$id": "67f0b9eb0002bb4a7658",
-            "$permissions": [
-                "read(\"label:students\")",
-                "read(\"label:teachers\")",
-                "create(\"label:admin\")",
-                "read(\"label:admin\")",
-                "update(\"label:admin\")",
-                "delete(\"label:admin\")"
-            ],
-            "databaseId": "67ef70bd0025644c3858",
-            "name": "step",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "name",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 12,
-                    "default": null
-                },
-                {
-                    "key": "description",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 500,
-                    "default": null
-                },
-                {
-                    "key": "code",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 12,
-                    "default": null
-                }
-            ],
-            "indexes": []
         },
         {
             "$id": "67f0d09400061c9c9fe0",
@@ -519,7 +426,7 @@
                 "read(\"label:admin\")",
                 "update(\"label:admin\")",
                 "delete(\"label:admin\")",
-                "read(\"guests\")"
+                "read(\"any\")"
             ],
             "databaseId": "67ef70bd0025644c3858",
             "name": "active",
@@ -591,50 +498,13 @@
     "teams": [],
     "buckets": [
         {
-            "$id": "67f5d09e000a4d858f1a",
-            "$permissions": [
-                "read(\"guests\")",
-                "create(\"label:admin\")",
-                "read(\"label:admin\")",
-                "update(\"label:admin\")",
-                "delete(\"label:admin\")"
-            ],
-            "fileSecurity": false,
-            "name": "guest",
-            "enabled": true,
-            "maximumFileSize": 30000000,
-            "allowedFileExtensions": [],
-            "compression": "none",
-            "encryption": true,
-            "antivirus": true
-        },
-        {
-            "$id": "67f5d9d6001e4590359b",
-            "$permissions": [
-                "read(\"label:teachers\")",
-                "read(\"label:students\")",
-                "create(\"label:admin\")",
-                "read(\"label:admin\")",
-                "update(\"label:admin\")",
-                "delete(\"label:admin\")"
-            ],
-            "fileSecurity": false,
-            "name": "users",
-            "enabled": true,
-            "maximumFileSize": 30000000,
-            "allowedFileExtensions": [],
-            "compression": "none",
-            "encryption": true,
-            "antivirus": true
-        },
-        {
             "$id": "67f677ac001d18127125",
             "$permissions": [
                 "create(\"label:admin\")",
                 "read(\"label:admin\")",
                 "update(\"label:admin\")",
                 "delete(\"label:admin\")",
-                "read(\"guests\")"
+                "read(\"any\")"
             ],
             "fileSecurity": false,
             "name": "course",
