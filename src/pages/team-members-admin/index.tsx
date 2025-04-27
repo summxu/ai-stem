@@ -74,8 +74,10 @@ function TeamMembersAdmin() {
         {
             title: '成员账号',
             dataIndex: 'userEmail',
-            key: 'userEmail',
             align: 'center',
+            render: (_, member) => {
+                return removeEmailSuffix(member.userEmail);
+            },
         },
         {
             title: '成员角色',
