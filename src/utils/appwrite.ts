@@ -1,4 +1,4 @@
-import { Account, Client, Databases, Functions, Locale, Teams, Storage } from 'appwrite';
+import { Account, Client, Databases, Functions, Locale, Teams, Storage, Graphql } from 'appwrite';
 
 export const client = new Client();
 
@@ -12,3 +12,4 @@ export const databases = new Databases(client);
 export const functions = new Functions(client);
 export const locale = new Locale(client);
 export const storage = new Storage(client);
+export const graphql = new Graphql(client);

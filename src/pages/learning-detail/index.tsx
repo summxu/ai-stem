@@ -3,94 +3,121 @@ import { Button, Flex, message, Table, TableProps } from 'antd';
 import { Query } from 'appwrite';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
-import { Learning as LearningType } from '../../../types/db.ts';
-import { CollectionName, DatabaseName } from '../../../types/enums.ts';
-import { databases } from '../../utils/appwrite.ts';
+import { Course, Learning, Learning as LearningType, Step } from '../../../types/db.ts';
+import { CollectionName, DatabaseName, FunctionName } from '../../../types/enums.ts';
+import { databases, functions } from '../../utils/appwrite.ts';
 import './index.scss';
+import { FunctionsReturn } from '../../../types/common.ts';
 
 interface Result {
     total: number;
-    list: LearningType[];
+    list: Course[];
+}
+
+export interface DownloadLearningResponse {
+    chapterLeaningList: Learning[]
+    interactionLeaningList: Learning[]
 }
 
 function LearningDetail() {
     const { userId, userName } = useParams();
 
-    const getTableData = ({ current, pageSize }: any): Promise<Result> => {
-        return new Promise((resolve, reject) => {
+    const getTableData = (): Promise<Result> => {
+        return new Promise(async (resolve, reject) => {
             const queries = [
                 Query.equal('createdBy', userId!),
-                Query.limit(pageSize),
-                Query.offset((current - 1) * pageSize),
+                Query.isNotNull("chapter"),
+                Query.limit(10000),
                 Query.orderDesc('$createdAt'),
             ];
-            databases.listDocuments<LearningType>(DatabaseName.ai_stem, CollectionName.leaning, queries)
-                .then((res) => {
-                    resolve({
-                        total: res.total,
-                        list: res.documents,
-                    })
-                }).catch((err) => {
-                    reject(err)
-                    message.error((err as Error).message);
-                })
+            try {
+                const allLeanringByChapter = await databases.listDocuments<LearningType>(DatabaseName.ai_stem, CollectionName.leaning, queries)
+                const groupedCourseData = allLeanringByChapter.documents.reduce((acc, curr) => {
+                    const courseId = curr.chapter?.course?.$id;
+                    if (courseId && !acc.some(item => item.$id === courseId)) {
+                        acc.push(curr.chapter?.course!);
+                    }
+                    return acc;
+                }, [] as Course[]);
+
+                resolve({
+                    total: groupedCourseData.length,
+                    list: groupedCourseData
+                });
+            } catch (error) {
+                reject(error);
+                message.error((error as Error).message);
+            }
         })
     };
 
     const { tableProps } = useAntdTable(getTableData);
 
-    const columns: TableProps<LearningType>['columns'] = [
+    const download = async (course: Course, step: Step) => {
+        const fileRes = await functions.createExecution(FunctionName.leaning,
+            JSON.stringify({
+                courseId: course.$id,
+                step: step,
+                userId: userId!
+            }),
+            false,
+            '/download'
+        )
+        
+        const { responseBody } = fileRes
+        const { data } = JSON.parse(responseBody) as FunctionsReturn<DownloadLearningResponse>;
+        
+        console.log(data)
+    };
+
+    const columns: TableProps<Course>['columns'] = [
         {
             title: '课程',
-            dataIndex: 'course',
+            dataIndex: 'name',
             align: 'center',
-            key: 'course'
+            key: 'name'
         },
         {
             title: '共情',
             dataIndex: '1',
             align: 'center',
-            render: (_, member) => (
-                <Button size="small" color="primary" variant="text">下载</Button>
+            render: (_, course) => (
+                <Button onClick={() => download(course, 'empathize')} size="small" color="primary" variant="text">下载</Button>
             ),
         },
         {
             title: '定义',
             dataIndex: '2',
             align: 'center',
-            render: (_, member) => (
-                <Button size="small" color="primary" variant="text">下载</Button>
+            render: (_, course) => (
+                <Button onClick={() => download(course, 'define')} size="small" color="primary" variant="text">下载</Button>
             ),
         },
         {
             title: '创意',
             dataIndex: '3',
             align: 'center',
-            render: (_, member) => (
-                <Button size="small" color="primary" variant="text">下载</Button>
+            render: (_, course) => (
+                <Button onClick={() => download(course, 'ideate')} size="small" color="primary" variant="text">下载</Button>
             ),
         },
         {
             title: '原型',
             dataIndex: '4',
             align: 'center',
-            render: (_, member) => (
-                <Button size="small" color="primary" variant="text">下载</Button>
+            render: (_, course) => (
+                <Button onClick={() => download(course, 'prototype')} size="small" color="primary" variant="text">下载</Button>
             ),
         },
         {
             title: '测试',
             dataIndex: '5',
             align: 'center',
-            render: (_, member) => (
-                <Button size="small" color="primary" variant="text">下载</Button>
+            render: (_, course) => (
+                <Button onClick={() => download(course, 'test')} size="small" color="primary" variant="text">下载</Button>
             ),
         }
     ];
-
-    useEffect(() => {
-
-    }, [userId])
 
     return (
         <div className="istem-learning-detail">
@@ -98,7 +125,7 @@ function LearningDetail() {
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
                     <p className="teams-members-title">{`${userName}的学习记录`}</p>
                 </Flex>
-                <Table<LearningType> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
+                <Table<Course> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
             </div>
         </div>
     );
