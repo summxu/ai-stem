@@ -16,6 +16,7 @@ import About from './pages/about';
 import TeamAdmin from './pages/team-admin/index.tsx';
 import TeamMembersAdmin from './pages/team-members-admin/index.tsx';
 import Learning from './pages/learning/index.tsx';
+import LearningDetail from './pages/learning-detail/index.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <UserProvider>
@@ -33,6 +34,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="teams/teams-member/:teamId" element={<TeamMembersAdmin />} />
                     <Route path="about" element={<About />} />
                     <Route path="learning" element={<Learning />} />
+                    <Route path="learning/learning-detail/:userId/:userName" element={<LearningDetail />} />
                 </Route>
             </Routes>
         </BrowserRouter>

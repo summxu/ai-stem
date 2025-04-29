@@ -47,6 +47,7 @@ export interface Learning extends Models.Document {
     chapter?: Chapter; // 关系字段
     interaction?: Interaction; // 关系字段
     complete: boolean;
+    createdBy: string;
 }
 
 // Interaction 集合

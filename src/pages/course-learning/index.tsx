@@ -156,7 +156,8 @@ function CourseLearning() {
                     JSON.stringify({
                         data: {
                             chapter: chapterId,
-                            complete: true
+                            complete: true,
+                            createdBy: userInfo?.$id,
                         },
                         teamId: userInfo?.prefs.teamId
                     }),
@@ -237,7 +238,8 @@ function CourseLearning() {
                     chapter: chapterId,
                     interaction: interactionId,
                     answer: answer,
-                    complete: isCorrect
+                    complete: isCorrect,
+                    createdBy: userInfo?.$id,
                 },
                 teamId: userInfo?.prefs.teamId
             }),

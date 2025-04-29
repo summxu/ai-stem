@@ -1,59 +1,58 @@
-import { PlusOutlined } from '@ant-design/icons';
 import { useAntdTable } from 'ahooks';
-import { Button, Flex, Form, InputNumber, message, Modal, Space, Table, TableProps } from 'antd';
-import { Models, Query } from 'appwrite';
-import { Fragment, useEffect, useState } from 'react';
-import { TeamGenerateResponse } from '../../../functions/teams/src/main.ts';
+import { Button, Flex, message, Space, Table, TableProps } from 'antd';
+import { Models } from 'appwrite';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { FunctionsReturn } from '../../../types/common.ts';
-import { Learning as LearningType } from '../../../types/db.ts';
-import { CollectionName, DatabaseName, FunctionName } from '../../../types/enums.ts';
+import { FunctionName } from '../../../types/enums.ts';
 import { useUser } from '../../hooks/user.tsx';
-import { databases, functions, teams } from '../../utils/appwrite.ts';
+import { functions, teams } from '../../utils/appwrite.ts';
 import { removeEmailSuffix } from '../../utils/index.ts';
 import './index.scss';
 
 interface Result {
     total: number;
-    list: LearningType[];
+    list: Models.Membership[];
 }
 
 function Learning() {
     const [teamName, setTeamName] = useState<string>('');
-    const { userInfo } = useUser()
-    const [team, setTeam] = useState<Models.Team<Models.Preferences>>()
+    const { userInfo } = useUser();
+    const navigate = useNavigate()
+
+    const getTableData = (): Promise<Result> => {
+        return new Promise((resolve, reject) => {
+            functions.createExecution(
+                FunctionName.leaning,
+                JSON.stringify({ teamId: userInfo!.prefs.teamId }),
+                false,
+                '/listMemberships'
+            ).then((res) => {
+                const { responseBody } = res
+                const { data: { total, memberships } } = JSON.parse(responseBody) as FunctionsReturn<Models.MembershipList>;
+                resolve({
+                    total: total,
+                    list: memberships,
+                });
+            }).catch((err) => {
+                reject(err)
+                message.error((err as Error).message);
+            })
+        })
+    }
+
+    const { tableProps, run } = useAntdTable(getTableData, { manual: true });
 
     useEffect(() => {
-        teams.get(userInfo?.prefs.teamId).then(res => {
-            setTeam(res)
-        })
+        if (userInfo && userInfo.prefs && userInfo.prefs.teamId) {
+            run({ current: 1, pageSize: tableProps.pagination.pageSize });
+            teams.get(userInfo.prefs.teamId).then((res) => {
+                setTeamName(res.name);
+            })
+        }
     }, [userInfo]);
 
-    const getTableData = ({ current, pageSize }: any): Promise<Result> => {
-        return new Promise((resolve, reject) => {
-            const queries = [
-                Query.limit(pageSize),
-                Query.offset((current - 1) * pageSize),
-                Query.orderDesc('$createdAt'),
-            ];
-            databases.listDocuments<LearningType>(DatabaseName.ai_stem, CollectionName.leaning, queries)
-                .then((res) => {
-                    resolve({
-                        total: res.total,
-                        list: res.documents,
-                    })
-                }).catch((err) => {
-                    reject(err)
-                    message.error((err as Error).message);
-                })
-        })
-    };
-
-    const { tableProps, run } = useAntdTable(getTableData);
-    const [open, setOpen] = useState(false);
-    const [form] = Form.useForm();
-    // 不再单独维护fileList状态，改为由Form.Item托管
-
-    const columns: TableProps<LearningType>['columns'] = [
+    const columns: TableProps<Models.Membership>['columns'] = [
         {
             title: '成员名称',
             dataIndex: 'userName',
@@ -75,10 +74,17 @@ function Learning() {
             },
         },
         {
-            title: '成员角色',
-            dataIndex: 'roles',
-            key: 'roles',
+            title: '操作',
+            dataIndex: 'options',
+            width: 150,
             align: 'center',
+            render: (_, member) => (
+                <Space>
+                    <Button onClick={() => navigate(`/learning/learning-detail/${member.userId}/${member.userName}`)} size="small" color="primary" variant="text">
+                        详细学习记录
+                    </Button>
+                </Space>
+            ),
         },
     ];
 
@@ -86,9 +92,9 @@ function Learning() {
         <div className="istem-learning-admin">
             <div className="istem-learning-admin-inner">
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
-                    <p className="teams-members-title">{teamName || '所有成员'}</p>
+                    <p className="teams-members-title">{teamName + '小组的学习记录'}</p>
                 </Flex>
-                <Table<LearningType> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
+                <Table<Models.Membership> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
             </div>
         </div>
     );

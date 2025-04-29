@@ -280,10 +280,8 @@
             "$permissions": [
                 "create(\"label:teachers\")",
                 "read(\"label:teachers\")",
-                "update(\"label:teachers\")",
                 "create(\"label:students\")",
                 "read(\"label:students\")",
-                "update(\"label:students\")",
                 "create(\"label:admin\")",
                 "read(\"label:admin\")",
                 "update(\"label:admin\")",
@@ -332,6 +330,14 @@
                     "required": false,
                     "array": false,
                     "default": false
+                },
+                {
+                    "key": "createdBy",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null
                 }
             ],
             "indexes": []
