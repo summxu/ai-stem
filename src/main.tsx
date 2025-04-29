@@ -33,7 +33,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="teams" element={<TeamAdmin />} />
                     <Route path="teams/teams-member/:teamId" element={<TeamMembersAdmin />} />
                     <Route path="about" element={<About />} />
-                    <Route path="learning" element={<Learning />} />
+                    <Route path="learning/:teamId?" element={<Learning />} />
                     <Route path="learning/learning-detail/:userId/:userName" element={<LearningDetail />} />
                 </Route>
             </Routes>

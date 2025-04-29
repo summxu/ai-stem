@@ -1,13 +1,14 @@
 import { useAntdTable } from 'ahooks';
 import { Button, Flex, message, Table, TableProps } from 'antd';
 import { Query } from 'appwrite';
-import { useEffect } from 'react';
+import * as docx from "docx";
+import { Document, Paragraph, TextRun } from "docx";
 import { useParams } from 'react-router';
+import { FunctionsReturn } from '../../../types/common.ts';
 import { Course, Learning, Learning as LearningType, Step } from '../../../types/db.ts';
-import { CollectionName, DatabaseName, FunctionName } from '../../../types/enums.ts';
+import { CollectionName, DatabaseName, FunctionName, StepType } from '../../../types/enums.ts';
 import { databases, functions } from '../../utils/appwrite.ts';
 import './index.scss';
-import { FunctionsReturn } from '../../../types/common.ts';
 
 interface Result {
     total: number;
@@ -63,11 +64,44 @@ function LearningDetail() {
             false,
             '/download'
         )
-        
+
         const { responseBody } = fileRes
         const { data } = JSON.parse(responseBody) as FunctionsReturn<DownloadLearningResponse>;
         
         console.log(data)
+
+        const doc = new Document({
+            sections: [
+                {
+                    properties: {},
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun("Hello World"),
+                                new TextRun({
+                                    text: "Foo Bar",
+                                    bold: true,
+                                }),
+                                new TextRun({
+                                    text: "\tGithub is the best",
+                                    bold: true,
+                                }),
+                            ],
+                        }),
+                    ],
+                },
+            ],
+        });
+
+        docx.Packer.toBlob(doc).then((blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${userName}-${course.name}-${StepType[step]}.docx`;
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
+
     };
 
     const columns: TableProps<Course>['columns'] = [

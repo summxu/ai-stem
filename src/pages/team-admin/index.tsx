@@ -63,16 +63,19 @@ function TeamAdmin() {
             dataIndex: 'options',
             width: 200,
             align: 'center',
-            render: (_, course) => (
+            render: (_, team) => (
                 <Space>
-                    <Button onClick={() => navigate(`/teams/teams-member/${course.$id}`)} size="small" color="primary" variant="text">
+                    <Button onClick={() => navigate(`/teams/teams-member/${team.$id}`)} size="small" color="primary" variant="text">
                         管理成员
                     </Button>
-                    <Button onClick={() => handleUpdate(course)} size="small" color="primary" variant="text">
+                    <Button onClick={() => handleUpdate(team)} size="small" color="primary" variant="text">
                         修改
                     </Button>
-                    <Button onClick={() => handleDelete(course)} size="small" color="danger" variant="text">
+                    <Button onClick={() => handleDelete(team)} size="small" color="danger" variant="text">
                         删除
+                    </Button>
+                    <Button onClick={() => navigate(`/learning/${team.$id}`)} size="small" color="primary" variant="text">
+                        学习记录
                     </Button>
                 </Space>
             ),

@@ -2,7 +2,7 @@ import { useAntdTable } from 'ahooks';
 import { Button, Flex, message, Space, Table, TableProps } from 'antd';
 import { Models } from 'appwrite';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { FunctionsReturn } from '../../../types/common.ts';
 import { FunctionName } from '../../../types/enums.ts';
 import { useUser } from '../../hooks/user.tsx';
@@ -17,6 +17,7 @@ interface Result {
 
 function Learning() {
     const [teamName, setTeamName] = useState<string>('');
+    const { teamId } = useParams()
     const { userInfo } = useUser();
     const navigate = useNavigate()
 
@@ -24,7 +25,7 @@ function Learning() {
         return new Promise((resolve, reject) => {
             functions.createExecution(
                 FunctionName.leaning,
-                JSON.stringify({ teamId: userInfo!.prefs.teamId }),
+                JSON.stringify({ teamId: teamId || userInfo!.prefs.teamId }),
                 false,
                 '/listMemberships'
             ).then((res) => {
@@ -44,13 +45,18 @@ function Learning() {
     const { tableProps, run } = useAntdTable(getTableData, { manual: true });
 
     useEffect(() => {
-        if (userInfo && userInfo.prefs && userInfo.prefs.teamId) {
+        if (teamId) {
+            run({ current: 1, pageSize: tableProps.pagination.pageSize });
+            teams.get(teamId).then((res) => {
+                setTeamName(res.name);
+            })
+        } else if (userInfo && userInfo.prefs && userInfo.prefs.teamId) {
             run({ current: 1, pageSize: tableProps.pagination.pageSize });
             teams.get(userInfo.prefs.teamId).then((res) => {
                 setTeamName(res.name);
             })
         }
-    }, [userInfo]);
+    }, [teamId, userInfo]);
 
     const columns: TableProps<Models.Membership>['columns'] = [
         {
