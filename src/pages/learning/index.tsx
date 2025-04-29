@@ -31,9 +31,10 @@ function Learning() {
             ).then((res) => {
                 const { responseBody } = res
                 const { data: { total, memberships } } = JSON.parse(responseBody) as FunctionsReturn<Models.MembershipList>;
+
                 resolve({
                     total: total,
-                    list: memberships,
+                    list: memberships.filter((item: Models.Membership) => item.roles.includes('student')),
                 });
             }).catch((err) => {
                 reject(err)
