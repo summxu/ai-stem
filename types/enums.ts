@@ -39,7 +39,7 @@ export enum SubjectType {
 }
 
 export enum StepType {
-    empathize = '移情',
+    empathize = '共情',
     define = '定义',
     ideate = '构思',
     prototype = '原型',

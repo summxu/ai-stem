@@ -19,6 +19,7 @@ interface Result {
 function CourseAdmin() {
     const { activeId } = useParams<{ activeId: string }>();
     const [activeName, setActiveName] = useState<string>('');
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (activeId) {
@@ -102,7 +103,7 @@ function CourseAdmin() {
                         课程内容
                     </Button>
                     <Button onClick={() => handleTeamPremission(course)} size="small" color="primary" variant="text">
-                        小组权限
+                        课程权限
                     </Button>
                     <Button onClick={() => handleUpdate(course)} size="small" color="primary" variant="text">
                         修改
@@ -136,6 +137,7 @@ function CourseAdmin() {
     const handleSetPremission = async () => {
         await formPremission.validateFields();
         const formData = formPremission.getFieldsValue();
+        setLoading(true)
         await functions.createExecution(
             FunctionName.chapter,
             JSON.stringify(formData),
@@ -144,6 +146,7 @@ function CourseAdmin() {
         );
         formPremission.resetFields()
         setShowTeamPremission(false)
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -200,7 +203,7 @@ function CourseAdmin() {
     const handleCreate = async () => {
         await form.validateFields();
         const formData: Course = form.getFieldsValue();
-        
+
         // 获取所有小组
         const { teams: teamsList } = await teams.list()
         const teamsIdList = teamsList.map(item => item.$id)
@@ -210,7 +213,7 @@ function CourseAdmin() {
         if (Array.isArray(attachmentFiles) && attachmentFiles.length > 0) {
             formData.attachment = attachmentFiles[0].url || attachmentFiles[0].response.url || '';
         }
-
+        setLoading(true)
         try {
             if (formData.$id) {
                 await databases.updateDocument<Course>(DatabaseName.ai_stem, CollectionName.course, formData.$id, formData);
@@ -230,6 +233,7 @@ function CourseAdmin() {
         } catch (e) {
             message.error((e as Error).message);
         }
+        setLoading(false)
     };
 
     const uploadProps: UploadProps = {
@@ -271,6 +275,7 @@ function CourseAdmin() {
                 okText="确定"
                 cancelText="取消"
                 maskClosable={false}
+                confirmLoading={loading}
                 keyboard={false}
                 onOk={handleCreate}>
                 <Form form={form} layout="vertical">
@@ -303,14 +308,15 @@ function CourseAdmin() {
             <Modal
                 open={showTeamPremission}
                 onCancel={() => setShowTeamPremission(false)}
-                title="设置小组权限"
+                title="设置课程权限"
                 okText="确定"
                 cancelText="取消"
                 maskClosable={false}
                 keyboard={false}
+                confirmLoading={loading}
                 onOk={handleSetPremission}>
                 <Form form={formPremission} layout="vertical">
-                    <Form.Item initialValue="all" name="premission" label="小组权限" rules={[{ required: true, message: '请选择小组权限' }]}>
+                    <Form.Item initialValue="all" name="premission" label="课程权限">
                         <Select
                             showSearch
                             mode="multiple"
@@ -326,13 +332,13 @@ function CourseAdmin() {
             </Modal>
             <div className="istem-course-admin-inner">
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
-                    <p className="course-title">{activeId ? activeName : '所有课程'}</p>
+                    <p className="course-title">{activeName + '活动的课程'}</p>
                     <Button onClick={() => { form.resetFields(); setOpen(true) }}
                         style={{ background: '#FF5F2F', color: 'white', border: 'none' }} icon={<PlusOutlined />}>
                         添加新课程
                     </Button>
                 </Flex>
-                <Table<Course> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
+                <Table<Course> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 500 }} />
             </div>
         </div>
     );

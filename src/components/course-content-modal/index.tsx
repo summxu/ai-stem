@@ -135,8 +135,6 @@ function CourseContentModal({ courseId, onSuccess, ...props }: CourseContentModa
                 }
                 return updated;
             });
-
-            message.success('删除章节成功');
         } catch (error) {
             message.error('删除章节失败');
         }
@@ -166,7 +164,6 @@ function CourseContentModal({ courseId, onSuccess, ...props }: CourseContentModa
             });
 
             await Promise.all(updatePromises);
-            message.success('保存成功');
             onSuccess?.();
             props.onCancel?.(null as any);
             setLoading(false);

@@ -15,6 +15,7 @@ interface Result {
 
 function TeamAdmin() {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
     const getTableData = ({ current, pageSize }: any): Promise<Result> => {
         return new Promise((resolve, reject) => {
             const queries = [
@@ -55,8 +56,8 @@ function TeamAdmin() {
         {
             title: '成员数量',
             dataIndex: 'total',
-            key: 'total',
             align: 'center',
+            render: (_, team) => (<span>{team.total - 1}</span>)
         },
         {
             title: '操作',
@@ -112,6 +113,7 @@ function TeamAdmin() {
     const handleCreate = async () => {
         await form.validateFields();
         const formData = form.getFieldsValue();
+        setLoading(true);
         try {
             if (formData.$id) {
                 await functions.createExecution(
@@ -125,11 +127,11 @@ function TeamAdmin() {
                 await teams.create(ID.unique(), formData.name, [])
                 run({ current: tableProps.pagination.current, pageSize: tableProps.pagination.pageSize });
             }
-            message.success('操作成功！');
             setOpen(false);
         } catch (error) {
             message.error((error as Error).message);
         }
+        setLoading(false);
     };
 
     return (
@@ -142,6 +144,7 @@ function TeamAdmin() {
                 cancelText="取消"
                 maskClosable={false}
                 keyboard={false}
+                confirmLoading={loading}
                 onOk={handleCreate}>
                 <Form form={form} layout="vertical">
                     <Form.Item name="name" label="小组名称" rules={[{ required: true, message: '请输入小组名称' }]}>
@@ -158,7 +161,7 @@ function TeamAdmin() {
                         添加新小组
                     </Button>
                 </Flex>
-                <Table<Models.Team<Models.Preferences>> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
+                <Table<Models.Team<Models.Preferences>> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 500 }} />
             </div>
         </div>
     );

@@ -159,7 +159,7 @@ function LearningDetail() {
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
                     <p className="teams-members-title">{`${userName}的学习记录`}</p>
                 </Flex>
-                <Table<Course> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
+                <Table<Course> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 500 }} />
             </div>
         </div>
     );

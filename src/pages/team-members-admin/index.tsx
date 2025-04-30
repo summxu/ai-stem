@@ -19,6 +19,7 @@ interface Result {
 function TeamMembersAdmin() {
     const { teamId } = useParams<{ teamId: string }>();
     const [teamName, setTeamName] = useState<string>('');
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (teamId) {
@@ -44,7 +45,7 @@ function TeamMembersAdmin() {
                 const { data: { total, memberships } } = JSON.parse(responseBody) as FunctionsReturn<Models.MembershipList>;
                 resolve({
                     total: total,
-                    list: memberships,
+                    list: memberships.filter(item => !item.roles.includes('owner')),
                 });
             }).catch((err) => {
                 reject(err)
@@ -176,6 +177,7 @@ function TeamMembersAdmin() {
     const handleCreate = async () => {
         await form.validateFields();
         const formData = form.getFieldsValue();
+        setLoading(true);
         try {
             const { responseBody } = await functions.createExecution(
                 FunctionName.teams,
@@ -225,6 +227,7 @@ function TeamMembersAdmin() {
         } catch (e) {
             message.error((e as Error).message);
         }
+        setLoading(false);
     };
 
     return (
@@ -237,6 +240,7 @@ function TeamMembersAdmin() {
                 cancelText="取消"
                 maskClosable={false}
                 keyboard={false}
+                confirmLoading={loading}
                 onOk={handleCreate}>
                 <Form form={form} layout="vertical">
                     <Form.Item initialValue={1} name="teacherCount" label="教师数量" >
@@ -249,13 +253,13 @@ function TeamMembersAdmin() {
             </Modal>
             <div className="istem-teams-members-admin-inner">
                 <Flex style={{ marginBottom: 16 }} align="center" justify="space-between">
-                    <p className="teams-members-title">{teamName || '所有成员'}</p>
+                    <p className="teams-members-title">{teamName + '小组成员'}</p>
                     <Button onClick={() => { form.resetFields(); setOpen(true) }}
                         style={{ background: '#FF5F2F', color: 'white', border: 'none' }} icon={<PlusOutlined />}>
                         生成新成员
                     </Button>
                 </Flex>
-                <Table<Models.Membership> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
+                <Table<Models.Membership> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 500 }} />
             </div>
         </div>
     );

@@ -52,6 +52,9 @@ function Header() {
                         {userInfo && userInfo.labels.includes('teachers') && <NavLink className={({ isActive }) =>
                             isActive ? 'nav-item active' : 'nav-item'
                         } to="/learning">学习记录</NavLink>}
+                        {userInfo && userInfo.labels.includes('students') && <NavLink className={({ isActive }) =>
+                            isActive ? 'nav-item active' : 'nav-item'
+                        } to={`/learning/learning-detail/${userInfo.$id}/${userInfo.name}`}>学习记录</NavLink>}
                         {userInfo && userInfo.labels.includes('admin') && <NavLink className={({ isActive }) =>
                             isActive ? 'nav-item active' : 'nav-item'
                         } to="/teams">账号管理</NavLink>}

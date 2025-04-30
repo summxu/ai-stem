@@ -15,7 +15,7 @@ interface Result {
 }
 
 function ActiveAdmin() {
-
+    const [loading, setLoading] = useState(false)
     const getTableData = ({ current, pageSize }: any): Promise<Result> => {
         return new Promise((resolve, reject) => {
             databases.listDocuments<Active>(DatabaseName.ai_stem, CollectionName.active, [
@@ -84,7 +84,7 @@ function ActiveAdmin() {
                     <Button onClick={() => navigate(`/course-preview/course-admin/${active.$id}`)} size="small" color="primary" variant="text">
                         管理课程
                     </Button>
-                    <Button onClick={() => handleUpdate(active)} size="small" color="default" variant="text">
+                    <Button  onClick={() => handleUpdate(active)} size="small" color="primary" variant="text">
                         修改
                     </Button>
                     <Button onClick={() => handleDeltet(active)} size="small" color="danger" variant="text">
@@ -94,7 +94,7 @@ function ActiveAdmin() {
             ),
         },
     ];
-    
+
     const handleDeltet = async (active: Active) => {
         Modal.confirm({
             title: '确认删除',
@@ -120,6 +120,7 @@ function ActiveAdmin() {
     const handleCreate = async () => {
         const formData: Active = form.getFieldsValue();
         await form.validateFields();
+        setLoading(true);
         // 上传选项
         try {
             if (formData.$id) {
@@ -133,6 +134,7 @@ function ActiveAdmin() {
         } catch (e) {
             message.error((e as Error).message);
         }
+        setLoading(false);
     };
 
     return (
@@ -145,6 +147,7 @@ function ActiveAdmin() {
                 cancelText="取消"
                 maskClosable={false}
                 keyboard={false}
+                confirmLoading={loading}
                 onOk={handleCreate}>
                 <Form form={form} layout="vertical">
                     <Form.Item name="name" label="活动名称" rules={[{ required: true, message: '请输入活动名称' }]}>
@@ -169,7 +172,7 @@ function ActiveAdmin() {
                         添加新活动
                     </Button>
                 </Flex>
-                <Table<Active> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 450 }} />
+                <Table<Active> {...tableProps} bordered columns={columns} size="small" style={{ minHeight: 500 }} />
             </div>
         </div>
     );

@@ -159,9 +159,9 @@ function CourseList() {
                         className="type-select"
                     >
                         <Option value="S">{SubjectType.S}</Option>
-                        <Option value="T">{SubjectType.T}</Option>
+                        {/* <Option value="T">{SubjectType.T}</Option>
                         <Option value="A">{SubjectType.E}</Option>
-                        <Option value="M">{SubjectType.M}</Option>
+                        <Option value="M">{SubjectType.M}</Option> */}
                     </Select>
                     <Button type="primary" onClick={() => filterActivities()}>查询</Button>
                 </div>
