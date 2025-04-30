@@ -85,7 +85,7 @@ function Footer() {
                             alt="Right logo"
                         />
                     </div>
-                    <div className="social-icons">
+                    <div  className="social-icons">
                         <img
                             className="social-icon"
                             src={
