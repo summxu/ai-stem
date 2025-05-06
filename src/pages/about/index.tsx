@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.scss';
+import b5afc98a2405db027438c25f5704bc72 from '../../assets/images/b5afc98a2405db027438c25f5704bc72.png';
 
 const About: React.FC = () => {
     return (
@@ -13,7 +14,7 @@ const About: React.FC = () => {
                     <img
                         className="image_1"
                         src={
-                            "../../assets/images/b5afc98a2405db027438c25f5704bc72.png"
+                            b5afc98a2405db027438c25f5704bc72
                         }
                     />
                 </div>

@@ -1,6 +1,13 @@
 import './index.scss';
 import LogoImage from '../../assets/logo.png';
 import { useLocation } from 'react-router';
+import _3db4ae0853ee1a1b31e2d54eb44ca689 from '../../assets/images/3db4ae0853ee1a1b31e2d54eb44ca689.png';
+import _08424ed46f9a944081489b814d12abb7 from '../../assets/images/08424ed46f9a944081489b814d12abb7.png';
+import _603bf0ab5e5f51ce5c9f86cdb66817a3 from '../../assets/images/603bf0ab5e5f51ce5c9f86cdb66817a3.png';
+import _1b731373fbb5d07019ab8209d0cf698a from '../../assets/images/1b731373fbb5d07019ab8209d0cf698a.png';
+import c3e08a254fa0c339955669f62fe5a3ac from '../../assets/images/c3e08a254fa0c339955669f62fe5a3ac.png';
+import _2e01cefbba197fa9c5a24bf77dadcf71 from '../../assets/images/2e01cefbba197fa9c5a24bf77dadcf71.png';
+import _5cab39dc0d92b1b88767a761a3e11cbe from '../../assets/images/5cab39dc0d92b1b88767a761a3e11cbe.png';
 
 function Footer() {
     const location = useLocation();
@@ -65,52 +72,50 @@ function Footer() {
                     <div className="footer-middle">
                         <img
                             className="middle-logo-right"
-                            src={
-                                '../../assets/images/3db4ae0853ee1a1b31e2d54eb44ca689.png'
-                            }
+                            src={_3db4ae0853ee1a1b31e2d54eb44ca689}
                             alt="Middle logo right"
                         />
                         <img
                             className="middle-logo-left"
                             src={
-                                '../../assets/images/08424ed46f9a944081489b814d12abb7.png'
+                                _08424ed46f9a944081489b814d12abb7
                             }
                             alt="Middle logo left"
                         />
                         <img
                             className="right-logo"
                             src={
-                                '../../assets/images/603bf0ab5e5f51ce5c9f86cdb66817a3.png'
+                                _603bf0ab5e5f51ce5c9f86cdb66817a3
                             }
                             alt="Right logo"
                         />
                     </div>
-                    <div  className="social-icons">
+                    <div className="social-icons">
                         <img
                             className="social-icon"
                             src={
-                                '../../assets/images/1b731373fbb5d07019ab8209d0cf698a.png'
+                                _1b731373fbb5d07019ab8209d0cf698a
                             }
                             alt="Social icon 1"
                         />
                         <img
                             className="social-icon"
                             src={
-                                '../../assets/images/c3e08a254fa0c339955669f62fe5a3ac.png'
+                                 c3e08a254fa0c339955669f62fe5a3ac 
                             }
                             alt="Social icon 2"
                         />
                         <img
                             className="social-icon"
                             src={
-                                '../../assets/images/2e01cefbba197fa9c5a24bf77dadcf71.png'
+                                _2e01cefbba197fa9c5a24bf77dadcf71
                             }
                             alt="Social icon 3"
                         />
                         <img
                             className="social-icon"
                             src={
-                                '../../assets/images/5cab39dc0d92b1b88767a761a3e11cbe.png'
+                                _5cab39dc0d92b1b88767a761a3e11cbe
                             }
                             alt="Social icon 4"
                         />

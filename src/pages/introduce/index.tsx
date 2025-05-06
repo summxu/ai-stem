@@ -1,4 +1,13 @@
 import './index.scss'
+import bd992610e780d053fabeb37e8b8afe6b from '../../assets/images/bd992610e780d053fabeb37e8b8afe6b.png';
+import _4758472e7e1377037e971e11a1000838 from '../../assets/images/4758472e7e1377037e971e11a1000838.png';
+import b56637cae3e9b8d374cdd241a23fa0b6 from '../../assets/images/b56637cae3e9b8d374cdd241a23fa0b6.png';
+import _2afbd41d63be1cd38e65af522acc449d from '../../assets/images/2afbd41d63be1cd38e65af522acc449d.png';
+import faa67f46bad0030db6700182bb915dbb from '../../assets/images/faa67f46bad0030db6700182bb915dbb.png';
+import _64a593907cab561e49b252ad1b7453ca from '../../assets/images/64a593907cab561e49b252ad1b7453ca.png';
+import eb6574311e26b474d5bc44278c18927d from '../../assets/images/eb6574311e26b474d5bc44278c18927d.png';
+import _1e336fc1bd539c1b568fb0a2ea47e46a from '../../assets/images/1e336fc1bd539c1b568fb0a2ea47e46a.png';
+import c03a4f3d6a47d3c6e54face6ada49292 from '../../assets/images/c03a4f3d6a47d3c6e54face6ada49292.png';
 
 function Introduce() {
     return (
@@ -10,7 +19,7 @@ function Introduce() {
                         <img
                             className="image_1"
                             src={
-                                "../../assets/images/bd992610e780d053fabeb37e8b8afe6b.png"
+                                bd992610e780d053fabeb37e8b8afe6b
                             }
                         />
                     </div>
@@ -20,7 +29,7 @@ function Introduce() {
                                 <img
                                     className="image_2"
                                     src={
-                                        "../../assets/images/4758472e7e1377037e971e11a1000838.png"
+                                        _4758472e7e1377037e971e11a1000838
                                     }
                                 />
                                 <div className="text-wrapper_2 flex-col justify-between">
@@ -37,7 +46,7 @@ function Introduce() {
                                     <img
                                         className="image_3"
                                         src={
-                                            "../../assets/images/b56637cae3e9b8d374cdd241a23fa0b6.png"
+                                            b56637cae3e9b8d374cdd241a23fa0b6
                                         }
                                     />
                                     <div className="text-group_1 flex-col justify-between">
@@ -54,7 +63,7 @@ function Introduce() {
                                 <img
                                     className="image_4"
                                     src={
-                                        "../../assets/images/2afbd41d63be1cd38e65af522acc449d.png"
+                                        _2afbd41d63be1cd38e65af522acc449d
                                     }
                                 />
                                 <div className="text-group_2 flex-col justify-between">
@@ -81,7 +90,7 @@ function Introduce() {
                         <img
                             className="image_6-0"
                             src={
-                                "../../assets/images/faa67f46bad0030db6700182bb915dbb.png"
+                                faa67f46bad0030db6700182bb915dbb
                             }
                         />
                     </div>
@@ -92,7 +101,7 @@ function Introduce() {
                         <img
                             className="image_6-1"
                             src={
-                                "../../assets/images/64a593907cab561e49b252ad1b7453ca.png"
+                                _64a593907cab561e49b252ad1b7453ca
                             }
                         />
                     </div>
@@ -105,7 +114,7 @@ function Introduce() {
                         <img
                             className="image_6-2"
                             src={
-                                "../../assets/images/eb6574311e26b474d5bc44278c18927d.png"
+                                eb6574311e26b474d5bc44278c18927d
                             }
                         />
                     </div>
@@ -116,7 +125,7 @@ function Introduce() {
                         <img
                             className="image_5-3"
                             src={
-                                "../../assets/images/1e336fc1bd539c1b568fb0a2ea47e46a.png"
+                                _1e336fc1bd539c1b568fb0a2ea47e46a
                             }
                         />
                     </div>
@@ -129,7 +138,7 @@ function Introduce() {
                         <img
                             className="image_5-4"
                             src={
-                                "../../assets/images/c03a4f3d6a47d3c6e54face6ada49292.png"
+                                c03a4f3d6a47d3c6e54face6ada49292
                             }
                         />
                     </div>

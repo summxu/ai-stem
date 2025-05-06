@@ -5,6 +5,24 @@ import { Course } from '../../../types/db';
 import { CollectionName, DatabaseName } from '../../../types/enums';
 import { Query } from 'appwrite';
 import { useNavigate } from 'react-router';
+import _3d26b9c4313810b3fd9e74706e948585 from '../../assets/images/3d26b9c4313810b3fd9e74706e948585.png';
+import _32a2fd4893ce00a5012d7f32c793234c from '../../assets/images/32a2fd4893ce00a5012d7f32c793234c.png';
+import e6971251659565ac4321132c304d21b0 from '../../assets/images/e6971251659565ac4321132c304d21b0.png';
+import _32a2fd4893ce00a5012d7f32c793234c1 from '../../assets/images/32a2fd4893ce00a5012d7f32c793234c.png';
+import _6ec2c30c6b396cef8175ba6590c47f07 from '../../assets/images/6ec2c30c6b396cef8175ba6590c47f07.png';
+import _2f6f6b05e1bf29806c0cf0ba80a8badc from '../../assets/images/2f6f6b05e1bf29806c0cf0ba80a8badc.png';
+
+import _4e019138b457a2a68131a880b77b60de from '../../assets/images/4e019138b457a2a68131a880b77b60de.png';
+import _385e44a2fbf23a2b0a8368f56094f2ce from '../../assets/images/385e44a2fbf23a2b0a8368f56094f2ce.png';
+import _cb360ad69e4ac3c828af04cb749261ed from '../../assets/images/cb360ad69e4ac3c828af04cb749261ed.png';
+import _157886ccdce7676aa694046e3150f520 from '../../assets/images/157886ccdce7676aa694046e3150f520.png';
+
+
+
+
+
+
+
 
 function Home() {
     const [course, setCourse] = useState<Course[]>([])
@@ -30,10 +48,10 @@ function Home() {
                 <div className="left-content flex-col ">
                     <div className="icon-container flex-row">
                         {[
-                            '../../assets/images/4e019138b457a2a68131a880b77b60de.png',
-                            '../../assets/images/385e44a2fbf23a2b0a8368f56094f2ce.png',
-                            '../../assets/images/cb360ad69e4ac3c828af04cb749261ed.png',
-                            '../../assets/images/157886ccdce7676aa694046e3150f520.png',
+                            _4e019138b457a2a68131a880b77b60de,
+                            _385e44a2fbf23a2b0a8368f56094f2ce,
+                            _cb360ad69e4ac3c828af04cb749261ed,
+                            _157886ccdce7676aa694046e3150f520,
                         ].map((src, index) => (
                             <img
                                 key={index}
@@ -51,7 +69,7 @@ function Home() {
                         <div className="card-header flex-row align-center">
                             <img
                                 className="course-icon"
-                                src="../../assets/images/3d26b9c4313810b3fd9e74706e948585.png"
+                                src={_3d26b9c4313810b3fd9e74706e948585}
                                 alt="Course icon"
                             />
                             <span className="header-text">新的课程</span>
@@ -84,7 +102,7 @@ function Home() {
                     <img
                         className="label_10"
                         src={
-                            '../../assets/images/32a2fd4893ce00a5012d7f32c793234c.png'
+                            _32a2fd4893ce00a5012d7f32c793234c
                         }
                     />
                 </div>
@@ -100,7 +118,7 @@ function Home() {
                                 <img
                                     className="thumbnail_3"
                                     src={
-                                        '../../assets/images/e6971251659565ac4321132c304d21b0.png'
+                                        e6971251659565ac4321132c304d21b0
                                     }
                                 />
                             </div>
@@ -119,7 +137,7 @@ function Home() {
                         <img
                             className="label_10"
                             src={
-                                '../../assets/images/32a2fd4893ce00a5012d7f32c793234c.png'
+                                _32a2fd4893ce00a5012d7f32c793234c1
                             }
                         />
                     </div>
@@ -177,7 +195,7 @@ function Home() {
                             <img
                                 className="label_6"
                                 src={
-                                    '../../assets/images/6ec2c30c6b396cef8175ba6590c47f07.png'
+                                    _6ec2c30c6b396cef8175ba6590c47f07
                                 }
                             />
                             <span className="text-group_5">应用理论</span>
@@ -185,7 +203,7 @@ function Home() {
                         <img
                             className="label_7"
                             src={
-                                '../../assets/images/2f6f6b05e1bf29806c0cf0ba80a8badc.png'
+                                _2f6f6b05e1bf29806c0cf0ba80a8badc
                             }
                         />
                     </div>

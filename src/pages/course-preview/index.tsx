@@ -2,6 +2,18 @@ import { message } from 'antd';
 import { useUser } from '../../hooks/user';
 import './index.scss';
 import { useNavigate } from 'react-router';
+import _5c08eba371591f00b3d417737a03001b from '../../assets/images/5c08eba371591f00b3d417737a03001b.png';
+import _18210ec7d59fed7d48074693ec2a7abd from '../../assets/images/18210ec7d59fed7d48074693ec2a7abd.png';
+import _18210ec7d59fed7d48074693ec2a7abd1 from '../../assets/images/18210ec7d59fed7d48074693ec2a7abd.png';
+import a2fe4037e642edd0b39d2e3f33d86a75 from '../../assets/images/a2fe4037e642edd0b39d2e3f33d86a75.png';
+import _1889a996c67d7a946187cbbd85de3c6b from '../../assets/images/1889a996c67d7a946187cbbd85de3c6b.png';
+import c1b4aa1165c9ae212d97a265f5da5c46 from '../../assets/images/c1b4aa1165c9ae212d97a265f5da5c46.png';
+import _56dcd260ef2b0b7085847ce7ab7bebf8 from '../../assets/images/56dcd260ef2b0b7085847ce7ab7bebf8.png';
+import _3f837e2a86f951683f81321844103b25 from '../../assets/images/3f837e2a86f951683f81321844103b25.png';
+import a8b6479420972c4630813d8297f350ba from '../../assets/images/a8b6479420972c4630813d8297f350ba.png';
+import _54c93e4ab957c5cc240ae35a8410b2f4 from '../../assets/images/54c93e4ab957c5cc240ae35a8410b2f4.png';
+import _40618f7deb5cdaf1fa3d4b1647a0bea1 from '../../assets/images/40618f7deb5cdaf1fa3d4b1647a0bea1.png';
+import _1a9d0f3e05008a1822c09facdd429c3b from '../../assets/images/1a9d0f3e05008a1822c09facdd429c3b.png';
 
 function CoursePreview() {
     const navigate = useNavigate();
@@ -17,7 +29,7 @@ function CoursePreview() {
                             <span>修改</span>
                             <img
                                 src={
-                                    '../../assets/images/5c08eba371591f00b3d417737a03001b.png'
+                                    _5c08eba371591f00b3d417737a03001b
                                 }
                                 alt="编辑图标"
                             />
@@ -28,7 +40,7 @@ function CoursePreview() {
                             <span>添加课程</span>
                             <img
                                 src={
-                                    '../../assets/images/18210ec7d59fed7d48074693ec2a7abd.png'
+                                    _18210ec7d59fed7d48074693ec2a7abd
                                 }
                                 alt="添加图标"
                             />
@@ -39,7 +51,7 @@ function CoursePreview() {
                             <span>管理课程</span>
                             <img
                                 src={
-                                    '../../assets/images/18210ec7d59fed7d48074693ec2a7abd.png'
+                                    _18210ec7d59fed7d48074693ec2a7abd1
                                 }
                                 alt="添加图标"
                             />
@@ -59,33 +71,33 @@ function CoursePreview() {
                         <img
                             className="icon-left"
                             src={
-                                '../../assets/images/a2fe4037e642edd0b39d2e3f33d86a75.png'
+                                a2fe4037e642edd0b39d2e3f33d86a75
                             }
                             alt="STEM图标"
                         />
                         <div className="icons-middle flex-row">
                             <img
                                 src={
-                                    '../../assets/images/1889a996c67d7a946187cbbd85de3c6b.png'
+                                    _1889a996c67d7a946187cbbd85de3c6b
                                 }
                                 alt="S图标"
                             />
                             <img
                                 src={
-                                    '../../assets/images/c1b4aa1165c9ae212d97a265f5da5c46.png'
+                                    c1b4aa1165c9ae212d97a265f5da5c46
                                 }
                                 alt="T图标"
                             />
                             <img
                                 src={
-                                    '../../assets/images/56dcd260ef2b0b7085847ce7ab7bebf8.png'
+                                    _56dcd260ef2b0b7085847ce7ab7bebf8
                                 }
                                 alt="E图标"
                             />
                             <img
                                 style={{ width: 160 }}
                                 src={
-                                    '../../assets/images/3f837e2a86f951683f81321844103b25.png'
+                                    _3f837e2a86f951683f81321844103b25
                                 }
                                 alt="M图标"
                             />
@@ -102,7 +114,7 @@ function CoursePreview() {
                         <img
                             className="card-image"
                             src={
-                                '../../assets/images/a8b6479420972c4630813d8297f350ba.png'
+                                a8b6479420972c4630813d8297f350ba
                             }
                             alt="科学图标"
                         />
@@ -121,7 +133,7 @@ function CoursePreview() {
                         <img
                             className="card-image"
                             src={
-                                '../../assets/images/54c93e4ab957c5cc240ae35a8410b2f4.png'
+                                _54c93e4ab957c5cc240ae35a8410b2f4
                             }
                             alt="技术图标"
                         />
@@ -140,7 +152,7 @@ function CoursePreview() {
                         <img
                             className="card-image"
                             src={
-                                '../../assets/images/40618f7deb5cdaf1fa3d4b1647a0bea1.png'
+                                _40618f7deb5cdaf1fa3d4b1647a0bea1
                             }
                             alt="工程图标"
                         />
@@ -159,7 +171,7 @@ function CoursePreview() {
                         <img
                             className="card-image"
                             src={
-                                '../../assets/images/1a9d0f3e05008a1822c09facdd429c3b.png'
+                                _1a9d0f3e05008a1822c09facdd429c3b
                             }
                             alt="数学图标"
                         />

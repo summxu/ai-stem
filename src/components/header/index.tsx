@@ -6,6 +6,7 @@ import { useLoginModal } from '../../hooks/useLogin.tsx';
 import { useUser } from '../../hooks/user.tsx';
 import LogoImage from '../../assets/logo.png';
 import './index.scss';
+import _7a8e4d0474dc90b89a943143bf1975a1 from '../../assets/images/7a8e4d0474dc90b89a943143bf1975a1.png';
 
 function Header() {
     const { showLoginModal } = useLoginModal();
@@ -82,7 +83,7 @@ function Header() {
                         <img
                             className="language-icon"
                             src={
-                                '../../assets/images/7a8e4d0474dc90b89a943143bf1975a1.png'
+                                _7a8e4d0474dc90b89a943143bf1975a1
                             }
                             alt="Language"
                         />
