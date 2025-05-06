@@ -30,10 +30,10 @@ function Home() {
                 <div className="left-content flex-col ">
                     <div className="icon-container flex-row">
                         {[
-                            'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng38bfaab46ef266215435154939bcc4954ea33140615d170c21d9d50b6462a45f',
-                            'https://lanhu-oss-2537-2.lanhuapp.com/SketchPnge3c2630441884399a4ca08f7393e9644114a7d8caa4abbd300ad19a70293fff7',
-                            'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng3e63f9722194c47ddab53d191f51afbd4388c7a3763d156d22c1e4cd68cebd50',
-                            'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng4b849f1dfc2d388bceafbea3244efee33bc9027bc6b2cc080fa339015b7e08ca',
+                            '../../assets/images/4e019138b457a2a68131a880b77b60de.png',
+                            '../../assets/images/385e44a2fbf23a2b0a8368f56094f2ce.png',
+                            '../../assets/images/cb360ad69e4ac3c828af04cb749261ed.png',
+                            '../../assets/images/157886ccdce7676aa694046e3150f520.png',
                         ].map((src, index) => (
                             <img
                                 key={index}
@@ -51,7 +51,7 @@ function Home() {
                         <div className="card-header flex-row align-center">
                             <img
                                 className="course-icon"
-                                src="https://lanhu-oss-2537-2.lanhuapp.com/SketchPng9035c16f67a81de08001031f8aacd9f84f0fc2cd7c0b53d74ed86db4213f34e7"
+                                src="../../assets/images/3d26b9c4313810b3fd9e74706e948585.png"
                                 alt="Course icon"
                             />
                             <span className="header-text">新的课程</span>
@@ -84,7 +84,7 @@ function Home() {
                     <img
                         className="label_10"
                         src={
-                            'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng49d9f79d747221f0730f71f02b94b8d083838de53c95205a46b8b024cd6ab4eb'
+                            '../../assets/images/32a2fd4893ce00a5012d7f32c793234c.png'
                         }
                     />
                 </div>
@@ -100,7 +100,7 @@ function Home() {
                                 <img
                                     className="thumbnail_3"
                                     src={
-                                        'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng2f778b48edfea95a1cfe0b95aeda5941cc22ab7c0e61b78e66448eff9968c618'
+                                        '../../assets/images/e6971251659565ac4321132c304d21b0.png'
                                     }
                                 />
                             </div>
@@ -119,7 +119,7 @@ function Home() {
                         <img
                             className="label_10"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng49d9f79d747221f0730f71f02b94b8d083838de53c95205a46b8b024cd6ab4eb'
+                                '../../assets/images/32a2fd4893ce00a5012d7f32c793234c.png'
                             }
                         />
                     </div>
@@ -177,7 +177,7 @@ function Home() {
                             <img
                                 className="label_6"
                                 src={
-                                    'https://lanhu-oss-2537-2.lanhuapp.com/SketchPnge38198944e505058469925c297d8cafba446a89410716b9a3a7e906ef8ef8eee'
+                                    '../../assets/images/6ec2c30c6b396cef8175ba6590c47f07.png'
                                 }
                             />
                             <span className="text-group_5">应用理论</span>
@@ -185,7 +185,7 @@ function Home() {
                         <img
                             className="label_7"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng118b3c38b18c856a6ca99e381afbc5634bd853dec731a97955a7b9568c2b3ffc'
+                                '../../assets/images/2f6f6b05e1bf29806c0cf0ba80a8badc.png'
                             }
                         />
                     </div>

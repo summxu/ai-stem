@@ -66,21 +66,21 @@ function Footer() {
                         <img
                             className="middle-logo-right"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng80889ad0117f3c8d49390d3d0b790100a779ecc32065b4dd013d0352cac235c4'
+                                '../../assets/images/3db4ae0853ee1a1b31e2d54eb44ca689.png'
                             }
                             alt="Middle logo right"
                         />
                         <img
                             className="middle-logo-left"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPngbaa1fc61e6b8ef3443862360739e62c7e27cddabe3a0c67af6c37910d8ab5739'
+                                '../../assets/images/08424ed46f9a944081489b814d12abb7.png'
                             }
                             alt="Middle logo left"
                         />
                         <img
                             className="right-logo"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPnge5d2f6b3ddcb0d989bcadd509d8236bd3e00e1db274b2628890cb0ab6cf6f3a4'
+                                '../../assets/images/603bf0ab5e5f51ce5c9f86cdb66817a3.png'
                             }
                             alt="Right logo"
                         />
@@ -89,28 +89,28 @@ function Footer() {
                         <img
                             className="social-icon"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng0ff1441627a0307911c907301eadd615ca8cf5b2b6c6d08c81b1cc38ece90846'
+                                '../../assets/images/1b731373fbb5d07019ab8209d0cf698a.png'
                             }
                             alt="Social icon 1"
                         />
                         <img
                             className="social-icon"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng8e44864ba8cd4ee83c8092fa6d3a7d58af50dcbcc1882a00297d80eb526a7472'
+                                '../../assets/images/c3e08a254fa0c339955669f62fe5a3ac.png'
                             }
                             alt="Social icon 2"
                         />
                         <img
                             className="social-icon"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPng5bdf5d543d72c3b40875898e2cee4b22b148304b280011a236bfb3af960d6f30'
+                                '../../assets/images/2e01cefbba197fa9c5a24bf77dadcf71.png'
                             }
                             alt="Social icon 3"
                         />
                         <img
                             className="social-icon"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPngb8283331461c6d412e9e6f49d564705bad9a835c6053911253957218f4cd12df'
+                                '../../assets/images/5cab39dc0d92b1b88767a761a3e11cbe.png'
                             }
                             alt="Social icon 4"
                         />

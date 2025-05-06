@@ -17,7 +17,7 @@ function CoursePreview() {
                             <span>修改</span>
                             <img
                                 src={
-                                    'https://lanhu-oss.lanhuapp.com/SketchPng37287cf95f9c4c3ff74f1775bd183ab85b0506bb10ef5e0daa7433a9a84dbee0'
+                                    '../../assets/images/5c08eba371591f00b3d417737a03001b.png'
                                 }
                                 alt="编辑图标"
                             />
@@ -28,7 +28,7 @@ function CoursePreview() {
                             <span>添加课程</span>
                             <img
                                 src={
-                                    'https://lanhu-oss.lanhuapp.com/SketchPng35f5a321ca03b58056e019b423beeed0db4060941c0c3c192538f9ddc65d0e57'
+                                    '../../assets/images/18210ec7d59fed7d48074693ec2a7abd.png'
                                 }
                                 alt="添加图标"
                             />
@@ -39,7 +39,7 @@ function CoursePreview() {
                             <span>管理课程</span>
                             <img
                                 src={
-                                    'https://lanhu-oss.lanhuapp.com/SketchPng35f5a321ca03b58056e019b423beeed0db4060941c0c3c192538f9ddc65d0e57'
+                                    '../../assets/images/18210ec7d59fed7d48074693ec2a7abd.png'
                                 }
                                 alt="添加图标"
                             />
@@ -59,33 +59,33 @@ function CoursePreview() {
                         <img
                             className="icon-left"
                             src={
-                                'https://lanhu-oss.lanhuapp.com/SketchPngc86fdc64218d7aeb5f870708f833eb0fa6d1ae84611a79cba2a2c480cb4b4df2'
+                                '../../assets/images/a2fe4037e642edd0b39d2e3f33d86a75.png'
                             }
                             alt="STEM图标"
                         />
                         <div className="icons-middle flex-row">
                             <img
                                 src={
-                                    'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/5612642c77374cb485d9d50914b7ac26_mergeImage.png'
+                                    '../../assets/images/1889a996c67d7a946187cbbd85de3c6b.png'
                                 }
                                 alt="S图标"
                             />
                             <img
                                 src={
-                                    'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/55d6dd40f3f64da0bd347458a322df0f_mergeImage.png'
+                                    '../../assets/images/c1b4aa1165c9ae212d97a265f5da5c46.png'
                                 }
                                 alt="T图标"
                             />
                             <img
                                 src={
-                                    'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/be28215276424d5ea93e3bbdc32e7b57_mergeImage.png'
+                                    '../../assets/images/56dcd260ef2b0b7085847ce7ab7bebf8.png'
                                 }
                                 alt="E图标"
                             />
                             <img
                                 style={{ width: 160 }}
                                 src={
-                                    'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/913760b73e3c4268b7bd61e711a35db9_mergeImage.png'
+                                    '../../assets/images/3f837e2a86f951683f81321844103b25.png'
                                 }
                                 alt="M图标"
                             />
@@ -102,7 +102,7 @@ function CoursePreview() {
                         <img
                             className="card-image"
                             src={
-                                'https://lanhu-oss.lanhuapp.com/SketchPng39b9b32f0d7b37ee9ff91777a9fdd9f98167c52294e827c4575130ed427f9ca1'
+                                '../../assets/images/a8b6479420972c4630813d8297f350ba.png'
                             }
                             alt="科学图标"
                         />
@@ -121,7 +121,7 @@ function CoursePreview() {
                         <img
                             className="card-image"
                             src={
-                                'https://lanhu-oss.lanhuapp.com/SketchPng73adbfd5212087e5aec45195ec66e76b6e4cc66ad91aa29aa62e4209353aed49'
+                                '../../assets/images/54c93e4ab957c5cc240ae35a8410b2f4.png'
                             }
                             alt="技术图标"
                         />
@@ -140,7 +140,7 @@ function CoursePreview() {
                         <img
                             className="card-image"
                             src={
-                                'https://lanhu-oss.lanhuapp.com/SketchPngc045dbb430cbbb9e7cede59069e33eb1e20c955b2e7870cf8ea372085d23f7cb'
+                                '../../assets/images/40618f7deb5cdaf1fa3d4b1647a0bea1.png'
                             }
                             alt="工程图标"
                         />
@@ -159,7 +159,7 @@ function CoursePreview() {
                         <img
                             className="card-image"
                             src={
-                                'https://lanhu-oss.lanhuapp.com/SketchPngfdcb5ecbebeaf026c781f7f77a4056a517d8f9d275793ad081d198003e1c2175'
+                                '../../assets/images/1a9d0f3e05008a1822c09facdd429c3b.png'
                             }
                             alt="数学图标"
                         />

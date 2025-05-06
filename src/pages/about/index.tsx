@@ -13,7 +13,7 @@ const About: React.FC = () => {
                     <img
                         className="image_1"
                         src={
-                            "https://lanhu-oss.lanhuapp.com/SketchPng5d94b526ebd605a328d949d83c4d4bdd9792e6b52134fcb317bf887cb67926bb"
+                            "../../assets/images/b5afc98a2405db027438c25f5704bc72.png"
                         }
                     />
                 </div>

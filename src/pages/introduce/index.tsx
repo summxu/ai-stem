@@ -10,7 +10,7 @@ function Introduce() {
                         <img
                             className="image_1"
                             src={
-                                "https://lanhu-oss.lanhuapp.com/SketchPngcbcf2bcc8da429a8f0d4133564f3849988ed107a30a6ac1369063bf409f95c48"
+                                "../../assets/images/bd992610e780d053fabeb37e8b8afe6b.png"
                             }
                         />
                     </div>
@@ -20,7 +20,7 @@ function Introduce() {
                                 <img
                                     className="image_2"
                                     src={
-                                        "https://lanhu-oss.lanhuapp.com/SketchPng3cf90d12e3989eb19d632657447630b7170d9b748e18754f86e518bc9995765b"
+                                        "../../assets/images/4758472e7e1377037e971e11a1000838.png"
                                     }
                                 />
                                 <div className="text-wrapper_2 flex-col justify-between">
@@ -37,7 +37,7 @@ function Introduce() {
                                     <img
                                         className="image_3"
                                         src={
-                                            "https://lanhu-oss.lanhuapp.com/SketchPnge7770a23ba34401bad2f41e3f477f198d962655a3f7a7ca746b15d7a183535d9"
+                                            "../../assets/images/b56637cae3e9b8d374cdd241a23fa0b6.png"
                                         }
                                     />
                                     <div className="text-group_1 flex-col justify-between">
@@ -54,7 +54,7 @@ function Introduce() {
                                 <img
                                     className="image_4"
                                     src={
-                                        "https://lanhu-oss.lanhuapp.com/SketchPngcf0a838809a5e5c3e90e325cf91af5e89dcf835cd01b11694113675acf3d2868"
+                                        "../../assets/images/2afbd41d63be1cd38e65af522acc449d.png"
                                     }
                                 />
                                 <div className="text-group_2 flex-col justify-between">
@@ -81,7 +81,7 @@ function Introduce() {
                         <img
                             className="image_6-0"
                             src={
-                                "https://lanhu-oss.lanhuapp.com/SketchPng01d29bd9b1fb19d9092d4c58b0f8dc5f694fc5f1fcb76f71b5e5deb7bae48fec"
+                                "../../assets/images/faa67f46bad0030db6700182bb915dbb.png"
                             }
                         />
                     </div>
@@ -92,7 +92,7 @@ function Introduce() {
                         <img
                             className="image_6-1"
                             src={
-                                "https://lanhu-oss.lanhuapp.com/SketchPngf78bd6b1169b4e0af94711a9baa350eb5fa204f8918737814281198de53784d1"
+                                "../../assets/images/64a593907cab561e49b252ad1b7453ca.png"
                             }
                         />
                     </div>
@@ -105,7 +105,7 @@ function Introduce() {
                         <img
                             className="image_6-2"
                             src={
-                                "https://lanhu-oss.lanhuapp.com/SketchPng825451934c0c80e86a8fc2bf349114962d0ebe0e2edc38bf59d620504d09d729"
+                                "../../assets/images/eb6574311e26b474d5bc44278c18927d.png"
                             }
                         />
                     </div>
@@ -116,7 +116,7 @@ function Introduce() {
                         <img
                             className="image_5-3"
                             src={
-                                "https://lanhu-oss.lanhuapp.com/SketchPngc5c964f807c1bc380b8bcf98273716b823b900c679d84ab30a6d1e8b7d0c7858"
+                                "../../assets/images/1e336fc1bd539c1b568fb0a2ea47e46a.png"
                             }
                         />
                     </div>
@@ -129,7 +129,7 @@ function Introduce() {
                         <img
                             className="image_5-4"
                             src={
-                                "https://lanhu-oss.lanhuapp.com/SketchPng26f49f3ba594387451af9e9f836f3cdeab8c08301f0873d6f40e1fb621e18359"
+                                "../../assets/images/c03a4f3d6a47d3c6e54face6ada49292.png"
                             }
                         />
                     </div>

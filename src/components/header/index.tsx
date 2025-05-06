@@ -82,7 +82,7 @@ function Header() {
                         <img
                             className="language-icon"
                             src={
-                                'https://lanhu-oss-2537-2.lanhuapp.com/SketchPngdc90e1abd80337692577fa18f0203de9dc8e27f273c997596e7a5ab00175de62'
+                                '../../assets/images/7a8e4d0474dc90b89a943143bf1975a1.png'
                             }
                             alt="Language"
                         />
